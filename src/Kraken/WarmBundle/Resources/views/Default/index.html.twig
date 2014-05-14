@@ -1,0 +1,109 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+
+<header class="jumbotron subhead" id="overview">
+  <div class="container">
+  <h1>Ile ciepła potrzebuje twój dom?</h1>
+  <p class="lead">Sprawdź, ile powinno kosztować ogrzewanie.</p>
+  </div>
+</header>
+
+
+<div class="container">
+  <div class="row-fluid">
+    <div class="span8">
+
+    <form action="{{ path('start', {slug: calc.slug}) }}" class="form-horizontal" method="post">
+          {{ form_errors(form) }}
+
+          <legend>Położenie w przestrzeni i czasie</legend>
+          {{ form_row(form.building_type, {'form_type': 'horizontal'}) }}
+          {{ form_row(form.construction_year, {'form_type': 'horizontal'}) }}
+
+          <div class="control-group">
+            <label class="required control-label">Lokalizacja budynku</label>
+            <div class="controls">
+              <div class="alert alert-info">
+                <strong>Spokojnie, nie zamierzamy cię nachodzić.</strong> Wystarczy przybliżenie ~50km.
+              </div>
+              <div id="map_canvas" style="width: 600px; height: 450px;"></div>
+            </div>
+          </div>
+          <script type="text/javascript">
+              var map518fb086278c0 = new google.maps.Map(
+                  document.getElementById("map_canvas"), {
+                      "zoom":6,
+                      "mapTypeId":"roadmap",
+                      "mapTypeControl":false,
+                      "zoomControl":true,
+                      "streetViewControl":false
+                  });
+              var map518fb086278c0Bounds = new google.maps.LatLngBounds();
+              var mapMarker518fb086279aa = new google.maps.Marker({
+                  position: new google.maps.LatLng({{ calc.latitude }}, {{ calc.longitude }}),
+                  draggable: true,
+                  map: map518fb086278c0
+              });
+              google.maps.event.addListener(mapMarker518fb086279aa, 'dragend', function()
+              {
+                  var pos = mapMarker518fb086279aa.getPosition();
+                  $("#calculation_latitude").val(pos.lat());
+                  $("#calculation_longitude").val(pos.lng());
+              });
+
+              google.maps.event.addListener(map518fb086278c0, 'click', function(event) {
+                  mapMarker518fb086279aa.setPosition(event.latLng);
+
+                  var pos = mapMarker518fb086279aa.getPosition();
+                  $("#calculation_latitude").val(pos.lat());
+                  $("#calculation_longitude").val(pos.lng());
+              });
+
+              map518fb086278c0.setCenter(new google.maps.LatLng(51.917168, 19.138184));
+          </script>
+          {{ form_row(form.latitude, {'form_type': 'horizontal'}) }}
+          {{ form_row(form.longitude, {'form_type': 'horizontal'}) }}
+
+          <legend>Źródło ciepła</legend>
+          <p><small>Podając informacje o sposobie ogrzewania i zużyciu paliwa, dowiesz się jak efektywnie działa ogrzewanie i w jaki sposób zaoszczędzić - nie rezygnując z ciepła w domu.</small></p>
+          {{ form_row(form.fuel_type, {'form_type': 'horizontal'}) }}
+          {{ form_row(form.stove_type, {'form_type': 'horizontal'}) }}
+          {{ form_row(form.stove_power, {'form_type': 'horizontal'}) }}
+          {{ form_row(form.fuel_consumption, {'form_type': 'horizontal'}) }}
+          {{ form_row(form.fuel_cost, {'form_type': 'horizontal'}) }}
+          {{ form_row(form.indoor_temperature, {'form_type': 'horizontal'}) }}
+
+          <legend>Pozostałe</legend>
+          {{ form_row(form.email, {'form_type': 'horizontal'}) }}
+          <div class="alert alert-block">
+              <strong>Adres e-mail nie jest wymagany.</strong> Jeśli go podasz, wyślemy ci link do wyniku, abyś go nie zgubił.<br />Wynik znajdziesz też w zakładce "Moje wyniki", ale tylko na tym komputerze.
+          </div>
+
+          <p><span class="required">*</span> - pola wymagane</p>
+
+          <div class="form-actions">
+            {{ form_rest(form) }}
+            <button type="submit" class="btn btn-primary">Dalej</button>
+          </div>
+      </form>
+    </div>
+    <div class="span4">
+      <div class="alert alert-info" style="margin-top:10px">
+        <h4>Zanim zaczniesz, zbierz informacje</h4>
+        Będziesz potrzebował nieco szczegółowych informacji o twoim budynku takich jak:
+        <ul>
+            <li>zewnętrzne wymiary obrysu budynku</li>
+            <li>grubość ścian zewnętrznych i materiały użyte do ich budowy</li>
+            <li>grubości i materiały izolacji dachu/podłogi na parterze czy w piwnicy</li>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+
+{% block bottom_javascripts %}
+<script src="{{ asset('bundles/krakenwarm/js/intro.js') }}"></script>
+{% endblock %}

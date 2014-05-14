@@ -1,0 +1,204 @@
+[
+    {
+        "name": "Beton",
+        "lambda": 1.65,
+        "for_wall_construction_layer": true,
+        "for_wall_facade_layer": true
+    },
+    {
+        "name": "Żelbet",
+        "lambda": 1.7,
+        "for_wall_construction_layer": true,
+        "for_wall_facade_layer": true
+    },
+    {
+        "name": "Pustak żużlobetonowy",
+        "lambda": 0.65,
+        "for_wall_construction_layer": true,
+        "for_wall_facade_layer": true
+    },
+    {
+        "name": "Beton komórkowy",
+        "lambda": 0.2,
+        "for_wall_construction_layer": true,
+        "for_wall_facade_layer": true
+    },
+    {
+        "name": "Drewno liściaste",
+        "lambda": 0.2,
+        "for_wall_construction_layer": true,
+        "for_wall_facade_layer": true
+    },
+    {
+        "name": "Drewno iglaste",
+        "lambda": 0.16,
+        "for_wall_construction_layer": true,
+        "for_wall_facade_layer": true
+    },
+    {
+        "name": "Cegła pełna",
+        "lambda": 0.77,
+        "for_wall_construction_layer": true,
+        "for_wall_facade_layer": true
+    },
+    {
+        "name": "Cegła dziurawka",
+        "lambda": 0.62,
+        "for_wall_construction_layer": true,
+        "for_wall_facade_layer": true
+    },
+    {
+        "name": "Cegła kratówka",
+        "lambda": 0.56,
+        "for_wall_construction_layer": true,
+        "for_wall_facade_layer": true
+    },
+    {
+        "name": "Cegła silikatowa pełna",
+        "lambda": 0.9,
+        "for_wall_construction_layer": true,
+        "for_wall_facade_layer": true
+    },
+    {
+        "name": "Cegła silikatowa dziurawka",
+        "lambda": 0.8,
+        "for_wall_construction_layer": true,
+        "for_wall_facade_layer": true
+    },
+    {
+        "name": "Cegła klinkierowa",
+        "lambda": 1.05,
+        "for_wall_construction_layer": true,
+        "for_wall_facade_layer": true
+    },
+    {
+        "name": "Pustaki ceramiczne",
+        "lambda": 0.35,
+        "for_wall_construction_layer": true,
+        "for_wall_facade_layer": true
+    },
+    {
+        "name": "Korek",
+        "lambda": 0.05,
+        "for_wall_internal_layer": true,
+        "for_wall_isolation_layer": true,
+        "for_ceiling": true,
+        "for_floor": true
+    },
+    {
+        "name": "Słoma",
+        "lambda": 0.08,
+        "for_wall_internal_layer": true,
+        "for_wall_isolation_layer": true,
+        "for_ceiling": true,
+        "for_floor": true
+    },
+    {
+        "name": "Trzcina",
+        "lambda": 0.07,
+        "for_wall_internal_layer": true,
+        "for_wall_isolation_layer": true,
+        "for_ceiling": true,
+        "for_floor": true
+    },
+    {
+        "name": "Paździerz lniany",
+        "lambda": 0.13,
+        "for_wall_internal_layer": true,
+        "for_wall_isolation_layer": true,
+        "for_ceiling": true,
+        "for_floor": true
+    },
+    {
+        "name": "Wełna mineralna",
+        "lambda": 0.045,
+        "for_wall_construction_layer": true,
+        "for_wall_internal_layer": true,
+        "for_wall_isolation_layer": true,
+        "for_ceiling": true,
+        "for_floor": true
+    },
+    {
+        "name": "Wełna mineralna granulowana",
+        "lambda": 0.05,
+        "for_wall_internal_layer": true,
+        "for_ceiling": true
+    },
+    {
+        "name": "Styropian",
+        "lambda": 0.038,
+        "for_wall_construction_layer": true,
+        "for_wall_internal_layer": true,
+        "for_wall_isolation_layer": true,
+        "for_ceiling": true,
+        "for_floor": true
+    },
+    {
+        "name": "Styropian twardy (XPS)",
+        "lambda": 0.032,
+        "for_wall_construction_layer": true,
+        "for_wall_internal_layer": true,
+        "for_wall_isolation_layer": true,
+        "for_ceiling": true,
+        "for_floor": true
+    },
+    {
+        "name": "Pustka powietrzna",
+        "lambda": 0.025,
+        "for_wall_internal_layer": true
+    },
+    {
+        "name": "Żużel",
+        "lambda": 0.24,
+        "for_ceiling": true,
+        "for_floor": true
+    },
+    {
+        "name": "Keramzyt",
+        "lambda": 0.21,
+        "for_ceiling": true,
+        "for_floor": true
+    },
+    {
+        "name": "Kamień polny",
+        "lambda": 2.6,
+        "for_wall_construction_layer": true,
+        "for_wall_facade_layer": true
+    },
+    {
+        "name": "Granit",
+        "lambda": 3.5,
+        "for_wall_construction_layer": true,
+        "for_wall_facade_layer": true
+    },
+    {
+        "name": "Marmur",
+        "lambda": 3.5,
+        "for_wall_construction_layer": true,
+        "for_wall_facade_layer": true
+    },
+    {
+        "name": "Piaskowiec",
+        "lambda": 2.3,
+        "for_wall_construction_layer": true,
+        "for_wall_facade_layer": true
+    },
+    {
+        "name": "Wapień",
+        "lambda": 1.1,
+        "for_wall_construction_layer": true,
+        "for_wall_facade_layer": true
+    },
+    {
+        "name": "Trociny drzewne",
+        "lambda": 0.08,
+        "for_ceiling": true
+    },
+    {
+        "name": "Wiórobeton",
+        "lambda": 0.23,
+        "for_wall_construction_layer": true,
+        "for_wall_internal_layer": true,
+        "for_wall_facade_layer": true
+    }
+]

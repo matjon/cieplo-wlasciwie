@@ -1,0 +1,90 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+
+<div class="hero-unit">
+  <h1>Informacje na temat mieszkania</h1>
+</div>
+
+<div class="container">
+  <div class="row-fluid">
+    <div class="span8">
+
+    <form action="{{ path('details', {slug: calc_slug}) }}" class="form-horizontal" method="post" novalidate>
+
+          {% if form.vars.errors|length %}
+              <div class="alert alert-error">
+                  <h4>Nie wszystko jest w porządku</h4>
+                  {{ form_errors(form) }}
+              </div>
+          {% endif %}
+
+          <legend>Wymiary mieszkania</legend>
+          {{ form_row(form.building_length, {'form_type': 'horizontal'}) }}
+          {{ form_row(form.building_width, {'form_type': 'horizontal'}) }}
+          {{ form_row(form.number_floors, {'form_type': 'horizontal'}) }}
+          {{ form_row(form.number_heated_floors, {'form_type': 'horizontal'}) }}
+            <div id="whats_unheated" style="display:none">
+                {{ form_row(form.whats_unheated, {'form_type': 'horizontal'}) }}
+            </div>
+
+          <legend>Sąsiedztwo</legend>
+          {{ form_row(form.apartment.number_external_walls, {'form_type': 'horizontal'}) }}
+          {{ form_row(form.apartment.number_unheated_walls, {'form_type': 'horizontal'}) }}
+          {{ form_row(form.apartment.whats_over, {'form_type': 'horizontal'}) }}
+          <div id="ceiling_isolation_layer" style="display:none">
+              {{ form_row(form.highest_ceiling_isolation_layer, {'form_type': 'horizontal'}) }}
+          </div>
+          {{ form_row(form.apartment.whats_under, {'form_type': 'horizontal'}) }}
+          <div id="floor_isolation_layer" style="display:none">
+              {{ form_row(form.lowest_ceiling_isolation_layer, {'form_type': 'horizontal'}) }}
+          </div>
+
+            <legend>Ściany zewnętrzne</legend>
+            {{ form_row(form.walls[0].construction_layer.material, {'form_type': 'horizontal'}) }}
+            {{ form_row(form.walls[0].construction_layer.size, {'form_type': 'horizontal'}) }}
+
+            {{ form_row(form.walls[0].has_another_layer, {'form_type': 'horizontal'}) }}
+            <div id="wall_outside_layer" style="display:none">
+                {{ form_row(form.walls[0].outside_layer.material, {'form_type': 'horizontal'}) }}
+                {{ form_row(form.walls[0].outside_layer.size, {'form_type': 'horizontal'}) }}
+            </div>
+            {{ form_row(form.walls[0].has_isolation_inside, {'form_type': 'horizontal'}) }}
+            <div id="wall_isolation_layer" style="display:none">
+                {{ form_row(form.walls[0].isolation_layer.material, {'form_type': 'horizontal'}) }}
+                {{ form_row(form.walls[0].isolation_layer.size, {'form_type': 'horizontal'}) }}
+            </div>
+            {{ form_row(form.walls[0].has_isolation_outside, {'form_type': 'horizontal'}) }}
+            <div id="wall_extra_isolation_layer" style="display:none">
+                {{ form_row(form.walls[0].extra_isolation_layer.material, {'form_type': 'horizontal'}) }}
+                {{ form_row(form.walls[0].extra_isolation_layer.size, {'form_type': 'horizontal'}) }}
+            </div>
+
+          <legend>Okna i drzwi</legend>
+          {{ form_row(form.number_doors, {'form_type': 'horizontal'}) }}
+          {{ form_row(form.doors_type, {'form_type': 'horizontal'}) }}
+          {{ form_row(form.number_windows, {'form_type': 'horizontal'}) }}
+          {{ form_row(form.windows_type, {'form_type': 'horizontal'}) }}
+          {{ form_row(form.has_balcony, {'form_type': 'horizontal'}) }}
+
+          <legend>Wentylacja</legend>
+          {{ form_row(form.ventilation_type, {'form_type': 'horizontal'}) }}
+
+          <p><span class="required">*</span> - pola wymagane</p>
+
+          <div class="control-group">
+            <div class="controls">
+              <button type="submit" class="btn btn-primary btn-large">Oblicz</button>
+            </div>
+          </div>
+          {{ form_rest(form) }}
+    </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block bottom_javascripts %}
+<script src="{{ asset('bundles/krakenwarm/js/apartment.js') }}"></script>
+{% endblock %}

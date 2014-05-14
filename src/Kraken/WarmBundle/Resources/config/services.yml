@@ -1,0 +1,69 @@
+parameters:
+#    kraken_warm.example.class: Kraken\WarmBundle\Example
+
+services:
+    kraken_warm.map.location:
+        class: Kraken\WarmBundle\Map\LocationMap
+        tags:
+            - { name: vichgeo.map, alias: location }
+
+    kraken_warm.instance:
+        class: Kraken\WarmBundle\Service\InstanceService
+
+    kraken_warm.heating_season:
+        class: Kraken\WarmBundle\Calculator\HeatingSeason
+        arguments: [@kraken_warm.instance, @doctrine.orm.entity_manager, @kraken_warm.city_locator, @kraken_warm.climate]
+
+    kraken_warm.city_locator:
+        class: Kraken\WarmBundle\Calculator\NearestCityLocator
+        arguments: [@kraken_warm.instance, @doctrine.orm.entity_manager]
+
+    kraken_warm.climate:
+        class: Kraken\WarmBundle\Calculator\ClimateZoneService
+        arguments: [@kraken_warm.instance]
+
+    kraken_warm.energy_calculator:
+        class: Kraken\WarmBundle\Calculator\EnergyCalculator
+        arguments: [@kraken_warm.instance, @kraken_warm.heating_season, @kraken_warm.fuel, @kraken_warm.building, @kraken_warm.climate]
+
+    kraken_warm.advice:
+        class: Kraken\WarmBundle\Calculator\AdviceGenerator
+        arguments: [@kraken_warm.instance, @kraken_warm.building, @kraken_warm.energy_calculator]
+
+    kraken_warm.punchline:
+        class: Kraken\WarmBundle\Calculator\PunchLineGenerator
+        arguments: [@kraken_warm.instance, @kraken_warm.energy_calculator]
+
+    kraken_warm.energy_pricing:
+        class: Kraken\WarmBundle\Calculator\EnergyPricing
+        arguments: [@kraken_warm.instance, @kraken_warm.energy_calculator, @doctrine.orm.entity_manager, @kraken_warm.heating_season]
+
+    kraken_warm.building_classifier:
+        class: Kraken\WarmBundle\Calculator\BuildingClassifier
+        arguments: [@kraken_warm.energy_calculator]
+
+    kraken_warm.fuel:
+        class: Kraken\WarmBundle\Service\FuelService
+
+    kraken_warm.wall:
+        class: Kraken\WarmBundle\Service\WallService
+        arguments: [@kraken_warm.instance]
+
+    kraken_warm.wall.factory:
+        class: Kraken\WarmBundle\Service\WallFactory
+
+    kraken_warm.ventilation:
+        class: Kraken\WarmBundle\Service\VentilationService
+        arguments: [@kraken_warm.instance]
+
+    kraken_warm.building_factory:
+        class:            "Kraken\WarmBundle\Service\BuildingFactory"
+    kraken_warm.building:
+        class:            "Kraken\WarmBundle\Service\BuildingInterface"
+        factory_service:  kraken_warm.building_factory
+        factory_method:   get
+        arguments:
+            - "@kraken_warm.instance"
+            - "@kraken_warm.ventilation"
+            - "@kraken_warm.wall"
+            - "@kraken_warm.wall.factory"

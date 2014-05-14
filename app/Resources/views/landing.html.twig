@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="utf-8">
+<title>{% block title %}Ciepło Właściwie - jak i za ile ogrzewać{% endblock %}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Prosty audyt energetyczny twojego domu. Dowiesz się, czym ogrzewać, jaki kocioł kupić, jak oszczędzić na ogrzewaniu bez ubierania kalesonów.">
+<meta name="author" content="Juzef">
+<meta property="og:title" content="Ciepło Właściwie" />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="http://cieplowlasciwie.pl{{ asset('bundles/krakenwarm/images/promo.jpg') }}" />
+<meta property="og:url" content="http://cieplowlasciwie.pl" />
+<meta property="og:description" content="Prosty audyt energetyczny twojego domu. Dowiedz się, jak oszczędzić na ogrzewaniu bez ubierania kalesonów." />
+<meta property="og:locale" content="pl_PL" />
+<meta property="og:site_name" content="CieploWlasciwie.pl" />
+{% block stylesheets %}{% endblock %}
+{% block javascripts %}{% endblock %}
+{{ vichgeo_include_js() }}
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-37682324-2']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<!-- Use precompiled CSS files -->
+<!-- {{ "{% include 'BraincraftedBootstrapBundle::_stylesheets.html.twig' %}" }} -->
+<link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
+
+<!-- Use Assetic -->
+<!-- {{ "<link rel=\"stylesheet\" href=\"{{ asset('bundles/braincraftedbootstrap/css/bootstrap.compiled.css') }}\">" }} -->
+
+<link rel="stylesheet" href="/bundles/krakenwarm/css/docs.css">
+
+{% include 'BcBootstrapBundle::_html5shiv.html.twig' %}
+
+</head>
+
+<body data-spy="scroll" data-target=".bs-docs-sidebar">
+
+    <!-- Navbar
+    ================================================== -->
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href="{{ path('homepage') }}">Ciepło Właściwie</a>
+          <div class="nav-collapse collapse">
+            {{ knp_menu_render('KrakenWarmBundle:Builder:navbar', {'nav_type': 'navbar'}) }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+{% block body %}{% endblock %}
+
+<!-- Footer
+================================================== -->
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right"><a href="#">Wróć do góry strony</a></p>
+    <p>Wyprodukowano we Wrocławiu</p>
+    <p>Strona jest częścią serwisu <a href="http://czysteogrzewanie.pl" target="_blank">Czyste Ogrzewanie</a>, który promuje tanie, świadome i ekologiczne ogrzewanie pozornie staroświeckimi paliwami.</p>
+    <ul class="footer-links">
+      <li><a href="http://czysteogrzewanie.pl">CzysteOgrzewanie.pl</a></li>
+      <li><a href="http://forum.info-ogrzewanie.pl">Forum.Info-Ogrzewanie.pl</a></li>
+      <li><a href="http://forum.muratordom.pl">Forum.MuratorDom.pl</a></li>
+    </ul>
+  </div>
+</footer>
+
+<!-- Use precompiled JavaScript files (includes jQuery) -->
+<!-- {{ "{% include 'BraincraftedBootstrapBundle::_javascripts.html.twig' %}" }} -->
+
+<!-- Use Assetic -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="{{ asset('js/jquery.js') }}"><\/script>')</script>
+<script src="{{ asset('js/bootstrap.js') }}"></script>
+<!-- {{ "<script src=\"{{ asset('bundles/braincraftedbootstrap/js/bootstrap.compiled.js') }}\"></script>" }}-->
+
+{% block bottom_javascripts %}{% endblock %}
+<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+
+</body>
+
+</html>

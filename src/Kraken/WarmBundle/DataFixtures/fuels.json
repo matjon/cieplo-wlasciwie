@@ -1,0 +1,101 @@
+[
+    {
+        "type": "coal_dirty",
+        "label": "Węgiel kamienny",
+        "detail": "spalany w zwykłym kotle, niechlujnie 'od dołu'",
+        "price": 0.78,
+        "unit": "kg",
+        "trade_amount": 1000,
+        "trade_unit": "t",
+        "energy": 28,
+        "efficiency": 0.3
+    },
+    {
+        "type": "coal_cleaner",
+        "label": "Węgiel kamienny",
+        "detail": "spalany w zwykłym kotle, czysto i ekonomicznie 'od góry'",
+        "price": 0.78,
+        "unit": "kg",
+        "trade_amount": 1000,
+        "trade_unit": "t",
+        "energy": 28,
+        "efficiency": 0.65
+    },
+    {
+        "type": "coal_sand",
+        "label": "Miał węglowy",
+        "detail": "spalany w kotle miałowym, czysto i ekonomicznie 'od góry'",
+        "price": 0.55,
+        "unit": "kg",
+        "trade_amount": 1000,
+        "trade_unit": "t",
+        "energy": 22,
+        "efficiency": 0.65
+    },
+    {
+        "type": "coal_automatic",
+        "label": "Ekogroszek",
+        "detail": "spalany w dobrym kotle podajnikowym",
+        "price": 0.85,
+        "unit": "kg",
+        "trade_amount": 1000,
+        "trade_unit": "t",
+        "energy": 28,
+        "efficiency": 0.8
+    },
+    {
+        "type": "gas",
+        "label": "Gaz ziemny typ E (GZ-50)",
+        "detail": "spalany w kotle kondensacyjnym",
+        "price": 2.2,
+        "unit": "m3",
+        "trade_amount": 1,
+        "trade_unit": "m3",
+        "energy": 38,
+        "efficiency": 1.05
+    },
+    {
+        "type": "pellet",
+        "label": "Pellet",
+        "detail": "",
+        "price": 0.8,
+        "unit": "kg",
+        "trade_amount": 1000,
+        "trade_unit": "t",
+        "energy": 18,
+        "efficiency": 0.85
+    },
+    {
+        "type": "electricity",
+        "label": "Elektryczność",
+        "detail": "taryfa dwustrefowa, strefa nocna",
+        "price": 0.4,
+        "unit": "kWh",
+        "trade_amount": 1,
+        "trade_unit": "kWh",
+        "energy": 3.6,
+        "efficiency": 1
+    },
+    {
+        "type": "wood",
+        "label": "Drewno bukowe",
+        "detail": "",
+        "price": 0.17,
+        "unit": "kg",
+        "trade_amount": 468,
+        "trade_unit": "mp",
+        "energy": 16,
+        "efficiency": 0.6
+    },
+    {
+        "type": "coke",
+        "label": "Koks",
+        "detail": "",
+        "price": 1,
+        "unit": "kg",
+        "trade_amount": 1000,
+        "trade_unit": "t",
+        "energy": 30,
+        "efficiency": 0.7
+    }
+]

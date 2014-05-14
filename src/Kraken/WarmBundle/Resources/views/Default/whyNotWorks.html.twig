@@ -1,0 +1,46 @@
+{% extends '::landing.html.twig' %}
+
+{% block body %}
+
+<div class="container">
+  <div class="row-fluid">
+    <div class="span12">
+      <div class="page-header">
+        <h1>Czemu nie działa</h1>
+      </div>
+      <div id="meanwhile" style="font-size: 16px">
+        <p>Dokładamy wszelkich starań, by wyniki uzyskiwane przy pomocy naszego narzędzia były tak bliskie rzeczywistości, jak to tylko możliwe. Nie zawsze jednak da się
+        to zapewnić. Dlaczego tak się dzieje i jak można temu zaradzić?
+        </p>
+        <h2>Nasza wina</h2>
+        <p>Część problemów może wynikać z błędów lub niedopatrzeń z naszej strony. <a href="http://czysteogrzewanie.pl/o-tej-stronie/#wpcf7-f236-p12-o1" target="_blank">Nie wahaj się napisać nam o tym.</a></p>
+        <h3>Mniej typowe detale budynku</h3>
+        <p>Jeśli twój dom zbudowany jest na planie figury innej niż czworokąt foremny, ma kilka przybudówek lub wież albo różne powierzchnie poszczególnych pięter, to próbując obliczyć jego
+        bilans cieplny możesz mieć problemy z podaniem właściwych danych. Wynika to stąd, że w pierwszej kolejności obsługujemy najbardziej typowe budynki, tj. w miarę regularną bryłę
+        z piętrami o zbliżonych powierzchniach. Sposoby pozwalające poradzić sobie z mniej typowymi długościami, wysokościami, rzutami i przekrojami zostaną wprowadzone z czasem.
+        Oczywiście pisz do nas, jeśli brak jakiejś funkcji cię boli - widząc zainteresowanie ludzi, na pewno przyspieszymy robotę.</p>
+        <h3>Gdzie ciepło z kota?</h3>
+        <p>Pewnie już gdzieś było napisane, że niniejsze narzędzie jest kompromisem między dokładnością i łatwością obsługi. To prawda i dlatego rezygnujemy póki co z pytań o wiele detali, które przeważnie
+        mają niewielki wpływ na ogólny bilans cieplny przeciętnego domu. Takim detalem są np. zyski cieplne od domowników i sprzętów AGD. W przypadku domu pasywnego pominięcie tych czynników
+        w bilansie cieplnym wpłynęłoby znacząco na wynik. Ale w przypadku nawet współcześnie budowanych polskich domów te wielkości nie są na tyle duże, by warto było
+            przeliczać zużycie prądu, ciepłej wody, gazu do gotowania, ilość ludzi i zwięrząt w domu na zysk ciepła.</p>
+
+        <h2>Twoja wina</h2>
+        <p>W wielu przypadkach dziwne wyniki może dawać nieumiejętne wypełnienie formularza. Staramy się uczynić cały proces jak najbardziej przejrzystym, ale ludzie ze swoimi problemami prześcigają nas pomysłowością.</p>
+        <h3>Policz do trzech i wpisz co chcesz</h3>
+        <p>Jednym z bardziej skomplikowanych rachunków w całym formularzu naszej aplikacji jest podanie liczby kondygnacji budynku. Ta błaha z pozoru operacja sprawia trudności bardzo wielu ludziom.
+        Fakt, że trzeba jeszcze przejrzeć formularz do końca i wybrać które z pięter są ogrzewane, a które nie - co niektórym zdarzy się przeoczyć. Jeśli otrzymujesz drastycznie zbyt małą powierzchnię ogrzewaną, to na pewno źle policzyłeś piętra
+            lub nie zaznaczyłeś opcji typu "Parter jest ogrzewany" albo "Poddasze jest ogrzewane".</p>
+          <h3>Perpetuum mobile w kotłowni</h3>
+          <p>Przy wyliczeniach podajesz zużycie opału, a następnie otrzymujesz komunikat, że sprawność z jaką je spaliłeś przekracza grubo 100%. Jaka może być tego przyczyna?</p>
+          <ul>
+              <li>przeszacowane zapotrzebowanie cieplne budynku - być może pominąłeś jakieś istotne warstwy ocieplenia ścian bądź stropu/piwnicy.</li>
+              <li>niedoszacowane zużycie opału - czy na pewno nie pomyliłeś się o tonę węgla? A może nie wziąłeś pod uwagę drewna dorzucanego dodatkowo co parę dni, którego w całym sezonie zeszło kilka metrów przestrzennych?
+              Drewno rozpałkowe zasadniczo możesz pominąć.</li>
+          </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

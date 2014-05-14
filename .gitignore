@@ -1,0 +1,12 @@
+/web/bundles/
+/app/bootstrap.php.cache
+/app/config/parameters.yml
+/app/config/deploy.rb
+/app/cache/*
+/app/logs/*
+/build/
+/vendor/
+/bin/
+/composer.phar
+*.kdev4
+*.php~

@@ -1,0 +1,39 @@
+{% extends '::landing.html.twig' %}
+
+{% block body %}
+
+<div class="container">
+  <div class="row-fluid">
+    <div class="span12">
+      <div class="hero-unit lead">
+        <h1>Czym i za ile ogrzewać dom?</h1>
+        <h2>Nie wierz szamanom.<br/>Policz to sam.</h2>
+        <a class="btn btn-warning btn-large" href="{{ path('start') }}">Sprawdź swój dom!</a>
+        <span class="copy"><a href="http://www.flickr.com/photos/47405720@N07/4564053866/" target="_blank">fot. Irina Alice, flickr.com</a></span>
+      </div>
+      <div id="meanwhile" style="font-size: 16px">
+        <div class="page-header">
+          <h2>Jak ogrzewać dom taniej <small>bez wyrzeczeń</small></h2>
+        </div>
+        <p>Ogrzewać gazem, węglem, a może prądem? Wymienić piec czy ocieplić strych? Aby inwestycja się opłaciła, dowiedz się najpierw, ile ciepła traci twój dom i dlaczego.</p>
+        <p>Dotąd aby to wiedzieć, musiałeś zlecać <strong>audyt energetyczny</strong> fachowcom lub męczyć się samemu z topornymi programami i ogromem fachowej wiedzy.</p>
+        <div class="page-header">
+          <h2>Kompletna diagnoza kosztów ogrzewania</h2>
+        </div>
+        <p>Oto pierwsze <strong>działające i przyjazne ludziom</strong> narzędzie do szacowania potrzeb grzewczych budynku. Nie jest tak dokładne, jak pełny audyt energetyczny, ale dzięki temu prostsze.
+        W kilka minut, odpowiadając na proste pytania, dowiesz się:</p>
+        <ul>
+          <li><strong>jakiej mocy kocioł powinieneś kupić</strong> - unikniesz gehenny związanej z zakupem kotła o zbyt dużej mocy, bo tak zwykle kończy się zaufanie sprzedawcom w marketach</li>
+          <li><strong>czym ogrzewać dom</strong> - jakie paliwo będzie najtańsze w twoim przypadku (bo nie zawsze jest to węgiel)</li>
+          <li><strong>jak najtaniej obniżyć koszty ogrzewania</strong> - kupując nowy piec, ocieplając dom, a może <strong>za darmo</strong> - ucząc się prawidłowo palić?</li>
+        </ul>
+        <div style="text-align:center">
+          <p>&nbsp;</p>
+          <a class="btn btn-warning btn-large" href="{{ path('start') }}">Sprawdź swój dom!</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,57 @@
+homepage:
+    pattern:  /
+    defaults: { _controller: KrakenWarmBundle:Default:landing }
+
+start:
+    pattern:  /start/{slug}
+    defaults: { _controller: KrakenWarmBundle:Calculator:index, slug: ~ }
+
+what:
+    pattern:  /co_to_jest
+    defaults: { _controller: KrakenWarmBundle:Default:what }
+
+details:
+    pattern:  /szczegoly/{slug}
+    defaults: { _controller: KrakenWarmBundle:Calculator:details }
+
+details_breakdown:
+    pattern:  /details/breakdown
+    defaults: { _controller: KrakenWarmBundle:Calculator:breakdown }
+    options:
+        expose: true
+
+details_climate:
+    pattern:  /details/climate
+    defaults: { _controller: KrakenWarmBundle:Calculator:climate }
+    options:
+        expose: true
+
+details_fuels:
+    pattern:  /details/fuels
+    defaults: { _controller: KrakenWarmBundle:Calculator:fuels }
+    options:
+        expose: true
+
+result:
+    pattern:  /wynik/{slug}
+    defaults: { _controller: KrakenWarmBundle:Calculator:result }
+
+old_result:
+    pattern:  /energia/{slug}
+    defaults: { _controller: KrakenWarmBundle:Calculator:result }
+
+how_it_works:
+    pattern:  /jak-to-dziala
+    defaults: { _controller: KrakenWarmBundle:Default:howItWorks }
+
+why_not_works:
+    pattern:  /czemu-nie-dziala
+    defaults: { _controller: KrakenWarmBundle:Default:whyNotWorks }
+
+rules:
+    pattern:  /zasady
+    defaults: { _controller: KrakenWarmBundle:Default:rules }
+
+my_results:
+    pattern:  /moje-wyniki
+    defaults: { _controller: KrakenWarmBundle:Calculator:myResults }

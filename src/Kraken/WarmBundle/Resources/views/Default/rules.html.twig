@@ -1,0 +1,35 @@
+{% extends '::landing.html.twig' %}
+
+{% block body %}
+
+<div class="container">
+  <div class="row-fluid">
+    <div class="span12">
+      <div class="page-header">
+        <h1>Zasady</h1>
+      </div>
+      <div id="meanwhile" style="font-size: 16px">
+        <p>Zanim skorzystasz z tej strony upewnij się, że rozumiesz i akceptujesz kilka prostych zasad.</p>
+
+        <h2>Niczego od ciebie nie chcemy</h2>
+        <p>Korzystanie z serwisu jest bezpłatne i dobrowolne. Zebrane szczegóły obliczeń i wyniki są przez nas przechowywane
+            i masz do nich dostęp tak długo, jak długo posiadasz bezpośredni link (dostaniesz go też na maila, o ile zechcesz go podać). Może się zdarzyć, że na podstawie
+            zebranych danych opublikujemy jakieś zbiorcze zestawienia parametrów budynków / instalacji grzewczych, jednak w żadnym wypadku nie będzie ujawniony adres e-mail
+            czy lokalizacja wskazana na mapie.</p>
+        <h2>Ty od nas niczego nie chcesz</h2>
+        <p>Dokładamy wszelkich starań, by oferowane tutaj narzędzie było pomocne w podejmowaniu decyzji o ew. inwestycjach w domową instalację grzewczą. Temat jest jednak trudny
+            i w żaden sposób nie możemy zagwarantować, że wyniki, które tu otrzymasz są miarodajne i warto się na nich opierać.
+            Dlatego to ty podejmujesz ostateczne decyzje i ty za nie odpowiadasz. Za dobre bądź złe skutki sugerowania się otrzymanymi tutaj wskazówkami nie ponosimy odpowiedzialności.</p>
+        <h2>Strona używa ciasteczek <small>bla bla bla pff</small></h2>
+        <p>Nikt normalny nie wie, co to za ciasteczka, więc wyjaśniamy: to malutki pliczek z tajemnym ciągiem znaków, który nasza strona zostawia u ciebie na komputerze i dzięki temu gdy do nas wracasz, wiemy że ty to znowu ty. Po co nam to wiedzieć?
+        </p>
+        <ul>
+          <li>abyś miał dostęp do poprzednich wyników - dopóki nie wyczyścisz pamięci przeglądarki, wchodząc w <a href="{{ path('my_results') }}">Moje wyniki</a> dostaniesz listę obliczeń wykonywanych poprzednio z tego komputera.</li>
+          <li>dla celów statystycznych - w ten sposób narzędzie analizujące ruch na stronie wie ilu ludzi rzeczywiście ją odwiedziło</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

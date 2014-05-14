@@ -1,0 +1,69 @@
+{% extends '::landing.html.twig' %}
+
+{% block body %}
+
+<div class="container">
+  <div class="row-fluid">
+    <div class="span12">
+      <div class="page-header">
+        <h1>Jak to działa</h1>
+      </div>
+      <div id="meanwhile" style="font-size: 16px">
+        <p>Dzięki naszemu narzędziu poznasz przybliżone koszty ogrzewania domu bez zaawansowanej wiedzy i obliczeń. Jak to możliwe?</p>
+        <h2>Do czego mi to potrzebne</h2>
+        <p>Wiedza o tym, ile ciepła potrzebuje twój dom jest bezcenna przy modernizacji instalacji grzewczej, wymianie kotła węglowego czy remoncie domu.
+        W ten sposób dowiesz się, że np. za daną sumę można ocieplić dach, aby obniżyć koszty ogrzewania o 1/4, zamiast wydawać te pieniądze na nowy kocioł, który takich oszczędności nie przyniesie.
+        <br />Bez choćby przybliżonego pojęcia łatwo pójść za sugestiami niekompetentnych sąsiadów, sprzedawców lub producentów, <a href="http://czysteogrzewanie.pl/2013/05/wdepnawszy-w-nowoczesnosc/" target="_blank"><strong>fundując sobie drogi problem na lata</strong></a>.</p>
+        <h2>O-Zet-co?</h2>
+        <p>Być może kojarzysz termin <strong>OZC</strong> (Obliczenie Zapotrzebowania Cieplnego budynku) lub audyt energetyczny. To metoda obliczania ilości ciepła potrzebnej do ogrzewania budynku, a tym samym niezbędnej mocy
+        grzewczej, ustalania klasy energetycznej budynku itp. Metoda ta jest skomplikowana i wymaga wiedzy z zakresu budownictwa, matematyki oraz umiejętności obsługi skomplikowanych programów
+        do wykonywania obliczeń (nie wierzysz? <a href="http://www.sankom.pl/program-audytor-ozc" target="_blank">zobacz jeden z takich programów</a>).</p>
+        <p>Do tej pory chcąc oszacować koszty ogrzewania budynku musiałeś uczyć się prowadzenia takich obliczeń samemu lub zlecać je fachowcowi za niemałą opłatą.
+        Teraz możesz dostać zrozumiałą informację w kilka chwil i za darmo.</p>
+        <h2>Kuchennym wejściem</h2>
+        <p>Więc jak to działa? To nie magia. Działanie naszego narzędzia opiera się w dużej mierze na Polskich Normach, m.in: PN-EN 12831, PN-EN ISO 13370. W obliczeniach uwzględniane są warunki klimatyczne, tj. temperatury
+        powietrza w sezonie grzewczym na podstawie średnich wieloletnich ze wskazanego regionu.</p>
+        <p>Warto zauważyć, że <strong>wyniki jakie tutaj otrzymasz, będą z natury mocno przybliżone</strong>. To narzędzie jest kompromisem między osiągalną dokładnością obliczeń, a zrozumiałością dla zwykłego człowieka. Nawet pełne obliczenia OZC nie są w 100% dokładne.
+        Mimo to, jeśli podałeś rzetelne dane, to uzyskany wynik może być kolejną wskazówką w decyzjach inwestycyjnych. Ostatecznie jednak to ty decydujesz.</p>
+        <h2 id="klasyfikacja">Klasyfikacja energetyczna budynków</h2>
+        <p>W wynikach analizy potrzeb grzewczych twojego budynku znajdziesz informację o <em>klasie energetycznej budynku</em>. Jest to podział na klasy od A+ do F, określający stopień energochłonności
+        budynku na podstawie rocznego zużycia energii przypadającego na 1m<sup>2</sup> powierzchni użytkowej budynku. Im bliżej A+, tym lepiej.</p>
+
+        <strong>Klasyfikacja energetyczna budynków według Stowarzyszenia Zrównoważonego Rozwoju</strong>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Klasa</th><th>Wskaźnik zużycia energii</th><th>Ocena energetyczna</th>
+            </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>A+</td><td>do 20kWh/m<sup>2</sup> rocznie</td><td>Dom pasywny</td>
+          </tr>
+          <tr>
+            <td>A</td><td>20-45kWh/m<sup>2</sup> rocznie</td><td>Dom niskoenergetyczny</td>
+          </tr>
+          <tr>
+            <td>B</td><td>45-80kWh/m<sup>2</sup> rocznie</td><td>Dom energooszczędny</td>
+          </tr>
+          <tr>
+            <td>C</td><td>80-100kWh/m<sup>2</sup> rocznie</td><td>Dom średnio energooszczędny</td>
+          </tr>
+          <tr>
+            <td>D</td><td>100-150kWh/m<sup>2</sup> rocznie</td><td>Dom średnio energochłonny</td>
+          </tr>
+          <tr>
+            <td>E</td><td>150-200kWh/m<sup>2</sup> rocznie</td><td>Dom energochłonny</td>
+          </tr>
+          <tr>
+            <td>F</td><td>ponad 250kWh/m<sup>2</sup> rocznie</td><td>Dom wysoko energochłonny</td>
+          </tr>
+          </tbody>
+        </table>
+        <p>W polskim prawie, w przeciwieństwie do państw Europy Zachodniej, taka klasyfikacja budynków nie jest zdefiniowana. Od 1999 roku istnieje jedynie wymaganie, by nowe budynki mieściły się w 150kWh/m<sup>2</sup> rocznie.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

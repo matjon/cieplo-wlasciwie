@@ -1,0 +1,47 @@
+set :application, "cieplowlasciwie"
+set :domain,      "#{application}.pl"
+set :deploy_to,   "#deploy_to#"
+
+default_run_options[:pty] = true
+set :ssh_options, {:forward_agent => true}
+set :user, "#user#"
+set :domain, "cieplowlasciwie.pl"
+set :use_sudo, false
+
+set :repository,  "git@github.com:juzefwt/cieplo-wlasciwie.git"
+set :scm,         :git
+
+set :model_manager, "doctrine"
+
+role :web,        domain                         # Your HTTP server, Apache/etc
+role :app,        domain                         # This may be the same as your `Web` server
+role :db,         domain, :primary => true       # This is where Symfony2 migrations will run
+
+set :keep_releases,  3
+set :deploy_via, :remote_cache
+
+set :shared_children,     [app_path + "/logs", web_path + "/uploads", "vendor"]
+set :use_composer, true
+set :dump_assetic_assets, true
+
+set :writable_dirs,     ["app/cache", "app/logs"]
+set :webserver_user,    "www-data"
+set :permission_method, :chown
+set :use_set_permissions, true
+
+# Be more verbose by uncommenting the following line
+logger.level = Logger::MAX_LEVEL
+
+task :upload_parameters do
+  origin_file = "app/config/parameters.yml.dist"
+  destination_file = latest_release + "/app/config/parameters.yml" # Notice the latest_release
+  top.upload(origin_file, destination_file)
+end
+
+before "deploy:share_childs", "upload_parameters"
+
+task :remove_cache do
+    top.run "rm -rf #{latest_release}/app/cache/*"
+end
+
+after "symfony:project:clear_controllers", "remove_cache"

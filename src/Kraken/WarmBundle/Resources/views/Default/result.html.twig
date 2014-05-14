@@ -1,0 +1,262 @@
+{% extends '::base.html.twig' %}
+
+{% block edit_button %}
+    {% if isAuthor %}
+        <a class="btn btn-info btn-big pull-right" href="{{ path('start', {slug: calc.slug}) }}">Edytuj informacje o budynku</a>
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+{% set powerNeeded = calculator.necessaryStovePower %}
+{% set sandCoalPowerNeeded = calculator.necessaryStovePower('sand_coal') %}
+
+<header class="jumbotron subhead" id="overview">
+  <div class="container">
+  <h1>{{ punch.phrases.house }}</h1>
+  <p class="lead">{{ punch.phrases.heating }}</p>
+  </div>
+</header>
+
+<div class="container">
+  {{ knp_menu_render('KrakenWarmBundle:Builder:resultTabs', {'nav_type': 'tabs'}) }}
+
+  {{ block('edit_button') }}
+
+  <div class="page-header">
+    <h2>Informacje o budynku <small>{{ building.heatedHouseArea|number_format(0) }}m<sup>2</sup> do ogrzania</small></h2>
+  </div>
+
+  <div class="row-fluid" id="info">
+    <div class="span6">
+      <div class="rank">
+          <span class="class-badge {{ classifier.classString }}-class">{{ classifier.class }}</span>
+          <h3>{{ classifier.classLabel }}</h3>
+      </div>
+      <p style="text-align:right;font-size:11px"><a href="{{ url('how_it_works') }}#klasyfikacja" target="_blank">Co to znaczy?</a></p>
+
+      <h3>W skrócie o budynku</h3>
+      <ul>
+      {% for item in houseDescription %}
+          <li>{{ item }}</li>
+      {% endfor %}
+      </ul>
+      <p><strong>Lokalizacja:</strong> {{ city.name }} i okolice</p>
+      <p><strong>Powierzchnia ogrzewana:</strong> {{ building.heatedHouseArea|number_format(0) }}m<sup>2</sup></p>
+    </div>
+    <div class="span6">
+                  <div class="alert alert-success">
+                      <h4>Pokaż swój wynik innym</h4>
+                      {% set resultUrl = url('result', {'slug': app.request.get('slug') }) %}
+                      Możesz później wrócić do tej strony, przesłać komuś te wyniki<br /> lub umieścić na forum. <br />Po prostu skopiuj ten adres: <strong><a href="{{ resultUrl }}">{{ resultUrl }}</a></strong>
+                  </div>
+      <h3>Warunki lokalne</h3>
+      <p>Sezon grzewczy trwa u ciebie ok. <strong>{{ heatingSeason.getSeasonLength(calc) }} dni</strong>.</p>
+      <p>Średnia temperatura zewnętrzna w sezonie grzewczym to <strong>{{ heatingSeason.getAverageTemperature(calc)|number_format(2, ',', ' ') }}&deg;C</strong>.</p>
+      <div id="climate_chart"></div>
+      <p class="pull-right"><small>Dane: weather.msn.com</small></p>
+    </div>
+  </div>
+
+  <div class="page-header" id="koszty">
+    <h2>Koszty i efektywność ogrzewania</h2>
+  </div>
+  <div class="row-fluid">
+    <div class="span6">
+        <h3>Aktualna sytuacja</h3>
+          <dl>
+          {% set fuelInfoProvided = calc.fuelType and calc.fuelConsumption %}
+          {% set stoveEfficiency = fuelInfoProvided ? (calculator.yearlyStoveEfficiency*100)|number_format(0, ',', ' ') : 0 %}
+          {% if calc.stovePower %}
+            <dt>{{ (calc.stovePower|number_format(0, ',', ' ') ~ 'kW')|badge('success') }}</dt>
+            <dd>moc nominalna twojego kotła</dd>
+            {% if calculator.isStoveOversized and (not fuelInfoProvided or stoveEfficiency < 50) %}
+                <div class="alert alert-error">
+                  <h4>Twój kocioł marnuje opał</h4>
+                  To dlatego, że ma zbyt dużą moc nominalną.
+                  <a href="http://czysteogrzewanie.pl/zakupy/mocy-przybywaj-dobor-mocy-kotla-weglowego/#Co_zrobi_z_przewymiarowanym_kotem" target="_blank">Dlaczego to problem i jak tanio go naprawić?</a>.
+                </div>
+            {% endif %}
+          {% endif %}
+            <dt>{{ calc.indoorTemperature|number_format(1, ',', ' ') }}&deg;C</dt>
+            <dd>średnia temperatura w domu w ciągu zimy</dd>
+          {% if fuelInfoProvided %}
+            <dt>{{ calc.fuelLabel }}</dt>
+            <dd>zużycie paliwa w sezonie grzewczym</dd>
+          {% endif %}
+          </dl>
+          {% if fuelInfoProvided %}
+            {% if calc.usingSolidFuel %}
+                {% if stoveEfficiency < 35 %}
+                  <div class="alert alert-error">
+                      <h4>Ogrzewanie rujnuje twój budżet</h4>
+                      Sprawność twojej instalacji grzewczej to <strong>marne ~{{ stoveEfficiency }}%</strong>.
+                      To znaczy, że większość pieniędzy wydanych na ogrzewanie wyrzucasz w błoto!
+                      <br />Na szczęście możesz szybko i prawie za darmo zacząć oszczędzać.
+                      <br /><a href="http://czysteogrzewanie.pl/jak-palic-w-piecu/jak-palic-czysto-weglem/" target="_blank">Przeczytaj, jak palić ekonomicznie i wygodnie</a>.
+                  </div>
+                {% elseif stoveEfficiency < 50 %}
+                  <div class="alert alert-block">
+                      <h4>Sporo przepłacasz za ogrzewanie</h4>
+                      Sprawność twojej instalacji grzewczej to <strong>tylko ~{{ stoveEfficiency }}%</strong>.
+                      <br /><a href="http://czysteogrzewanie.pl/jak-palic-w-piecu/jak-palic-czysto-weglem/" target="_blank">Zobacz, jak palić ekonomicznie oraz wygodnie i zacznij oszczędzać od zaraz!</a>
+                  </div>
+                {% elseif stoveEfficiency < 75 %}
+                  <div class="alert alert-info">
+                      <h4>Ogrzewanie jest dość efektywne</h4>
+                      Sprawność twojej instalacji grzewczej to <strong>~{{ stoveEfficiency }}%</strong>.
+                  </div>
+                {% elseif stoveEfficiency < 90 %}
+                  <div class="alert alert-success">
+                      <h4>Ogrzewanie jest bardzo efektywne</h4>
+                      Sprawność twojej instalacji grzewczej to <strong>aż ~{{ stoveEfficiency }}%</strong>.
+                  </div>
+                {% endif %}
+            {% else %}
+                {% if stoveEfficiency < 75 %}
+                  <div class="alert alert-block">
+                      <h4>Ogrzewanie jest nieefektywne</h4>
+                      Sprawność twojej instalacji grzewczej to <strong>tylko ~{{ stoveEfficiency }}%</strong>. To mało jak na {{ calc.fuelType == 'electricity' ? 'prąd' : 'gaz' }}.
+                      Być może podałeś zbyt duże aktualne zużycie energii. Jeśli grzejesz także wodę użytkową, odejmij od rachunku 10-20%.
+                  </div>
+                {% elseif stoveEfficiency < 110 %}
+                  <div class="alert alert-success">
+                      <h4>Ogrzewanie jest bardzo efektywne</h4>
+                      Sprawność twojej instalacji grzewczej to <strong>aż ~{{ stoveEfficiency }}%</strong>. Znakomicie.
+                  </div>
+                {% endif %}
+            {% endif %}
+          {% else %}
+            <div class="alert alert-error">
+                <strong>Niestety</strong> nie podałeś kosztów ogrzewania, więc nie powiemy ci nic na ten temat.
+            </div>
+          {% endif %}
+    </div>
+    <div class="span6">
+        <h3>Ile energii potrzeba do ogrzewania</h3>
+        <dl>
+          <dt>{{ ((calculator.maxHeatingPower/1000)|number_format(1, ',', ' ') ~ 'kW')|badge('success') }}</dt>
+          <dd>takiej maksymalnej mocy źródła ciepła potrzebujesz</dd>
+          <dt>{{ calculator.yearlyEnergyConsumption|number_format(0, ',', ' ') }}kWh</dt>
+          <dd>tyle energii zużyjesz rocznie na ogrzewanie</dd>
+          <dt>{{ calculator.yearlyEnergyConsumptionFactor|number_format(0, ',', ' ') }}kWh/m<sup>2</sup>*rok</dt>
+          <dd>zużycie roczne energii w przeliczeniu na 1m<sup>2</sup> - zalicza twój dom do klasy energetycznej {{ classifier.class }}</dd>
+        </dl>
+        <h4>W najmroźniejszy dzień zimy <small>średnia dobowa {{ heatingSeason.getLowestTemperature()|number_format(0, ',', ' ') }}&deg;C na zewnątrz</small></h4>
+        <dl>
+          <dt>{{ ((calculator.maxHeatingPower/1000)|number_format(1, ',', ' ') ~ 'kW')|badge('success') }}</dt>
+          <dd>potrzebna moc grzewcza</dd>
+        </dl>
+        <h4>W przeciętny dzień zimy <small>{{ heatingSeason.getAverageTemperature()|number_format(1, ',', ' ') }}&deg;C na zewnątrz</small></h4>
+        <dl>
+          <dt>{{ ((calculator.avgHeatingPower/1000)|number_format(1, ',', ' ') ~ 'kW')|badge('success') }}</dt>
+          <dd>potrzebna moc grzewcza</dd>
+        </dl>
+    </div>
+  </div>
+
+  <div class="row-fluid">
+    <div class="span6">
+      <h3>Czym i za ile ogrzewać</h3>
+      <p>Tyle zapłaciłbyś, gdybyś chciał całą zimę utrzymać w mieszkaniu średnią temperaturę {{ calc.indoorTemperature|number_format(1, ',', ' ') }}&deg;C.
+        Możesz założyć kufajkę i marznąć przy 16&deg;C, ale <a href="http://czysteogrzewanie.pl/jak-palic-w-piecu/jak-ogrzewac-by-sie-ogrzac/" target="_blank">wcale nie będzie taniej</a>.</p>
+        <div id="fuel_chart"></div>
+        <a class="btn btn-info btn-big pull-right" href="#custom_fuel_prices" data-toggle="modal">Zmień ceny paliw i koszt pracy</a>
+        <div id="custom_fuel_prices" class="modal fade">
+          <div class="modal-header">
+            <a class="close" data-dismiss="modal">&times;</a>
+            <h3>Ceny paliw i koszt pracy</h3>
+          </div>
+          <div class="modal-body">
+            <p>Poniżej możesz podać ceny paliw dostępnych w twojej okolicy oraz cenę godziny twojej pracy w kotłowni, aby otrzymać bardziej realne podsumowanie kosztów ogrzewania.</p>
+            <div id="custom_fuel_prices2">
+              <form>
+              <div class="control-group">
+                        <label for="work_hour_cost" class="required control-label">Cena twojej pracy:</label>
+                        <div class="controls">
+                          <div class="input-append">
+                            <input type="text" id="work_hour_cost" name="work_hour_cost" value="{{ pricing.defaultWorkHourPrice }}" />
+                            <span class="add-on">zł/h</span>
+                          </div>
+                        </div>
+              </div>
+              <div class="control-group">
+                  {% for fuel in fuels %}
+                        <label for="fuel_{{ fuel.type }}" class="required control-label">{{ fuel.name }}:</label>
+                        <div class="controls">
+                          <div class="input-append">
+                            <input type="text" id="fuel_{{ fuel.type }}" name="fuel_{{ fuel.type }}" value="{{ fuel.price * fuel.tradeAmount }}" />
+                            <span class="add-on">zł/{{ fuel.tradeUnit }}</span>
+                          </div>
+                        </div>
+                  {% endfor %}
+              </div>
+              </form>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <a href="#" class="btn" data-dismiss="modal">Zamknij</a>
+            <a href="#" class="btn btn-primary" id="update_fuels">Przelicz koszty</a>
+          </div>
+        </div>
+    </div>
+    <div class="span6">
+      <div id="heat_loss_breakdown"></div>
+    </div>
+  </div>
+
+  <div class="page-header" id="rady">
+    <h2>Jak żyć</h2>
+  </div>
+  <div class="row-fluid">
+    <div class="span6">
+      <h3>Jakiej mocy ogrzewania potrzebuję?</h3>
+
+      <dl>
+      {% if powerNeeded > 3 %}
+        <dt>{{ powerNeeded|number_format(0, ',', ' ') ~ '-' ~ (1.3*powerNeeded)|number_format(0, ',', ' ') }}kW dla kotła węglowego zasypowego lub podajnikowego</dt>
+        <dd>Nie kupuj kotła o dużo większej mocy,
+              <a href="#" onclick="$('#big-stove-alert').toggle();return false">nawet jeśli sprzedawca, sąsiad i szwagier twierdzą inaczej</a>. Duży kocioł pracujący z małą mocą <a href="http://czysteogrzewanie.pl/zakupy/mocy-przybywaj-dobor-mocy-kotla-weglowego/" target="_blank">to katastrofa finansowa</a>.
+              <div class="alert alert-success" id="big-stove-alert" style="display:none">
+                  Nie zamarzniesz zimą! <strong>~{{ powerNeeded|number_format(0, ',', ' ') }}kW</strong> to maksymalna moc ciągła, jakiej twój dom będzie potrzebował w kilka(naście) najmroźniejszych dni w roku.<br />
+                  Jeśli grzejesz kotłem ciepłą wodę, dodaj jeszcze 2-3kW.
+                  Natomiast kocioł o zbyt dużej mocy to problemy i straty przez 3/4 sezonu grzewczego - wtedy pracuje on ze sprawnością <strong>zaledwie ~30%!</strong>
+              </div>
+        </dd>
+        <dt>{{ sandCoalPowerNeeded|number_format(0, ',', ' ') ~ '-' ~  (1.2*sandCoalPowerNeeded)|number_format(0, ',', ' ') }}kW dla kotła miałowego</dt>
+        <dd>Kocioł miałowy o takiej mocy ma pojemność zasypu wystarczającą do bezobsługowej pracy przez ok. 24h, jeśli będzie rozpalany od góry (a to jedyny wygodny sposób palenia miałem).</dd>
+      {% else %}
+          <dt>Zapomnij o kotle węglowym</dt>
+          <p>Nie istnieją kotły węglowe pracujące efektywnie z tak małą mocą.</p>
+      {% endif %}
+        <dt>min. {{ powerNeeded|number_format(0, ',', ' ') }}kW dla gazowego</dt>
+        <dd>Kotły gazowe pracują z dobrą sprawnością nawet na niskich mocach, ale nie ma potrzeby, abyś płacił za moc 30kW, której nie wykorzystasz nawet w połowie.</dd>
+      </dl>
+      {% if powerNeeded > 3 and powerNeeded <= 10 %}
+          <div class="alert alert-block">
+            <h4>Co jeśli nie znajdę kotła węglowego o tak małej mocy?</h4>
+            Oferta tego typu kotłów jest dość skromna. Rozważ ogrzewanie innego rodzaju, np. gazowe (różnica kosztów nie będzie tak duża).
+            W ostateczności kupuj najmniejszą dostępną moc, ale nie więcej jak 10-12kW.
+          </div>
+      {% endif %}
+    </div>
+    <div class="span6">
+      <h3>Co zrobić, by było lepiej</h3>
+      <dl>
+        {% for title,content in advice %}
+        <dt>{{ title|raw }}</dt>
+        <dd>{{ content|raw }}</dd>
+        {% endfor %}
+      </dl>
+
+    </div>
+  </div>
+
+  {{ block('edit_button') }}
+</div>
+
+{% endblock %}
+
+{% block bottom_javascripts %}
+<script src="{{ asset('bundles/krakenwarm/js/vendor/highcharts.js') }}"></script>
+<script src="{{ asset('bundles/krakenwarm/js/result.js') }}"></script>
+{% endblock %}
