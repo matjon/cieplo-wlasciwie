@@ -34,6 +34,12 @@
       </div>
       <p style="text-align:right;font-size:11px"><a href="{{ url('how_it_works') }}#klasyfikacja" target="_blank">Co to znaczy?</a></p>
 
+      <div class="alert alert-success">
+          <h4>Pokaż swój wynik innym</h4>
+          {% set resultUrl = url('result', {'slug': app.request.get('slug') }) %}
+          Możesz później wrócić do tej strony, przesłać komuś te wyniki<br /> lub umieścić na forum. <br />Po prostu skopiuj ten adres: <strong><a href="{{ resultUrl }}">{{ resultUrl }}</a></strong>
+      </div>
+
       <h3>W skrócie o budynku</h3>
       <ul>
       {% for item in houseDescription %}
@@ -44,11 +50,6 @@
       <p><strong>Powierzchnia ogrzewana:</strong> {{ building.heatedHouseArea|number_format(0) }}m<sup>2</sup></p>
     </div>
     <div class="span6">
-                  <div class="alert alert-success">
-                      <h4>Pokaż swój wynik innym</h4>
-                      {% set resultUrl = url('result', {'slug': app.request.get('slug') }) %}
-                      Możesz później wrócić do tej strony, przesłać komuś te wyniki<br /> lub umieścić na forum. <br />Po prostu skopiuj ten adres: <strong><a href="{{ resultUrl }}">{{ resultUrl }}</a></strong>
-                  </div>
       <h3>Warunki lokalne</h3>
       <p>Sezon grzewczy trwa u ciebie ok. <strong>{{ heatingSeason.getSeasonLength(calc) }} dni</strong>.</p>
       <p>Średnia temperatura zewnętrzna w sezonie grzewczym to <strong>{{ heatingSeason.getAverageTemperature(calc)|number_format(2, ',', ' ') }}&deg;C</strong>.</p>
@@ -200,6 +201,7 @@
         </div>
     </div>
     <div class="span6">
+      <h3>Źródła strat ciepła</h3>
       <div id="heat_loss_breakdown"></div>
     </div>
   </div>

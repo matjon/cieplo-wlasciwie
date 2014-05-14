@@ -85,7 +85,7 @@ $(function () {
             plotShadow: false
         },
         title: {
-            text: 'Źródła strat ciepła'
+            text: ''
         },
         tooltip: {
             formatter: function() {

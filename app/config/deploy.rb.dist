@@ -32,14 +32,6 @@ set :use_set_permissions, true
 # Be more verbose by uncommenting the following line
 logger.level = Logger::MAX_LEVEL
 
-task :upload_parameters do
-  origin_file = "app/config/parameters.yml.dist"
-  destination_file = latest_release + "/app/config/parameters.yml" # Notice the latest_release
-  top.upload(origin_file, destination_file)
-end
-
-before "deploy:share_childs", "upload_parameters"
-
 task :remove_cache do
     top.run "rm -rf #{latest_release}/app/cache/*"
 end
