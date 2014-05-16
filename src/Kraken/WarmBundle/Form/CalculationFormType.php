@@ -21,17 +21,13 @@ class CalculationFormType extends AbstractType
                     'apartment' => 'Mieszkanie',
                 ),
                 'label' => 'Rodzaj budynku',
-                'attr' => array(
-                    'class' => 'input-xlarge',
-                ),
             ))
             ->add('construction_year', 'choice', array(
                 'choices' => array_combine(range(date("Y"), 1900), range(date("Y"), 1900)),
                 'required' => true,
                 'label' => 'Rok budowy domu',
                 'attr'  => array(
-                    'help' => 'Dokładność +/- 10 lat nas zadowoli',
-                    'class' => 'input-xlarge',
+                    'help_text' => 'Dokładność +/- 10 lat nas zadowoli',
                 ),
             ))
             ->add('fuel_type', 'choice', array(
@@ -50,9 +46,6 @@ class CalculationFormType extends AbstractType
                 ),
                 'required' => false,
                 'label' => 'Czym ogrzewasz dom',
-                'attr' => array(
-                    'class' => 'input-xlarge',
-                ),
             ))
             ->add('stove_type', 'choice', array(
                 'choices' => array(
@@ -68,30 +61,35 @@ class CalculationFormType extends AbstractType
                 'required' => false,
                 'label' => 'Rodzaj pieca/kotła',
                 'attr' => array(
-                    'class' => 'input-xlarge',
-                    'help' => 'Nie orientujesz się? Wybierz "górne spalanie".',
+                    'help_text' => 'Nie orientujesz się? Wybierz "górne spalanie".',
                 ),
             ))
             ->add('stove_power', 'number', array(
                 'label' => 'Moc kotła',
                 'required' => false,
                 'attr'  => array(
-                    'append_input'  => 'kW'
+                    'input_group' => array(
+                        'append'  => 'kW'
+                    )
                 ),
             ))
             ->add('fuel_consumption', 'number', array(
                 'label' => 'Zużycie opału ostatniej zimy',
                 'required' => false,
                 'attr'  => array(
-                    'append_input'  => 't',
-                    'help' => 'Jeśli grzejesz równocześnie ciepłą wodę, odejmij 10-20%',
+                    'input_group' => array(
+                        'append'  => 't',
+                    ),
+                    'help_text' => 'Jeśli grzejesz równocześnie ciepłą wodę, odejmij 10-20%',
                 ),
             ))
             ->add('fuel_cost', 'number', array(
                 'label' => 'Koszt zużytego opału',
                 'required' => false,
                 'attr'  => array(
-                    'append_input'  => 'zł'
+                    'input_group' => array(
+                        'append'  => 'zł'
+                    )
                 ),
             ))
             ->add('email', null, array(
@@ -101,8 +99,10 @@ class CalculationFormType extends AbstractType
             ->add('indoor_temperature', 'number', array(
                 'label' => 'Temperatura w mieszkaniu zimą',
                 'attr'  => array(
-                    'append_input'  => 'st.C',
-                    'help' => 'Chodzi o średnią dobową. Jeśli np. w dzień zwykle jest 22st.C, a nocą 18st.C, to wpisz 20st.C',
+                    'input_group' => array(
+                        'append'  => '&deg;C',
+                    ),
+                    'help_text' => 'Chodzi o średnią dobową. Jeśli np. w dzień zwykle jest 22st.C, a nocą 18st.C, to wpisz 20st.C',
                 ),
             ))
             ->add('latitude', 'hidden')

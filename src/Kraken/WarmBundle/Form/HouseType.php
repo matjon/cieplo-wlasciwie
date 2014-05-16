@@ -16,13 +16,17 @@ class HouseType extends AbstractType
             ->add('building_length', null, array(
                 'label' => 'Długość budynku',
                 'attr'  => array(
-                    'append_input'  => 'm'
+                    'input_group' => array(
+                        'append'  => 'm'
+                    )
                 ),
             ))
             ->add('building_width', null, array(
                 'label' => 'Szerokość budynku',
                 'attr'  => array(
-                    'append_input'  => 'm'
+                    'input_group' => array(
+                        'append'  => 'm'
+                    )
                 ),
             ))
             ->add('number_floors', null, array(
@@ -63,7 +67,7 @@ class HouseType extends AbstractType
                 ),
                 'label' => 'Rodzaj drzwi zewnętrznych',
                 'attr' => array(
-                    'help' => 'Jeśli masz starsze i nowsze, wybierz te których jest najwięcej',
+                    'help_text' => 'Jeśli masz starsze i nowsze, wybierz te, których jest najwięcej',
                 )
             ))
             ->add('number_windows', null, array(

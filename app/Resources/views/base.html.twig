@@ -43,29 +43,30 @@
 
 <link rel="stylesheet" href="/bundles/krakenwarm/css/docs.css">
 
-{% include 'BcBootstrapBundle::_html5shiv.html.twig' %}
+<!-- HTML5 Shim and Respond.js add IE8 support of HTML5 elements and media queries -->
+{% include 'BraincraftedBootstrapBundle::ie8-support.html.twig' %}
 
 </head>
 
 <body data-spy="scroll" data-target=".bs-docs-sidebar">
 
-    <!-- Navbar
-    ================================================== -->
-    <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+    <header class="navbar navbar-inverse navbar-fixed-top" id="top" role="banner">
+      <div class="container">
+        <div class="navbar-header">
+          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+            <span class="sr-only">Pokaż menu</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="brand" href="{{ path('homepage') }}">Ciepło Właściwie</a>
-          <div class="nav-collapse collapse">
-            {{ knp_menu_render('KrakenWarmBundle:Builder:navbar', {'nav_type': 'navbar'}) }}
-          </div>
+          <a class="brand navbar-brand" href="{{ path('homepage') }}">Ciepło Właściwie</a>
         </div>
+        <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+          {{ knp_menu_render('KrakenWarmBundle:Builder:navbar', {'style': 'navbar'}) }}
+        </nav>
       </div>
-    </div>
+    </header>
+
 
 {% block body %}{% endblock %}
 
@@ -84,14 +85,8 @@
   </div>
 </footer>
 
-<!-- Use precompiled JavaScript files (includes jQuery) -->
-<!-- {{ "{% include 'BraincraftedBootstrapBundle::_javascripts.html.twig' %}" }} -->
-
-<!-- Use Assetic -->
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script>window.jQuery || document.write('<script src="{{ asset('js/jquery.js') }}"><\/script>')</script>
+<script src="{{ asset('js/jquery.js') }}"></script>
 <script src="{{ asset('js/bootstrap.js') }}"></script>
-<!-- {{ "<script src=\"{{ asset('bundles/braincraftedbootstrap/js/bootstrap.compiled.js') }}\"></script>" }}-->
 
 {% block bottom_javascripts %}{% endblock %}
 <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>

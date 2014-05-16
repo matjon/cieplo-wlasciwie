@@ -27,7 +27,9 @@ class LayerType extends AbstractType
                 'required' => false,
                 'label' => 'Grubość',
                 'attr'  => array(
-                    'append_input' => 'cm'
+                    'input_group' => array(
+                        'append' => 'cm'
+                    )
                 ),
             ))
         ;

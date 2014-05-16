@@ -24,8 +24,8 @@ framework:
 twig:
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
-    form:
-        resources: ['KrakenWarmBundle:Form:form_div_layout.html.twig']
+#     form:
+#         resources: ['KrakenWarmBundle:Form:form_div_layout.html.twig']
 
 # Assetic Configuration
 assetic:
@@ -88,3 +88,11 @@ stof_doctrine_extensions:
     orm:
         default:
             timestampable: true
+
+braincrafted_bootstrap:
+    less_filter: less # "less", "lessphp" or "none"
+    auto_configure:
+        assetic: true
+        twig: true
+        knp_menu: true
+        knp_paginator: true

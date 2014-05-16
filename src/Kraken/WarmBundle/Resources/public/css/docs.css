@@ -1079,12 +1079,19 @@ div.lead {
         color: #fff;
         padding-top: 40px;
         position: relative;
+        text-align: left;
+}
+
+div.lead h1 {
+        font-size: 64px;
 }
 
 div.lead .btn {
         position: absolute;
         bottom: 60px;
         left: 60px;
+        font-weight: bold;
+        color: #fff;
 }
 
 div.lead .copy a {
@@ -1122,7 +1129,6 @@ div.lead .copy a:hover {
         display: block;
         float: left;
         font-weight: bold;
-        line-height: 40px;
         padding: 10px 20px;
         font-size: 36px;
 }

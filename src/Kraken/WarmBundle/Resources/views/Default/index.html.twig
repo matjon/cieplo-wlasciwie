@@ -11,23 +11,31 @@
 
 
 <div class="container">
-  <div class="row-fluid">
-    <div class="span8">
-
-    <form action="{{ path('start', {slug: calc.slug}) }}" class="form-horizontal" method="post">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="alert alert-info" style="margin-top:10px">
+        <h4>Zanim zaczniesz - zbierz informacje</h4>
+        Będziesz potrzebował parametrów budynku takich jak:
+        <ul>
+            <li>zewnętrzne wymiary obrysu budynku</li>
+            <li>grubość ścian zewnętrznych i materiały użyte do ich budowy</li>
+            <li>grubości i materiały izolacji dachu/podłogi na parterze czy w piwnicy</li>
+      </div>
+      <form action="{{ path('start', {slug: calc.slug}) }}" class="form-horizontal" method="post">
+          {{ form_start(form, { 'style': 'horizontal', 'label_col': 4, 'widget_col': 8}) }}
           {{ form_errors(form) }}
 
           <legend>Położenie w przestrzeni i czasie</legend>
-          {{ form_row(form.building_type, {'form_type': 'horizontal'}) }}
-          {{ form_row(form.construction_year, {'form_type': 'horizontal'}) }}
+          {{ form_row(form.building_type) }}
+          {{ form_row(form.construction_year) }}
 
-          <div class="control-group">
-            <label class="required control-label">Lokalizacja budynku</label>
-            <div class="controls">
-              <div class="alert alert-info">
-                <strong>Spokojnie, nie zamierzamy cię nachodzić.</strong> Wystarczy przybliżenie ~50km.
-              </div>
-              <div id="map_canvas" style="width: 600px; height: 450px;"></div>
+          <div class="form-group">
+            <label class="required control-label col-lg-4">Lokalizacja budynku</label>
+            <div class="col-lg-8">
+                <div class="alert alert-info">
+                  <strong>Spokojnie, nie zamierzamy cię nachodzić.</strong> Wystarczy przybliżenie ~50km.
+                </div>
+                <div id="map_canvas" style="height: 500px;"></div>
             </div>
           </div>
           <script type="text/javascript">
@@ -62,21 +70,21 @@
 
               map518fb086278c0.setCenter(new google.maps.LatLng(51.917168, 19.138184));
           </script>
-          {{ form_row(form.latitude, {'form_type': 'horizontal'}) }}
-          {{ form_row(form.longitude, {'form_type': 'horizontal'}) }}
+          {{ form_row(form.latitude) }}
+          {{ form_row(form.longitude) }}
 
           <legend>Źródło ciepła</legend>
           <p><small>Podając informacje o sposobie ogrzewania i zużyciu paliwa, dowiesz się jak efektywnie działa ogrzewanie i w jaki sposób zaoszczędzić - nie rezygnując z ciepła w domu.</small></p>
-          {{ form_row(form.fuel_type, {'form_type': 'horizontal'}) }}
-          {{ form_row(form.stove_type, {'form_type': 'horizontal'}) }}
-          {{ form_row(form.stove_power, {'form_type': 'horizontal'}) }}
-          {{ form_row(form.fuel_consumption, {'form_type': 'horizontal'}) }}
-          {{ form_row(form.fuel_cost, {'form_type': 'horizontal'}) }}
-          {{ form_row(form.indoor_temperature, {'form_type': 'horizontal'}) }}
+          {{ form_row(form.fuel_type) }}
+          {{ form_row(form.stove_type) }}
+          {{ form_row(form.stove_power) }}
+          {{ form_row(form.fuel_consumption) }}
+          {{ form_row(form.fuel_cost) }}
+          {{ form_row(form.indoor_temperature) }}
 
           <legend>Pozostałe</legend>
-          {{ form_row(form.email, {'form_type': 'horizontal'}) }}
-          <div class="alert alert-block">
+          {{ form_row(form.email) }}
+          <div class="form-group alert alert-info">
               <strong>Adres e-mail nie jest wymagany.</strong> Jeśli go podasz, wyślemy ci link do wyniku, abyś go nie zgubił.<br />Wynik znajdziesz też w zakładce "Moje wyniki", ale tylko na tym komputerze.
           </div>
 
@@ -86,17 +94,8 @@
             {{ form_rest(form) }}
             <button type="submit" class="btn btn-primary">Dalej</button>
           </div>
+          {{ form_end(form) }}
       </form>
-    </div>
-    <div class="span4">
-      <div class="alert alert-info" style="margin-top:10px">
-        <h4>Zanim zaczniesz, zbierz informacje</h4>
-        Będziesz potrzebował nieco szczegółowych informacji o twoim budynku takich jak:
-        <ul>
-            <li>zewnętrzne wymiary obrysu budynku</li>
-            <li>grubość ścian zewnętrznych i materiały użyte do ich budowy</li>
-            <li>grubości i materiały izolacji dachu/podłogi na parterze czy w piwnicy</li>
-      </div>
     </div>
   </div>
 </div>

@@ -2,15 +2,18 @@
 
 {% block body %}
 
-<div class="hero-unit">
-  <h1>Informacje na temat budynku</h1>
+<div class="jumbotron subhead">
+  <div class="container">
+      <h1>Informacje na temat budynku</h1>
+  </div>
 </div>
 
 <div class="container">
-  <div class="row-fluid">
-    <div class="span8">
+  <div class="row">
+    <div class="col-md-12">
 
-    <form action="{{ path('details', {slug: calc_slug}) }}" class="form-horizontal" method="post" novalidate>
+    <form action="{{ path('details', {slug: calc_slug}) }}" class="form-horizontal" method="post" role="form" novalidate>
+          {{ form_start(form, { 'style': 'horizontal', 'label_col': 3, 'widget_col': 9}) }}
 
           {% if form.vars.errors|length %}
               <div class="alert alert-error">
@@ -20,37 +23,37 @@
           {% endif %}
 
           <legend>Wymiary budynku</legend>
-          {{ form_row(form.building_length, {'form_type': 'horizontal'}) }}
-          {{ form_row(form.building_width, {'form_type': 'horizontal'}) }}
-          {{ form_row(form.number_floors, {'form_type': 'horizontal'}) }}
-            <div class="alert alert-success">
-                <h4>Ile pięter ma mój dom?</h4>
-                Policz wszystkie zamieszkiwane kondygnacje, parter, piwnicę, poddasze/strych. <br />Nie bierz pod uwagę np. stryszku, na który można wejść tylko na czworaka.
-            </div>
-          {{ form_row(form.number_heated_floors, {'form_type': 'horizontal'}) }}
-          <div id="whats_unheated" style="display:none">
-                {{ form_row(form.whats_unheated, {'form_type': 'horizontal'}) }}
+          {{ form_row(form.building_length) }}
+          {{ form_row(form.building_width) }}
+          {{ form_row(form.number_floors) }}
+          <div class="alert alert-success">
+              <h4>Ile pięter ma mój dom?</h4>
+              Policz wszystkie zamieszkiwane kondygnacje, parter, piwnicę, poddasze/strych. <br />Nie bierz pod uwagę np. stryszku, na który można wejść tylko na czworaka.
           </div>
-          {{ form_row(form.has_basement, {'form_type': 'horizontal'}) }}
+          {{ form_row(form.number_heated_floors) }}
+          <div id="whats_unheated" style="display:none">
+                {{ form_row(form.whats_unheated) }}
+          </div>
+          {{ form_row(form.has_basement) }}
 
           <legend>Ściany zewnętrzne</legend>
-          {{ form_row(form.walls[0].construction_layer.material, {'form_type': 'horizontal'}) }}
-          {{ form_row(form.walls[0].construction_layer.size, {'form_type': 'horizontal'}) }}
+          {{ form_row(form.walls[0].construction_layer.material) }}
+          {{ form_row(form.walls[0].construction_layer.size) }}
 
-          {{ form_row(form.walls[0].has_another_layer, {'form_type': 'horizontal'}) }}
+          {{ form_row(form.walls[0].has_another_layer) }}
             <div id="wall_outside_layer" style="display:none">
-                {{ form_row(form.walls[0].outside_layer.material, {'form_type': 'horizontal'}) }}
-                {{ form_row(form.walls[0].outside_layer.size, {'form_type': 'horizontal'}) }}
+                {{ form_row(form.walls[0].outside_layer.material) }}
+                {{ form_row(form.walls[0].outside_layer.size) }}
             </div>
-          {{ form_row(form.walls[0].has_isolation_inside, {'form_type': 'horizontal'}) }}
+          {{ form_row(form.walls[0].has_isolation_inside) }}
             <div id="wall_isolation_layer" style="display:none">
-                {{ form_row(form.walls[0].isolation_layer.material, {'form_type': 'horizontal'}) }}
-                {{ form_row(form.walls[0].isolation_layer.size, {'form_type': 'horizontal'}) }}
+                {{ form_row(form.walls[0].isolation_layer.material) }}
+                {{ form_row(form.walls[0].isolation_layer.size) }}
             </div>
-          {{ form_row(form.walls[0].has_isolation_outside, {'form_type': 'horizontal'}) }}
+          {{ form_row(form.walls[0].has_isolation_outside) }}
             <div id="wall_extra_isolation_layer" style="display:none">
-                  {{ form_row(form.walls[0].extra_isolation_layer.material, {'form_type': 'horizontal'}) }}
-                  {{ form_row(form.walls[0].extra_isolation_layer.size, {'form_type': 'horizontal'}) }}
+                  {{ form_row(form.walls[0].extra_isolation_layer.material) }}
+                  {{ form_row(form.walls[0].extra_isolation_layer.size) }}
             </div>
 
             <div class="alert alert-warning" style="display:none" id="wall_may_be_too_thin">
@@ -65,30 +68,30 @@
             </div>
 
           <legend>Okna i drzwi</legend>
-          {{ form_row(form.number_doors, {'form_type': 'horizontal'}) }}
-          {{ form_row(form.doors_type, {'form_type': 'horizontal'}) }}
-          {{ form_row(form.number_windows, {'form_type': 'horizontal'}) }}
-          {{ form_row(form.windows_type, {'form_type': 'horizontal'}) }}
-          {{ form_row(form.has_balcony, {'form_type': 'horizontal'}) }}
+          {{ form_row(form.number_doors) }}
+          {{ form_row(form.doors_type) }}
+          {{ form_row(form.number_windows) }}
+          {{ form_row(form.windows_type) }}
+          {{ form_row(form.has_balcony) }}
 
           <legend>Poddasze i dach</legend>
-          {{ form_row(form.roof_type, {'form_type': 'horizontal'}) }}
-          {{ form_row(form.highest_ceiling_isolation_layer, {'form_type': 'horizontal'}) }}
+          {{ form_row(form.roof_type) }}
+          {{ form_row(form.highest_ceiling_isolation_layer) }}
           <div id="roof_isolation_layer" style="display:none">
-              {{ form_row(form.roof_isolation_layer, {'form_type': 'horizontal'}) }}
+              {{ form_row(form.roof_isolation_layer) }}
           </div>
 
           <legend>Parter i piwnica</legend>
-          {{ form_row(form.has_garage, {'form_type': 'horizontal'}) }}
-          {{ form_row(form.ground_floor_isolation_layer, {'form_type': 'horizontal'}) }}
+          {{ form_row(form.has_garage) }}
+          {{ form_row(form.ground_floor_isolation_layer) }}
           <div id="basement_floor_isolation_layer" style="display:none">
-              {{ form_row(form.basement_floor_isolation_layer, {'form_type': 'horizontal'}) }}
+              {{ form_row(form.basement_floor_isolation_layer) }}
           </div>
           <div id="lowest_ceiling_isolation_layer" style="display:none">
-              {{ form_row(form.lowest_ceiling_isolation_layer, {'form_type': 'horizontal'}) }}
+              {{ form_row(form.lowest_ceiling_isolation_layer) }}
           </div>
           <legend>Wentylacja</legend>
-          {{ form_row(form.ventilation_type, {'form_type': 'horizontal'}) }}
+          {{ form_row(form.ventilation_type) }}
 
           <p><span class="required">*</span> - pola wymagane</p>
 
@@ -98,6 +101,7 @@
             </div>
           </div>
           {{ form_rest(form) }}
+          {{ form_end(form) }}
     </form>
     </div>
   </div>

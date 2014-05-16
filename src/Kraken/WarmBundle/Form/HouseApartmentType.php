@@ -36,13 +36,17 @@ class HouseApartmentType extends HouseType
             ->add('building_length', null, array(
                 'label' => 'Długość mieszkania',
                 'attr'  => array(
-                    'append_input'  => 'm'
+                    'input_group' => array(
+                        'append'  => 'm'
+                    )
                 ),
             ))
             ->add('building_width', null, array(
                 'label' => 'Szerokość mieszkania',
                 'attr'  => array(
-                    'append_input'  => 'm'
+                    'input_group' => array(
+                        'append'  => 'm'
+                    )
                 ),
             ))
             ->add('number_floors', null, array(

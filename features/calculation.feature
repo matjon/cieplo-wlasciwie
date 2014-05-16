@@ -45,7 +45,6 @@ Feature: Energy balance calculation
       And I should see "Budynek jednorodzinny trzypiętrowy"
       And I should see "Otwock i okolice"
       And I should see "Ściany: Pustak żużlobetonowy, 30cm + Pustka powietrzna, 10cm + Cegła dziurawka, 15cm + Styropian, 6cm"
-      And I should see "Sprawność twojej instalacji grzewczej"
       And I should see "Edytuj informacje o budynku"
 
   Scenario: Energy calculation for double house

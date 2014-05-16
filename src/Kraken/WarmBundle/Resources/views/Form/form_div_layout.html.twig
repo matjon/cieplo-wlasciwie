@@ -1,4 +1,4 @@
-{% extends 'BcBootstrapBundle:Form:form_div_layout.html.twig' %}
+{% extends 'BraincraftedBootstrapBundle:Form:bootstrap.html.twig' %}
 
 {% block form_label %}
 {% spaceless %}
@@ -25,7 +25,6 @@
 {% block choice_widget_collapsed %}
 {{ parent() }}
 {% spaceless %}
-    <br />
     {% if attr.help is defined %}
         <span class="help-inline">{{ attr.help|trans({}, translation_domain)|raw }}</span>
     {% endif %}
