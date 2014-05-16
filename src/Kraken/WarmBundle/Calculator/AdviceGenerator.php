@@ -40,7 +40,7 @@ class AdviceGenerator
             }
 
             if ($usingSolidFuel) {
-                if ($stoveEfficiency > 0.7 && $stoveEfficiency < 0.9) {
+                if ($stoveEfficiency > 0.6 && $stoveEfficiency < 0.9) {
                     $advice['Nie kupuj nowego kotła zasypowego'] = 'Obecny pracuje ze znakomitą sprawnością, a nowy kocioł zasypowy, zwłaszcza tani ulep z dmuchawą, może znacznie pogorszyć sytuację.';
                 }
             } else {

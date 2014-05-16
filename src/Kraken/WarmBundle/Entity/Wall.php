@@ -59,19 +59,19 @@ class Wall
             || !$this->construction_layer->getSize()
             || !$this->construction_layer->getMaterial()
         ) {
-            $context->addViolationAtSubPath('construction_layer', 'Wybierz materiał i grubość warstwy nośnej ściany', array(), null);
+            $context->addViolationAt('construction_layer', 'Wybierz materiał i grubość warstwy nośnej ściany', array(), null);
         }
 
         if ($this->construction_layer && $this->construction_layer->getSize() < 15) {
-            $context->addViolationAtSubPath('construction_layer', 'Grubość ściany nośnej budynku nie może być mniejsza niż 12cm', array(), null);
+            $context->addViolationAt('construction_layer', 'Grubość ściany nośnej budynku nie może być mniejsza niż 12cm', array(), null);
         }
 
         if ($this->extra_isolation_layer) {
             if ($this->extra_isolation_layer->getSize() && !$this->extra_isolation_layer->getMaterial()) {
-                $context->addViolationAtSubPath('extra_isolation_layer', 'Wybierz materiał docieplenia ściany', array(), null);
+                $context->addViolationAt('extra_isolation_layer', 'Wybierz materiał docieplenia ściany', array(), null);
             }
             if (!$this->extra_isolation_layer->getSize() && $this->extra_isolation_layer->getMaterial()) {
-                $context->addViolationAtSubPath('extra_isolation_layer', 'Wybierz grubość docieplenia ściany', array(), null);
+                $context->addViolationAt('extra_isolation_layer', 'Wybierz grubość docieplenia ściany', array(), null);
             }
         }
     }

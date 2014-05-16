@@ -15,15 +15,15 @@ class WallType extends AbstractType
         $builder
             ->add('has_another_layer', 'checkbox', array(
                 'label' => 'Ściana ma drugą warstwę z innego materiału',
-                'property_path' => false
+                'mapped' => false
             ))
             ->add('has_isolation_inside', 'checkbox', array(
                 'label' => 'Ściana ma izolację w środku',
-                'property_path' => false
+                'mapped' => false
             ))
             ->add('has_isolation_outside', 'checkbox', array(
                 'label' => 'Dom jest ocieplony',
-                'property_path' => false
+                'mapped' => false
             ))
             ->add('construction_layer', new LayerType(), array(
                 'material_type' => 'for_wall_construction_layer',
