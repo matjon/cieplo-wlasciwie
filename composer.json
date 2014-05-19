@@ -19,7 +19,7 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "symfony/symfony": "2.3.*",
+        "symfony/symfony": "2.4.*",
         "doctrine/orm": "~2.2,>=2.2.3",
         "doctrine/doctrine-bundle": "1.2.*",
         "twig/extensions": "1.0.*",
@@ -46,13 +46,13 @@
         "kunstmaan/sentry-bundle": "~2.2"
     },
     "require-dev": {
-        "behat/behat": "2.4.*",
+        "behat/behat": "3.0.*@dev",
         "behat/common-contexts": "*",
         "behat/symfony2-extension": "*",
-        "behat/mink": "1.4.*@stable",
+        "behat/mink": "1.6.*@dev",
         "behat/mink-extension": "*",
         "behat/mink-browserkit-driver": "*",
-        "behat/mink-goutte-driver": "1.0.*",
+        "behat/mink-goutte-driver": "1.1.*",
         "behat/mink-selenium2-driver": "*",
         "mockery/mockery": "dev-master",
         "vipsoft/doctrine-data-fixtures-extension": "*"
