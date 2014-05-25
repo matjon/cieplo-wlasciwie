@@ -152,46 +152,46 @@ class House
     {
         if ($this->highest_ceiling_isolation_layer) {
             if ($this->highest_ceiling_isolation_layer->getSize() && !$this->highest_ceiling_isolation_layer->getMaterial()) {
-                $context->addViolationAtSubPath('highest_ceiling_isolation_layer', 'Wybierz materiał warstwy izolacji dachu', array(), null);
+                $context->addViolationAt('highest_ceiling_isolation_layer', 'Wybierz materiał warstwy izolacji dachu', array(), null);
             }
             if (!$this->highest_ceiling_isolation_layer->getSize() && $this->highest_ceiling_isolation_layer->getMaterial()) {
-                $context->addViolationAtSubPath('highest_ceiling_isolation_layer', 'Wybierz grubość warstwy izolacji dachu', array(), null);
+                $context->addViolationAt('highest_ceiling_isolation_layer', 'Wybierz grubość warstwy izolacji dachu', array(), null);
             }
         }
 
         if ($this->lowest_ceiling_isolation_layer) {
             if ($this->lowest_ceiling_isolation_layer->getSize() && !$this->lowest_ceiling_isolation_layer->getMaterial()) {
-                $context->addViolationAtSubPath('lowest_ceiling_isolation_layer', 'Wybierz materiał warstwy izolacji stropu nad parterem', array(), null);
+                $context->addViolationAt('lowest_ceiling_isolation_layer', 'Wybierz materiał warstwy izolacji stropu nad parterem', array(), null);
             }
             if (!$this->lowest_ceiling_isolation_layer->getSize() && $this->lowest_ceiling_isolation_layer->getMaterial()) {
-                $context->addViolationAtSubPath('lowest_ceiling_isolation_layer', 'Wybierz grubość warstwy izolacji stropu nad parterem', array(), null);
+                $context->addViolationAt('lowest_ceiling_isolation_layer', 'Wybierz grubość warstwy izolacji stropu nad parterem', array(), null);
             }
         }
 
         if ($this->basement_floor_isolation_layer) {
             if ($this->basement_floor_isolation_layer->getSize() && !$this->basement_floor_isolation_layer->getMaterial()) {
-                $context->addViolationAtSubPath('basement_floor_isolation_layer', 'Wybierz materiał warstwy izolacji podłogi piwnicy', array(), null);
+                $context->addViolationAt('basement_floor_isolation_layer', 'Wybierz materiał warstwy izolacji podłogi piwnicy', array(), null);
             }
             if (!$this->basement_floor_isolation_layer->getSize() && $this->basement_floor_isolation_layer->getMaterial()) {
-                $context->addViolationAtSubPath('basement_floor_isolation_layer', 'Wybierz grubość warstwy izolacji podłogi piwnicy', array(), null);
+                $context->addViolationAt('basement_floor_isolation_layer', 'Wybierz grubość warstwy izolacji podłogi piwnicy', array(), null);
             }
         }
 
         if ($this->ground_floor_isolation_layer) {
             if ($this->ground_floor_isolation_layer->getSize() && !$this->ground_floor_isolation_layer->getMaterial()) {
-                $context->addViolationAtSubPath('ground_floor_isolation_layer', 'Wybierz materiał warstwy izolacji podłogi parteru', array(), null);
+                $context->addViolationAt('ground_floor_isolation_layer', 'Wybierz materiał warstwy izolacji podłogi parteru', array(), null);
             }
             if (!$this->ground_floor_isolation_layer->getSize() && $this->ground_floor_isolation_layer->getMaterial()) {
-                $context->addViolationAtSubPath('ground_floor_isolation_layer', 'Wybierz grubość warstwy izolacji podłogi parteru', array(), null);
+                $context->addViolationAt('ground_floor_isolation_layer', 'Wybierz grubość warstwy izolacji podłogi parteru', array(), null);
             }
         }
 
         if ($this->roof_isolation_layer) {
             if ($this->roof_isolation_layer->getSize() && !$this->roof_isolation_layer->getMaterial()) {
-                $context->addViolationAtSubPath('roof_isolation_layer', 'Wybierz materiał warstwy izolacji dachu', array(), null);
+                $context->addViolationAt('roof_isolation_layer', 'Wybierz materiał warstwy izolacji dachu', array(), null);
             }
             if (!$this->roof_isolation_layer->getSize() && $this->roof_isolation_layer->getMaterial()) {
-                $context->addViolationAtSubPath('roof_isolation_layer', 'Wybierz grubość warstwy izolacji dachu', array(), null);
+                $context->addViolationAt('roof_isolation_layer', 'Wybierz grubość warstwy izolacji dachu', array(), null);
             }
         }
     }
