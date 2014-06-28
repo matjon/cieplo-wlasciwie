@@ -16,7 +16,7 @@
           {{ form_start(form, { 'style': 'horizontal', 'label_col': 3, 'widget_col': 9}) }}
 
           {% if form.vars.errors|length %}
-              <div class="alert alert-error">
+              <div class="alert alert-danger">
                   <h4>Nie wszystko jest w porządku</h4>
                   {{ form_errors(form) }}
               </div>

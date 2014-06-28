@@ -56,6 +56,9 @@ class HouseType extends AbstractType
             ))
             ->add('number_doors', null, array(
                 'label' => 'Liczba drzwi zewnętrznych',
+                'attr' => array(
+                    'help_text' => 'W części ogrzewanej',
+                )
             ))
             ->add('doors_type', 'choice', array(
                 'choices' => array(
@@ -71,7 +74,10 @@ class HouseType extends AbstractType
                 )
             ))
             ->add('number_windows', null, array(
-                'label' => 'Liczba okien'
+                'label' => 'Liczba okien',
+                'attr' => array(
+                    'help_text' => 'W części ogrzewanej',
+                )
             ))
             ->add('windows_type', 'choice', array(
                 'choices' => array(

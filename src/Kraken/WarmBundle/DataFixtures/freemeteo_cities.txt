@@ -1,0 +1,100 @@
+3103719">Będzin
+3103709">Bełchatów
+776175">Biała Podlaska
+776069">Białystok
+3103402">Bielsko-Biała
+3102014">Bydgoszcz
+3101950">Bytom
+774558">Chełm
+3101619">Chorzów
+774208">Ciechanów
+3100946">Częstochowa
+3100796">Dąbrowa Górnicza
+773380">Dębica
+3099759">Elbląg
+772621">Ełk
+3099434">Gdańsk
+3099424">Gdynia
+3099230">Gliwice
+3099213">Głogów
+3099112">Gniezno
+3098722">Gorzów Wielkopolski
+3098218">Grudziądz
+3097872">Inowroclaw
+3097391">Jastrzębie Zdrój
+3097333">Jaworzno
+3097257">Jelenia Góra
+3096880">Kalisz
+3096472">Katowice
+3096372">Kędzierzyn-Koźle
+769250">Kielce
+3095321">Konin
+3095049">Koszalin
+3094802">Kraków
+767470">Krosno
+3094170">Kutno
+766555">Legionowo
+3093692">Legnica
+3093524">Leszno
+3093133">Łódź
+766027">Łomża
+3092931">Lublin
+765876">Lublin
+764849">Mielec
+3091232">Mysłowice
+3090592">Nowe Tychy
+763534">Nowy Sącz
+3090433">Nysa
+763166">Olsztyn
+3090048">Opole
+762909">Ostrołęka
+3089684">Ostrów Wielkopolski
+762863">Ostrowiec Świętokrzyski
+3089578">Pabianice
+3089125">Piekary Śląskie
+3088972">Piotrków Trybunalski
+3089033">Piła
+3088825">Płock
+3083821">Pogodno
+3088171">Poznań
+761168">Przemyśl</a>
+760924">Puławy
+3087584">Racibórz
+760778">Radom
+3087497">Radomsko
+3086800">Ruda Śląska
+3086706">Rumia
+3086586">Rybnik
+759734">Rzeszów
+759412">Siedlce
+3086024">Siemianowice Śląskie
+759141">Skarżysko-Kamienna
+759123">Skierniewice
+3085450">Słupsk
+3085128">Sosnowiec
+758445">Stalowa Wola
+758390">Starachowice
+3084840">Stargard Szczeciński
+3084826">Starogard Gdański
+757718">Suwałki
+3084093">Świdnica
+3083988">Świętochłowice
+757033">Tarnobrzeg
+757026">Tarnów
+3083440">Tarnowskie Góry
+3083426">Tczew
+756867">Tomaszów Mazowiecki
+3083271">Toruń
+7302309">Trójmiasto
+3082707">Wałbrzych
+756135">Warszawa
+3082473">Wejherowo
+3081741">Włocławek
+3081677">Wodzisław Śląski
+3081368">Wrocław
+3080985">Zabrze
+753866">Zamość
+3080526">Zawiercie
+3080251">Zgierz
+3080165">Zielona Góra
+3080004">Żory

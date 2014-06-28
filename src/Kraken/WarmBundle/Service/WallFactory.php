@@ -15,13 +15,13 @@ class WallFactory
 
         if ($year < 1975) {
             $lambda = 0.6;
-            $size = 25;
+            $size = 30;
         } elseif ($year < 1995) {
-            $lambda = 1.6;
-            $size = 20;
+            $lambda = 0.4;
+            $size = 25;
         } else {
             $lambda = 0.2;
-            $size = 25;
+            $size = 20;
         }
 
         $m = new Material();

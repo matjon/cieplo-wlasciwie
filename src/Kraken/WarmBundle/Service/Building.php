@@ -261,12 +261,27 @@ class Building implements BuildingInterface
         return $this->wall->getThermalConductance($wall) * $this->getRealWallArea($wall);
     }
 
+    public function getExternalWallConductance()
+    {
+        $wall = $this->instance->getHouse()->getWalls()->first();
+
+        return $this->wall->getThermalConductance($wall);
+    }
+
+    public function getDoorsConductance()
+    {
+        $wall = $this->instance->getHouse()->getWalls()->first();
+        $house = $wall->getHouse();
+
+        return $this->doors_u_factor[$house->getDoorsType()];
+    }
+
     public function getDoorsEnergyLossFactor(Wall $wall = null)
     {
         $wall = $this->instance->getHouse()->getWalls()->first();
         $house = $wall->getHouse();
 
-        return $this->doors_u_factor[$house->getDoorsType()] * $this->getDoorsArea($house);
+        return $this->getDoorsConductance() * $this->getDoorsArea($house);
     }
 
     /*
@@ -280,7 +295,15 @@ class Building implements BuildingInterface
         return $this->windows_u_factor[$house->getWindowsType()] * $this->getWindowsArea();
     }
 
-    public function getRoofEnergyLossFactor()
+    public function getWindowsConductance()
+    {
+        $wall = $this->instance->getHouse()->getWalls()->first();
+        $house = $wall->getHouse();
+
+        return $this->windows_u_factor[$house->getWindowsType()];
+    }
+
+    public function getRoofConductance()
     {
         $house = $this->instance->getHouse();
         $roofType = $house->getRoofType();
@@ -292,7 +315,7 @@ class Building implements BuildingInterface
                 ? ($isolation->getSize()/100)/$isolation->getMaterial()->getLambda()
                 : 0;
 
-            return $this->getRoofArea() * (1/($this->getInternalCeilingResistance() + $roofIsolationResistance));
+            return 1/($this->getInternalCeilingResistance() + $roofIsolationResistance);
         }
 
         if ($this->isAtticHeated()) {
@@ -307,10 +330,15 @@ class Building implements BuildingInterface
                 ? ($isolation->getSize()/100)/$isolation->getMaterial()->getLambda()
                 : 0;
 
-            return $this->getRoofArea() * (1/($constructionResistance + $roofIsolationResistance));
+            return 1/($constructionResistance + $roofIsolationResistance);
         } else {
             return 0;
         }
+    }
+
+    public function getRoofEnergyLossFactor()
+    {
+        return $this->getRoofArea() * $this->getRoofConductance();
     }
 
     public function getRoofEnergyLossToUnheated()
@@ -433,6 +461,13 @@ class Building implements BuildingInterface
         $Rse = 0.04;
 
         return $Rsi + $woodenFloor + $concrete + $dz3 + $Rse;
+    }
+
+    public function getInternalWallConductance()
+    {
+        $internalWall = $this->wall_factory->getInternalWall($this->instance);
+
+        return $this->wall->getThermalConductance($internalWall);
     }
 
     public function getFloorEnergyLossToUnheated()
@@ -656,5 +691,48 @@ class Building implements BuildingInterface
     public function getBasementHeight()
     {
         return 0.9 * self::FLOOR_HEIGHT;
+    }
+
+    public function getFloors()
+    {
+        $nbFloors = $this->getHouse()->getNumberFloors();
+        $nbHeatedFloors = $this->getHouse()->getNumberHeatedFloors();
+
+        $unheated = $this->getHouse()->getWhatsUnheated();
+
+        $floors = array();
+        $i = 0;
+
+        if ($this->getHouse()->getHasBasement()) {
+            $floors[] = array(
+                'name' => 'basement',
+                'label' => 'Piwnica',
+                'heated' => $this->isBasementHeated(),
+            );
+            $i++;
+        }
+
+        $floors[] = array(
+            'name' => 'ground_floor',
+            'label' => 'Parter',
+            'heated' => $this->isGroundFloorHeated(),
+        );
+        $i++;
+
+        for ($j = 1; $i < $nbFloors-1; $i++) {
+            $floors[] = array(
+                'name' => 'regular_floor_'.$j,
+                'label' => ($j++).'. piętro',
+                'heated' => true,
+            );
+        }
+
+        $floors[] = array(
+            'name' => 'attic',
+            'label' => 'Poddasze',
+            'heated' => true,
+        );
+
+        return $floors;
     }
 }

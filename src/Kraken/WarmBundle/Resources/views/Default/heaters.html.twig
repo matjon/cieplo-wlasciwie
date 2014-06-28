@@ -1,0 +1,145 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+
+<script>
+  var buildingExternalWallConductance = {{ building.externalWallConductance }};
+  var buildingInternalWallConductance = {{ building.internalWallConductance }};
+  var buildingRoofConductance = {{ building.roofConductance }};
+  var buildingDoorsConductance = {{ building.doorsConductance }};
+  var buildingWindowsConductance = {{ building.windowsConductance }};
+  var buildingWidth = {{ building.internalBuildingWidth }};
+  var buildingLength = {{ building.internalBuildingLength }};
+  var buildingFloors = JSON.parse('{{ building.floors|json_encode|raw }}');
+console.log(buildingFloors);
+</script>
+
+<header class="jumbotron subhead" id="overview">
+  <div class="container">
+    <h1>{{ punch.phrases.house }}</h1>
+    <p class="lead">{{ punch.phrases.heating }}</p>
+  </div>
+</header>
+
+<div class="container">
+  <ul class="nav nav-pills">
+    <li><a href="{{ url('result', {'slug': calc.slug}) }}">Bilans cieplny</a></li>
+    <li class="active"><a href="{{ url('heaters', {'slug': calc.slug}) }}">Dobór grzejników</a></li>
+  </ul>
+
+  <div class="page-header">
+    <h2>Moc grzejnika</h2>
+    <p>Tutaj możesz sprawdzić, jakiej mocy grzejnika potrzeba do poszczególnych pomieszczeń w twoim domu.</p>
+  </div>
+
+  <div class="row" id="info">
+    <div class="col-md-6">
+      <h3>Informacje</h3>
+      <form class="form-horizontal">
+        <div class="form-group">
+          <label class="control-label col-lg-4" for="room_type">Rodzaj pomieszczenia</label>
+          <div class="col-lg-8">
+            <select id="room_type" name="room_type" ng-model="room_type" class="form-control">
+              <option value="standard">Pokój dzienny</option>
+              <option value="bathroom">Łazienka</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group" ng-show="floors.length > 1">
+          <label class="control-label col-lg-4" for="room_floor">Piętro</label>
+          <div class="col-lg-8">
+            <select id="room_floor" name="room_floor" ng-model="room_floor" class="form-control">
+              <option ng-repeat="floor in floors" ng-if="floor.heated == true" value="{[{ floor.name }]}">{[{ floor.label }]}</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-lg-4" for="room_length">Długość pomieszczenia</label>
+          <div class="col-lg-8">
+            <div class="input-group">
+              <input type="text" id="room_length" name="room_length" ng-model="room_length" required="required" class="form-control" value="{{ (calc.house.buildingLength/2)|round }}" />
+              <span class="input-group-addon">m</span>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-lg-4" for="room_width">Szerokość pomieszczenia</label>
+          <div class="col-lg-8">
+            <div class="input-group">
+              <input type="text" id="room_width" name="room_width" required="required" ng-model="room_width" class="form-control" value="{{ (calc.house.buildingWidth/2)|round }}"/>
+              <span class="input-group-addon">m</span>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-lg-4" for="room_external_walls">Liczba ścian zewnętrznych</label>
+          <div class="col-lg-8">
+            <select id="room_external_walls" name="room_external_walls" ng-model="room_external_walls" class="form-control">
+              <option value="0">Brak</option>
+              <option value="short">Jedna, ta krótsza</option>
+              <option value="long">Jedna, ta dłuższa</option>
+              <option value="2">Dwie</option>
+              <option value="3">Trzy</option>
+              <option value="4">Cztery</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-lg-4" for="room_unheated_walls">Liczba ścian sąsiadujących z pomieszczeniami nieogrzewanymi</label>
+          <div class="col-lg-8">
+            <select id="room_unheated_walls" name="room_unheated_walls" ng-model="room_unheated_walls" class="form-control">
+              <option value="0">Brak</option>
+              <option value="short">Jedna, ta krótsza</option>
+              <option value="long">Jedna, ta dłuższa</option>
+              <option value="2">Dwie</option>
+              <option value="3">Trzy</option>
+              <option value="4">Cztery</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-lg-4" for="room_windows">Liczba okien</label>
+          <div class="col-lg-8">
+            <div class="input-group">
+              <input type="number" id="room_windows" name="room_windows" ng-model="room_windows" required="required" maxlength="2" pattern=".{1,}" class="form-control">
+              <span class="input-group-addon">szt.</span>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-lg-4" for="room_doors">Liczba drzwi zewnętrznych</label>
+          <div class="col-lg-8">
+            <div class="input-group">
+              <input type="number" id="room_doors" name="room_doors" ng-model="room_doors" required="required" maxlength="2" pattern=".{1,}" class="form-control">
+              <span class="input-group-addon">szt.</span>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="checkbox">
+            <label for="room_has_balcony_door">
+            <input type="checkbox" id="room_has_balcony_door" ng-model="room_has_balcony_door" name="room_has_balcony_door" />
+            W pokoju jest wyjście na balkon
+            </label>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-6">
+      <h3>Wynik</h3>
+      <h4><span class="label label-info">{[{ calculatePower() | number }]}W</span></h4>
+  </div>
+
+</div>
+
+{% endblock %}
+
+{% block javascripts %}
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.10/angular.min.js"></script>
+  <script src="https://code.angularjs.org/1.3.0-beta.10/i18n/angular-locale_pl.js"></script>
+{% endblock %}
+
+{% block bottom_javascripts %}
+  <script src="{{ asset('bundles/krakenwarm/js/heaters.js') }}"></script>
+{% endblock %}
+

@@ -18,6 +18,11 @@
 </header>
 
 <div class="container">
+  <ul class="nav nav-pills">
+    <li class="active"><a href="{{ url('result', {'slug': calc.slug}) }}">Bilans cieplny</a></li>
+    <li><a href="{{ url('heaters', {'slug': calc.slug}) }}">Dobór grzejników</a></li>
+  </ul>
+
   {{ block('edit_button') }}
 
   <div class="page-header">
@@ -69,7 +74,7 @@
             <dt>{{ label_success(calc.stovePower|number_format(0, ',', ' ') ~ 'kW') }}</dt>
             <dd>moc nominalna twojego kotła</dd>
             {% if calculator.isStoveOversized and (not fuelInfoProvided or stoveEfficiency < 50) %}
-                <div class="alert alert-error">
+                <div class="alert alert-danger">
                   <h4>Twój kocioł marnuje opał</h4>
                   To dlatego, że ma zbyt dużą moc nominalną.
                   <a href="http://czysteogrzewanie.pl/zakupy/mocy-przybywaj-dobor-mocy-kotla-weglowego/#Co_zrobi_z_przewymiarowanym_kotem" target="_blank">Dlaczego to problem i jak tanio go naprawić?</a>.
@@ -86,7 +91,7 @@
           {% if fuelInfoProvided %}
             {% if calc.usingSolidFuel %}
                 {% if stoveEfficiency < 35 %}
-                  <div class="alert alert-error">
+                  <div class="alert alert-danger">
                       <h4>Ogrzewanie rujnuje twój budżet</h4>
                       Sprawność twojej instalacji grzewczej to <strong>marne ~{{ stoveEfficiency }}%</strong>.
                       To znaczy, że większość pieniędzy wydanych na ogrzewanie wyrzucasz w błoto!
@@ -125,7 +130,7 @@
                 {% endif %}
             {% endif %}
           {% else %}
-            <div class="alert alert-error">
+            <div class="alert alert-danger">
                 <strong>Niestety</strong> nie podałeś kosztów ogrzewania, więc nie powiemy ci nic na ten temat.
             </div>
           {% endif %}

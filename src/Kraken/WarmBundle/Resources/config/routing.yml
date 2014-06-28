@@ -36,6 +36,10 @@ result:
     pattern:  /wynik/{slug}
     defaults: { _controller: KrakenWarmBundle:Calculator:result }
 
+heaters:
+    pattern:  /wynik/{slug}/grzejniki
+    defaults: { _controller: KrakenWarmBundle:Calculator:heaters }
+
 old_result:
     pattern:  /energia/{slug}
     defaults: { _controller: KrakenWarmBundle:Calculator:result }

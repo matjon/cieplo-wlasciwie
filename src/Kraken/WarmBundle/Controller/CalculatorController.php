@@ -397,6 +397,42 @@ class CalculatorController extends Controller
         ));
     }
 
+    public function heatersAction($slug)
+    {
+        $calc = $this->getDoctrine()
+            ->getRepository('KrakenWarmBundle:Calculation')
+            ->findOneBy(array('id' => intval($slug, 36)));
+
+        if (!$calc || !$calc->getHouse()) {
+            throw $this->createNotFoundException('Jakiś zły masz ten link. Nic tu nie ma.');
+        }
+
+        $this->get('session')->set('calculation', $slug);
+        $this->get('kraken_warm.instance')->setCalculation($calc);
+
+        $calculator = $this->get('kraken_warm.energy_calculator');
+        $building = $this->get('kraken_warm.building');
+//         $heatingSeason = $this->get('kraken_warm.heating_season');
+//         $pricing = $this->get('kraken_warm.energy_pricing');
+//         $adviceGenerator = $this->get('kraken_warm.advice');
+
+        return $this->render('KrakenWarmBundle:Default:heaters.html.twig', array(
+            'calculator' => $calculator,
+//             'external_wall_conductance' => $building->getExternalWallConductance(),
+//             'fuels' => $this->get('kraken_warm.energy_pricing')->getFuels(),
+            'building' => $building,
+//             'pricing' => $pricing,
+//             'heatingSeason' => $heatingSeason,
+//             'advice' => $adviceGenerator->getAdviceFor($calc),
+            'punch' => $this->get('kraken_warm.punchline'),
+//             'classifier' => $this->get('kraken_warm.building_classifier'),
+//             'houseDescription' => $building->getHouseDescription(),
+            'calc' => $calc,
+//             'city' => $this->get('kraken_warm.city_locator')->findNearestCity(),
+//             'isAuthor' => $this->userIsAuthor($slug),
+        ));
+    }
+
     public function myResultsAction()
     {
         $request = $this->get('request');
