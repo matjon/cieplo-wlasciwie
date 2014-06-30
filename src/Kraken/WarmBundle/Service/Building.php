@@ -341,18 +341,25 @@ class Building implements BuildingInterface
         return $this->getRoofArea() * $this->getRoofConductance();
     }
 
+    public function getHighestCeilingConductance()
+    {
+        $house = $this->instance->getHouse();
+
+        $isolation = $house
+            ->getHighestCeilingIsolationLayer();
+        $isolationResistance = $isolation
+            ? ($isolation->getSize()/100)/$isolation->getMaterial()->getLambda()
+            : 0;
+
+        return 1/($this->getInternalCeilingResistance() + $isolationResistance);
+    }
+
     public function getRoofEnergyLossToUnheated()
     {
         $house = $this->instance->getHouse();
 
         if ($house->getRoofType() != 'flat' && !$this->isAtticHeated()) {
-            $isolation = $house
-                ->getHighestCeilingIsolationLayer();
-            $roofIsolationResistance = $isolation
-                ? ($isolation->getSize()/100)/$isolation->getMaterial()->getLambda()
-                : 0;
-
-            return $this->getRoofArea() * (1/($this->getInternalCeilingResistance() + $roofIsolationResistance));
+            return $this->getRoofArea() * $this->getHighestCeilingConductance();
         }
 
         return 0;
@@ -375,7 +382,7 @@ class Building implements BuildingInterface
         return 0;
     }
 
-    public function getEnergyLossThroughGroundFloor()
+    public function getGroundFloorConductance()
     {
         $house = $this->instance->getHouse();
         $l = $house->getBuildingLength();
@@ -399,10 +406,15 @@ class Building implements BuildingInterface
             $equivalentLambda = $groundLambda/(0.457*$proportion + $equivalentSize);
         }
 
-        return round($l * $w * $equivalentLambda, 2);
+        return $equivalentLambda;
     }
 
-    public function getEnergyLossToUnderground()
+    public function getEnergyLossThroughGroundFloor()
+    {
+        return round($l * $w * $this->getGroundFloorConductance(), 2);
+    }
+
+    public function getUndergroundConductance()
     {
         $house = $this->instance->getHouse();
 
@@ -442,7 +454,17 @@ class Building implements BuildingInterface
 
         $totalLambda = ($floorArea * $equivalentFloorLambda + $basementHeight * $floorPerimeter * $basementWallsLambda) / ($floorArea + $basementHeight * $floorPerimeter);
 
-        return round($l * $w * $totalLambda, 2);
+        return $totalLambda;
+    }
+
+    public function getEnergyLossToUnderground()
+    {
+        $house = $this->instance->getHouse();
+
+        $l = $house->getBuildingLength();
+        $w = $house->getBuildingWidth();
+
+        return round($l * $w * $this->getUndergroundConductance(), 2);
     }
 
     public function getGroundLambda()
@@ -723,14 +745,14 @@ class Building implements BuildingInterface
             $floors[] = array(
                 'name' => 'regular_floor_'.$j,
                 'label' => ($j++).'. piętro',
-                'heated' => true,
+                'heated' => $unheated == 'floor' ? $i == $nbFloors-1 : true,
             );
         }
 
         $floors[] = array(
             'name' => 'attic',
             'label' => 'Poddasze',
-            'heated' => true,
+            'heated' => true && $unheated != 'attic',
         );
 
         return $floors;

@@ -6,12 +6,15 @@
   var buildingExternalWallConductance = {{ building.externalWallConductance }};
   var buildingInternalWallConductance = {{ building.internalWallConductance }};
   var buildingRoofConductance = {{ building.roofConductance }};
+  var buildingHighestCeilingConductance = {{ building.highestCeilingConductance }};
+  var buildingGroundFloorConductance = {{ building.groundFloorConductance }};
+  var buildingUndergroundConductance = {{ building.undergroundConductance }};
   var buildingDoorsConductance = {{ building.doorsConductance }};
   var buildingWindowsConductance = {{ building.windowsConductance }};
+  var buildingInternalCeilingConductance = 1/{{ building.internalCeilingResistance }};
   var buildingWidth = {{ building.internalBuildingWidth }};
   var buildingLength = {{ building.internalBuildingLength }};
   var buildingFloors = JSON.parse('{{ building.floors|json_encode|raw }}');
-console.log(buildingFloors);
 </script>
 
 <header class="jumbotron subhead" id="overview">
