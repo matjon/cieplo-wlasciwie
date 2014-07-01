@@ -4,12 +4,10 @@ var app = angular.module('warm', []).config(function($interpolateProvider){
 );
 
 app.controller('WarmCtrl', function($scope) {
-    //TODO
-    $scope.outdoor_temperature = -20;
-    $scope.unheated_temperature = 10;
-    $scope.floor_height = 2.6;
-    $scope.standard_window_area = 1.5 * 1.4;
-    $scope.standard_door_area = 2.2 * 1;
+    $scope.outdoor_temperature = outdoorTemperature;
+    $scope.floor_height = floorHeight;
+    $scope.standard_window_area = standardWindowArea;
+    $scope.standard_door_area = standardDoorArea;
     $scope.floors = buildingFloors;
 
     $scope.getFirstHeatedFloor = function()
@@ -31,6 +29,7 @@ app.controller('WarmCtrl', function($scope) {
     $scope.room_doors = 0;
 
     $scope.power = 0;
+    $scope.heater_not_required = false;
 
     $scope.getWindowsArea = function()
     {
@@ -177,11 +176,11 @@ app.controller('WarmCtrl', function($scope) {
         }
         
         if (aboveFloorName == 'attic' && !isAboveFloorHeated) {
-            return $scope.getCeilingArea() * buildingHighestCeilingConductance * ($scope.getIndoorTemperature() - $scope.unheated_temperature);
+            return 0.5 * $scope.getCeilingArea() * buildingHighestCeilingConductance * ($scope.getIndoorTemperature() - $scope.outdoor_temperature);
         }
 
         if (!isAboveFloorHeated) {
-            return $scope.getCeilingArea() * buildingInternalCeilingConductance * ($scope.getIndoorTemperature() - $scope.unheated_temperature);
+            return 0.5 * $scope.getCeilingArea() * buildingInternalCeilingConductance * ($scope.getIndoorTemperature() - $scope.outdoor_temperature);
         }
         
         return 0;
@@ -204,7 +203,7 @@ app.controller('WarmCtrl', function($scope) {
         }
 
         if (!isBelowFloorHeated) {
-            return $scope.getCeilingArea() * buildingInternalCeilingConductance  * ($scope.getIndoorTemperature() - $scope.unheated_temperature);
+            return 0.5 * $scope.getCeilingArea() * buildingInternalCeilingConductance  * ($scope.getIndoorTemperature() - $scope.outdoor_temperature);
         }
 
         return 0;
@@ -241,6 +240,7 @@ app.controller('WarmCtrl', function($scope) {
         }
         
         console.log("ventilation loss: "  +$scope.getVentilationEnergyLoss());
+        
         power += $scope.getVentilationEnergyLoss();
             
         power += $scope.getWindowsArea() * buildingWindowsConductance * temperatureDiff;
@@ -251,6 +251,8 @@ app.controller('WarmCtrl', function($scope) {
         power += $scope.getFloorHeatLoss();
 
         power *= 1.1;
+        
+        $scope.heater_not_required = power <= 200;
         
         if (power) {
             $scope.power = 50 * Math.ceil(Math.round(power) / 50);

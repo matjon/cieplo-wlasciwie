@@ -657,6 +657,11 @@ class Building implements BuildingInterface
         return $sum * $houseHeight;
     }
 
+    public function getFloorHeight()
+    {
+        return self::FLOOR_HEIGHT;
+    }
+
     public function getHouseHeight()
     {
         $numberFloors = $this->getNumberOfHeatedFloors();
@@ -669,12 +674,8 @@ class Building implements BuildingInterface
         $numberDoors = $this->instance->getHouse()->getNumberDoors();
         $hasGarage = $this->instance->getHouse()->getHasGarage();
 
-        $doorHeight = self::FLOOR_HEIGHT*0.8;
-        $doorWidth = 0.9;
-        $standardDoorArea = $doorHeight * $doorWidth;
-
         // garage door is ignored
-        $sum = $standardDoorArea * $numberDoors;
+        $sum = $this->getStandardDoorArea() * $numberDoors;
 
         if (!$this->isGroundFloorHeated() && $numberDoors > 1) {
             $numberDoors--;
@@ -683,13 +684,24 @@ class Building implements BuildingInterface
         return $sum;
     }
 
+    public function getStandardDoorArea()
+    {
+        $doorHeight = self::FLOOR_HEIGHT*0.8;
+        $doorWidth = 1;
+
+        return $doorHeight * $doorWidth;
+    }
+
+    public function getStandardWindowArea()
+    {
+        return 1.4 * 1.5;
+    }
+
     public function getWindowsArea()
     {
         $numberWindows = $this->instance->getHouse()->getNumberWindows();
 
-        $standardWindowArea = 1.4*1.5;
-
-        return $standardWindowArea * $numberWindows;
+        return $this->getStandardWindowArea() * $numberWindows;
     }
 
     /*
