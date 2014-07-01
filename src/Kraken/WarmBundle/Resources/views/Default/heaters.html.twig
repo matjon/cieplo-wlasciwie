@@ -14,6 +14,8 @@
   var buildingInternalCeilingConductance = 1/{{ building.internalCeilingResistance }};
   var buildingWidth = {{ building.internalBuildingWidth }};
   var buildingLength = {{ building.internalBuildingLength }};
+  var buildingVentilationEnergyLossFactor = {{ building.ventilationEnergyLossFactor }};
+  var buildingCubature = {{ building.houseCubature }};
   var buildingFloors = JSON.parse('{{ building.floors|json_encode|raw }}');
 </script>
 
@@ -32,19 +34,21 @@
 
   <div class="page-header">
     <h2>Moc grzejnika</h2>
-    <p>Tutaj możesz sprawdzić, jakiej mocy grzejnika potrzeba do poszczególnych pomieszczeń w twoim domu.</p>
+    <p>Tu możesz sprawdzić, jakiej mocy grzejnika będziesz potrzebować do poszczególnych pomieszczeń w twoim domu.</p>
   </div>
 
   <div class="row" id="info">
     <div class="col-md-6">
-      <h3>Informacje</h3>
+      <h3>Informacje o pomieszczeniu</h3>
       <form class="form-horizontal">
         <div class="form-group">
           <label class="control-label col-lg-4" for="room_type">Rodzaj pomieszczenia</label>
           <div class="col-lg-8">
             <select id="room_type" name="room_type" ng-model="room_type" class="form-control">
-              <option value="standard">Pokój dzienny</option>
+              <option value="standard">Pokój dzienny / sypialnia / kuchnia</option>
               <option value="bathroom">Łazienka</option>
+              <option value="workshop">Pomieszczenie gospodarcze</option>
+              <option value="garage">Garaż</option>
             </select>
           </div>
         </div>
@@ -79,11 +83,11 @@
           <div class="col-lg-8">
             <select id="room_external_walls" name="room_external_walls" ng-model="room_external_walls" class="form-control">
               <option value="0">Brak</option>
-              <option value="short">Jedna, ta krótsza</option>
-              <option value="long">Jedna, ta dłuższa</option>
-              <option value="2">Dwie</option>
-              <option value="3">Trzy</option>
-              <option value="4">Cztery</option>
+              <option value="short" ng-if="room_unheated_walls!='4'">Jedna, ta krótsza</option>
+              <option value="long" ng-if="room_unheated_walls!='4'">Jedna, ta dłuższa</option>
+              <option value="2" ng-if="room_unheated_walls!=3 && room_unheated_walls!=4">Dwie</option>
+              <option value="3" ng-if="room_unheated_walls==0 || room_unheated_walls=='short' || room_unheated_walls=='long'">Trzy</option>
+              <option value="4" ng-if="room_unheated_walls==0">Cztery</option>
             </select>
           </div>
         </div>
@@ -92,15 +96,15 @@
           <div class="col-lg-8">
             <select id="room_unheated_walls" name="room_unheated_walls" ng-model="room_unheated_walls" class="form-control">
               <option value="0">Brak</option>
-              <option value="short">Jedna, ta krótsza</option>
-              <option value="long">Jedna, ta dłuższa</option>
-              <option value="2">Dwie</option>
-              <option value="3">Trzy</option>
-              <option value="4">Cztery</option>
+              <option value="short" ng-if="room_external_walls!='4'">Jedna, ta krótsza</option>
+              <option value="long" ng-if="room_external_walls!='4'">Jedna, ta dłuższa</option>
+              <option value="2" ng-if="room_external_walls!=3 && room_external_walls!=4">Dwie</option>
+              <option value="3" ng-if="room_external_walls==0 || room_external_walls=='short' || room_external_walls=='long'">Trzy</option>
+              <option value="4" ng-if="room_external_walls==0">Cztery</option>
             </select>
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" ng-show="room_external_walls!=0">
           <label class="control-label col-lg-4" for="room_windows">Liczba okien</label>
           <div class="col-lg-8">
             <div class="input-group">
@@ -109,7 +113,7 @@
             </div>
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" ng-show="room_external_walls!=0">
           <label class="control-label col-lg-4" for="room_doors">Liczba drzwi zewnętrznych</label>
           <div class="col-lg-8">
             <div class="input-group">
@@ -118,7 +122,7 @@
             </div>
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" ng-show="room_external_walls!=0">
           <div class="checkbox">
             <label for="room_has_balcony_door">
             <input type="checkbox" id="room_has_balcony_door" ng-model="room_has_balcony_door" name="room_has_balcony_door" />
@@ -130,7 +134,25 @@
     </div>
     <div class="col-md-6">
       <h3>Wynik</h3>
-      <h4><span class="label label-info">{[{ calculatePower() | number }]}W</span></h4>
+      <h5><span class="label label-success" style="font-size:120%;line-height:120%">{[{ getIndoorTemperature() | number }]}&deg;C</span> to zakładana temperatura dla tego rodzaju pomieszczenia.</h5>
+      <h5><span class="label label-warning" style="font-size:120%;line-height:120%">{[{ calculatePower() | number }]}W</span> takiej mocy grzejnik należy zainstalować.</h5>
+      <p>&nbsp;</p>
+      <div class="alert alert-warning" ng-show="calculatePower() <= 200 && room_type != 'bathroom'">
+          <h4>Pomieszczenie nie wymaga grzejnika</h4>
+          Straty ciepła są tak małe, że zrównoważą je zyski z innych pomieszczeń.
+      </div>
+      <div class="alert alert-info">
+          <h4>Co z tym dalej zrobić</h4>
+          <ul>
+              <li>zdecyduj, jak będziesz ogrzewał dom</li>
+              <li>na tej podstawie ustal roboczą temperaturę wody w instalacji grzewczej</li>
+              <li>dobierz wymiary grzejnika do miejsca montażu oraz układ i rozmiary przyłączy</li>
+              <li>znajdź grzejnik, który dla zakładanej temperatury wody i przy odpowiednich wymiarach zewnętrznych osiąga wyliczoną tutaj moc</li>
+              <li>na końcu dopasuj materiał, wygląd, kolor i cenę do upodobań</li>
+          </ul>
+          <br />
+          Dokładniejszy opis tych spraw znajdziesz w <a href="http://czysteogrzewanie.pl/warsztat/instalacja-grzewcza-jak-to-sie-robi/" target="_blank"><strong>artykule o projektowaniu instalacji grzewczej</strong></a>.
+      </div>
   </div>
 
 </div>

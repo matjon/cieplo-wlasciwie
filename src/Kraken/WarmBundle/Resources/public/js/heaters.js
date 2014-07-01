@@ -62,13 +62,16 @@ app.controller('WarmCtrl', function($scope) {
             externalWallLength = Math.max($scope.room_width, $scope.room_length);
         } else if ($scope.room_external_walls == 2) {
             console.log('2');
-            externalWallLength = $scope.room_width + $scope.room_length;
+            externalWallLength = parseFloat($scope.room_width) + parseFloat($scope.room_length);
+            console.log("2 tu jest: " + externalWallLength);
         } else if ($scope.room_external_walls == 3) {
             console.log('3');
-            externalWallLength = 2 * $scope.room_width + $scope.room_length;
+            externalWallLength = 2 * $scope.room_width + parseFloat($scope.room_length);
+            console.log("3 tu jest: " + externalWallLength);
         } else if ($scope.room_external_walls == 4) {
             console.log('4');
             externalWallLength = 2 * $scope.room_width + 2 * $scope.room_length;
+            console.log("4 tu jest: " + externalWallLength);
         }
         
         console.log("external:" + externalWallLength);
@@ -85,9 +88,9 @@ app.controller('WarmCtrl', function($scope) {
         } else if ($scope.room_unheated_walls == "long") {
             unheatedWallLength = Math.max($scope.room_width, $scope.room_length);
         } else if ($scope.room_unheated_walls == 2) {
-            unheatedWallLength = $scope.room_width + $scope.room_length;
+            unheatedWallLength = parseFloat($scope.room_width) + parseFloat($scope.room_length);
         } else if ($scope.room_unheated_walls == 3) {
-            unheatedWallLength = 2 * $scope.room_width + $scope.room_length;
+            unheatedWallLength = 2 * $scope.room_width + parseFloat($scope.room_length);
         } else if ($scope.room_unheated_walls == 4) {
             unheatedWallLength = 2 * $scope.room_width + 2 * $scope.room_length;
         }
@@ -99,7 +102,16 @@ app.controller('WarmCtrl', function($scope) {
 
     $scope.getIndoorTemperature = function()
     {
-        return $scope.room_type == "bathroom" ? 24 : 20;
+        if ($scope.room_type == "bathroom")
+            return 24;
+        
+        if ($scope.room_type == "workshop")
+            return 16;
+
+        if ($scope.room_type == "garage")
+            return 12;
+        
+        return 20;
     }
 
     $scope.getBelowFloorName = function()
@@ -198,6 +210,23 @@ app.controller('WarmCtrl', function($scope) {
         return 0;
     }
     
+    $scope.getVentilationEnergyLoss = function()
+    {
+        var roomCubature = $scope.room_width * $scope.room_length * $scope.floor_height;
+        
+        console.log("cubature: " + roomCubature);
+        console.log("house cubature: " + buildingCubature);
+        console.log("ventilation loss factor: " + buildingVentilationEnergyLossFactor);
+        
+        var fraction = roomCubature/buildingCubature;
+        
+        if ($scope.room_doors > 0 || $scope.room_windows > 0) {
+            fraction *= 1.025;
+        }
+        
+        return fraction * buildingVentilationEnergyLossFactor * ($scope.getIndoorTemperature() - $scope.outdoor_temperature);
+    }
+    
     $scope.calculatePower = function()
     {
         var temperatureDiff = $scope.getIndoorTemperature() - $scope.outdoor_temperature;
@@ -210,6 +239,9 @@ app.controller('WarmCtrl', function($scope) {
                 power *= 1.15;
             }
         }
+        
+        console.log("ventilation loss: "  +$scope.getVentilationEnergyLoss());
+        power += $scope.getVentilationEnergyLoss();
             
         power += $scope.getWindowsArea() * buildingWindowsConductance * temperatureDiff;
         power += $scope.getDoorsArea() * buildingDoorsConductance * temperatureDiff;
