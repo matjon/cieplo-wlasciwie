@@ -6,7 +6,7 @@ $(document).ready(function () {
 
 function initialize() {
     updateWallStuff();
-    updateFloorStuff();
+    updateFloorsStuff();
     updateCeilingIsolation();
     updateFloorIsolation();
 }

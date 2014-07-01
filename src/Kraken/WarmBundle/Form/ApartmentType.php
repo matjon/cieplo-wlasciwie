@@ -16,13 +16,13 @@ class ApartmentType extends AbstractType
             ->add('number_external_walls', null, array(
                 'label' => 'Liczba ścian zewnętrznych',
                 'attr' => array(
-                    'help' => 'Chodzi o te ściany twojego mieszkania, za którymi jest dwór/pole, a nie inne pomieszczenia',
+                    'help_text' => 'Chodzi o te ściany twojego mieszkania, za którymi jest dwór/pole, a nie inne pomieszczenia',
                 )
             ))
             ->add('number_unheated_walls', null, array(
                 'label' => 'Liczba ścian nieogrzewanych',
                 'attr' => array(
-                    'help' => 'Chodzi o te ściany twojego mieszkania, za którymi są nieogrzewane pomieszczenia (puste mieszkanie, klatka schodowa itp.)',
+                    'help_text' => 'Chodzi o te ściany twojego mieszkania, za którymi są nieogrzewane pomieszczenia (puste mieszkanie, klatka schodowa itp.)',
                 )
             ))
             ->add('whats_over', 'choice', array(

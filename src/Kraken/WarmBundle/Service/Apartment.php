@@ -252,4 +252,42 @@ class Apartment extends Building implements BuildingInterface
 
         return $w;
     }
+
+    public function getFloors()
+    {
+        $nbFloors = $this->getHouse()->getNumberFloors();
+        $nbHeatedFloors = $this->getHouse()->getNumberHeatedFloors();
+
+        $below = $this->getHouse()->getApartment()->getWhatsUnder();
+        $above = $this->getHouse()->getApartment()->getWhatsOver();
+
+        $floors = array();
+        $i = 0;
+
+        if ($below == 'unheated_room') {
+            $floors[] = array(
+                'name' => 'basement',
+                'label' => false,
+                'heated' => false,
+            );
+        }
+
+        for ($j = 1; $i < $nbFloors; $i++) {
+            $floors[] = array(
+                'name' => 'regular_floor_'.$j,
+                'label' => ($j++).'. piętro',
+                'heated' => true,
+            );
+        }
+
+        if ($above == 'unheated_room') {
+            $floors[] = array(
+                'name' => 'attic',
+                'label' => false,
+                'heated' => false,
+            );
+        }
+
+        return $floors;
+    }
 }

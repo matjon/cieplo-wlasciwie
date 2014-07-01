@@ -308,7 +308,7 @@ class Building implements BuildingInterface
         $house = $this->instance->getHouse();
         $roofType = $house->getRoofType();
 
-        if ($roofType == 'flat') {
+        if ($roofType == 'flat' || $roofType == false) {
             $isolation = $house
                 ->getHighestCeilingIsolationLayer();
             $roofIsolationResistance = $isolation
@@ -411,6 +411,10 @@ class Building implements BuildingInterface
 
     public function getEnergyLossThroughGroundFloor()
     {
+        $house = $this->instance->getHouse();
+        $l = $house->getBuildingLength();
+        $w = $house->getBuildingWidth();
+
         return round($l * $w * $this->getGroundFloorConductance(), 2);
     }
 

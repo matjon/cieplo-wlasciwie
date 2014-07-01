@@ -171,7 +171,7 @@ app.controller('WarmCtrl', function($scope) {
         console.log("above: " + aboveFloorName);
         console.log("above heated: " + isAboveFloorHeated);
         
-        if ($scope.room_floor == "attic") {
+        if (aboveFloorName == false) {
             return $scope.getCeilingArea() * buildingRoofConductance * ($scope.getIndoorTemperature() - $scope.outdoor_temperature);
         }
         
@@ -179,7 +179,7 @@ app.controller('WarmCtrl', function($scope) {
             return 0.5 * $scope.getCeilingArea() * buildingHighestCeilingConductance * ($scope.getIndoorTemperature() - $scope.outdoor_temperature);
         }
 
-        if (!isAboveFloorHeated) {
+        if (!isAboveFloorHeated && aboveFloorName != false) {
             return 0.5 * $scope.getCeilingArea() * buildingInternalCeilingConductance * ($scope.getIndoorTemperature() - $scope.outdoor_temperature);
         }
         
@@ -194,7 +194,7 @@ app.controller('WarmCtrl', function($scope) {
         console.log("below: " + belowFloorName);
         console.log("below heated: " + isBelowFloorHeated);
         
-        if ($scope.room_floor == "ground_floor" && belowFloorName == false) {
+        if (belowFloorName == false) {
             return $scope.getCeilingArea() * buildingGroundFloorConductance * ($scope.getIndoorTemperature() - $scope.outdoor_temperature);
         }
         
@@ -202,7 +202,7 @@ app.controller('WarmCtrl', function($scope) {
             return $scope.getCeilingArea() * buildingUndergroundConductance * ($scope.getIndoorTemperature() - $scope.outdoor_temperature);
         }
 
-        if (!isBelowFloorHeated) {
+        if (!isBelowFloorHeated && belowFloorName != false) {
             return 0.5 * $scope.getCeilingArea() * buildingInternalCeilingConductance  * ($scope.getIndoorTemperature() - $scope.outdoor_temperature);
         }
 
@@ -249,8 +249,10 @@ app.controller('WarmCtrl', function($scope) {
         power += $scope.getUnheatedWallArea() * buildingInternalWallConductance * temperatureDiff * 0.5;
         power += $scope.getCeilingHeatLoss();
         power += $scope.getFloorHeatLoss();
-
-        power *= 1.1;
+        console.log("Sufit: " + $scope.getCeilingHeatLoss());
+        console.log("Podłoga: " + $scope.getFloorHeatLoss());
+ 
+        power *= 1.05;
         
         $scope.heater_not_required = power <= 200;
         
