@@ -59,7 +59,7 @@ class AdviceGenerator
         } catch (\Exception $e) {}
 
         if ($heatingPower <= 8000) {
-            $advice['Szkoda życia na szuflowanie węgla'] = "Twój dom jest energooszczędny, zostaw węgiel w spokoju! Za ledwo kilkaset złotych więcej w skali roku możesz ogrzewać gazem ziemnym.";
+            $advice['Szkoda życia na szuflowanie węgla'] = "Twój dom jest energooszczędny, <a href='http://czysteogrzewanie.pl/2014/05/nie-pakuj-smieciucha-do-nowego-domu'>nie pakuj do niego 'śmieciucha'</a>! Nie oszczędzisz tyle ile myślisz, a uprzykrzysz sobie życie.";
         }
 
         $breakdown = $this->building->getEnergyLossBreakdown();
@@ -67,7 +67,7 @@ class AdviceGenerator
         $label = strip_tags($keys[count($keys)-1]);
 
         //TODO nie proponować ocieplenia gdy ocieplenie już jest
-        if ($label != 'Wentylacja' && $heatingPower > 8000) {
+        if (!in_array($label, array('Wentylacja', 'Okna', 'Drzwi'))) {
             $advice[$label . ' to główne źródło strat ciepła'] = 'Rozważ dodatkowe ocieplenie - koszt zwróci się błyskawicznie.';
         }
 

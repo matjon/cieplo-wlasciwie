@@ -221,6 +221,8 @@ app.controller('WarmCtrl', function($scope) {
         
         if ($scope.room_doors > 0 || $scope.room_windows > 0) {
             fraction *= 1.025;
+        } else {
+            fraction -= 0.025;
         }
         
         return fraction * buildingVentilationEnergyLossFactor * ($scope.getIndoorTemperature() - $scope.outdoor_temperature);

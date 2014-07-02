@@ -121,15 +121,19 @@ class EnergyCalculator
             return false;
         }
 
-        if (!$this->instance->getStovePower()) {
+        $actualStovePower = $this->instance->getStovePower();
+
+        if (!$actualStovePower) {
             return false;
         }
 
         if ($this->instance->getFuelType() == 'sand_coal') {
-            return $this->instance->getStovePower() > 1.25 * $this->getNecessaryStovePower('sand_coal');
+            return $actualStovePower > 1.5 * $this->getNecessaryStovePower('sand_coal');
         }
 
-        return $this->instance->getStovePower() > 1.25 * $this->getNecessaryStovePower();
+        $factor = $this->getNecessaryStovePower() > 10 ? 1.5 : 2;
+
+        return $actualStovePower > $factor * $this->getNecessaryStovePower();
     }
 
 }

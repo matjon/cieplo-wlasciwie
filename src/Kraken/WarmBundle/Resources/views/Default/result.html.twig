@@ -162,46 +162,46 @@
     <div class="col-md-6">
       <h3>Czym i za ile ogrzewać</h3>
       <p>Tyle zapłaciłbyś, gdybyś chciał całą zimę utrzymać w mieszkaniu średnią temperaturę {{ calc.indoorTemperature|number_format(1, ',', ' ') }}&deg;C.
-        Możesz założyć kufajkę i marznąć przy 16&deg;C, ale <a href="http://czysteogrzewanie.pl/jak-palic-w-piecu/jak-ogrzewac-by-sie-ogrzac/" target="_blank">wcale nie będzie taniej</a>.</p>
+        Możesz założyć kufajkę i marznąć przy {{ min(16, calc.indoorTemperature-5)|number_format(1, ',', ' ') }}&deg;C, ale <a href="http://czysteogrzewanie.pl/jak-palic-w-piecu/jak-ogrzewac-by-sie-ogrzac/" target="_blank">wcale nie będzie taniej</a>.</p>
         <div id="fuel_chart"></div>
         <a class="btn btn-info btn-big pull-right" href="#custom_fuel_prices" data-toggle="modal">Zmień ceny paliw i koszt pracy</a>
         <div id="custom_fuel_prices" class="modal fade">
-          <div class="modal-header">
-            <a class="close" data-dismiss="modal">&times;</a>
-            <h3>Ceny paliw i koszt pracy</h3>
-          </div>
-          <div class="modal-body">
-            <p>Poniżej możesz podać ceny paliw dostępnych w twojej okolicy oraz cenę godziny twojej pracy w kotłowni, aby otrzymać bardziej realne podsumowanie kosztów ogrzewania.</p>
-            <div id="custom_fuel_prices2">
-              <form>
-              <div class="control-group">
-                        <label for="work_hour_cost" class="required control-label">Cena twojej pracy:</label>
-                        <div class="controls">
-                          <div class="input-append">
-                            <input type="text" id="work_hour_cost" name="work_hour_cost" value="{{ pricing.defaultWorkHourPrice }}" />
-                            <span class="add-on">zł/h</span>
-                          </div>
-                        </div>
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <a class="close" data-dismiss="modal">&times;</a>
+                <h3>Ceny paliw i koszt pracy</h3>
               </div>
-              <div class="control-group">
-                  {% for fuel in fuels %}
-                        <label for="fuel_{{ fuel.type }}" class="required control-label">{{ fuel.name }}:</label>
-                        <div class="controls">
-                          <div class="input-append">
-                            <input type="text" id="fuel_{{ fuel.type }}" name="fuel_{{ fuel.type }}" value="{{ fuel.price * fuel.tradeAmount }}" />
-                            <span class="add-on">zł/{{ fuel.tradeUnit }}</span>
+              <div class="modal-body">
+                <p>Poniżej możesz podać ceny paliw dostępnych w twojej okolicy oraz cenę godziny twojej pracy w kotłowni, aby otrzymać bardziej realne podsumowanie kosztów ogrzewania.</p>
+                <div id="custom_fuel_prices2">
+                  <form role="form">
+                  <div class="form-group">
+                      <label for="work_hour_cost" class="required control-label">Cena twojej pracy:</label>
+                      <div class="input-group">
+                          <input type="text" id="work_hour_cost" name="work_hour_cost" value="{{ pricing.defaultWorkHourPrice }}" class="form-control" />
+                          <span class="input-group-addon">zł/h</span>
+                      </div>
+                  </div>
+                      {% for fuel in fuels %}
+                      <div class="form-group">
+                          <label for="fuel_{{ fuel.type }}" class="required control-label">{{ fuel.name }}:</label>
+                          <div class="input-group">
+                                <input type="text" id="fuel_{{ fuel.type }}" name="fuel_{{ fuel.type }}" value="{{ fuel.price * fuel.tradeAmount }}" class="form-control" />
+                                <span class="input-group-addon">zł/{{ fuel.tradeUnit }}</span>
                           </div>
-                        </div>
-                  {% endfor %}
+                      </div>
+                      {% endfor %}
+                  </form>
+                </div>
               </div>
-              </form>
+              <div class="modal-footer">
+                <a href="#" class="btn" data-dismiss="modal">Zamknij</a>
+                <a href="#" class="btn btn-primary" id="update_fuels">Przelicz koszty</a>
+              </div>
             </div>
-          </div>
-          <div class="modal-footer">
-            <a href="#" class="btn" data-dismiss="modal">Zamknij</a>
-            <a href="#" class="btn btn-primary" id="update_fuels">Przelicz koszty</a>
-          </div>
         </div>
+      </div>
     </div>
     <div class="col-md-6">
       <h3>Źródła strat ciepła</h3>
@@ -218,7 +218,7 @@
 
       <dl>
       {% if powerNeeded > 3 %}
-        <dt>{{ powerNeeded|number_format(0, ',', ' ') ~ '-' ~ (1.3*powerNeeded)|number_format(0, ',', ' ') }}kW dla kotła węglowego zasypowego lub podajnikowego</dt>
+        <dt>{{ label_success(powerNeeded|number_format(0, ',', ' ') ~ '-' ~ (1.3*powerNeeded)|number_format(0, ',', ' ') ~ 'kW') }} dla kotła węglowego zasypowego lub podajnikowego</dt>
         <dd>Nie kupuj kotła o dużo większej mocy,
               <a href="#" onclick="$('#big-stove-alert').toggle();return false">nawet jeśli sprzedawca, sąsiad i szwagier twierdzą inaczej</a>. Duży kocioł pracujący z małą mocą <a href="http://czysteogrzewanie.pl/zakupy/mocy-przybywaj-dobor-mocy-kotla-weglowego/" target="_blank">to katastrofa finansowa</a>.
               <div class="alert alert-success" id="big-stove-alert" style="display:none">
@@ -227,20 +227,24 @@
                   Natomiast kocioł o zbyt dużej mocy to problemy i straty przez 3/4 sezonu grzewczego - wtedy pracuje on ze sprawnością <strong>zaledwie ~30%!</strong>
               </div>
         </dd>
-        <dt>{{ sandCoalPowerNeeded|number_format(0, ',', ' ') ~ '-' ~  (1.2*sandCoalPowerNeeded)|number_format(0, ',', ' ') }}kW dla kotła miałowego</dt>
-        <dd>Kocioł miałowy o takiej mocy ma pojemność zasypu wystarczającą do bezobsługowej pracy przez ok. 24h, jeśli będzie rozpalany od góry (a to jedyny wygodny sposób palenia miałem).</dd>
+        <dt>{{ label_success(sandCoalPowerNeeded|number_format(0, ',', ' ') ~ '-' ~  (1.2*sandCoalPowerNeeded)|number_format(0, ',', ' ') ~ 'kW') }} dla kotła miałowego</dt>
+        <dd><a href="http://czysteogrzewanie.pl/zakupy/mocy-przybywaj-dobor-mocy-kotla-weglowego/#Wyjtek_dla_kotw_miaowych" target="_blank">Kocioł miałowy dobiera się nieco inaczej</a>. Taka moc ma pojemność zasypu wystarczającą do bezobsługowej pracy przez ok. 24h, jeśli będzie rozpalany od góry (a to jedyny wygodny sposób palenia miałem).</dd>
       {% else %}
           <dt>Zapomnij o kotle węglowym</dt>
           <p>Nie istnieją kotły węglowe pracujące efektywnie z tak małą mocą.</p>
       {% endif %}
-        <dt>min. {{ powerNeeded|number_format(0, ',', ' ') }}kW dla gazowego</dt>
-        <dd>Kotły gazowe pracują z dobrą sprawnością nawet na niskich mocach, ale nie ma potrzeby, abyś płacił za moc 30kW, której nie wykorzystasz nawet w połowie.</dd>
+        <dt>min. {{ label_success(powerNeeded|number_format(0, ',', ' ') ~ 'kW') }} dla kotła gazowego</dt>
+        <dd>Kotły gazowe pracują z dobrą sprawnością nawet na niskich mocach, ale nie ma potrzeby, abyś płacił za 30kW, czego nie wykorzystasz nawet w połowie.<br /> 
+            Instalując kocioł kondensacyjny pamiętaj o takim zaprojektowaniu instalacji, <a href="http://czysteogrzewanie.pl/zakupy/mocy-przybywaj-dobor-mocy-kotla-weglowego/#Koty_gazowe" target="_blank">aby temperatura wody nie musiała przekraczać 60&deg;C</a> - inaczej nici z kondensacji i rachunki wzrosną.</dd>
       </dl>
       {% if powerNeeded > 3 and powerNeeded <= 10 %}
           <div class="alert alert-warning">
-            <h4>Co jeśli nie znajdę kotła węglowego o tak małej mocy?</h4>
-            Oferta tego typu kotłów jest dość skromna. Rozważ ogrzewanie innego rodzaju, np. gazowe (różnica kosztów nie będzie tak duża).
-            W ostateczności kupuj najmniejszą dostępną moc, ale nie więcej jak 10-12kW.
+            <h4>Co jeśli nie znajdę kotła zasypowego o tak małej mocy?</h4>
+            <ul>
+                <li><a href="http://czysteogrzewanie.pl/2014/05/nie-pakuj-smieciucha-do-nowego-domu" target="_blank">rozważ ogrzewanie innego rodzaju</a>, np. pellet lub gaz ziemny (różnica kosztów w małych domkach to 200-300zł rocznie)</li>
+                <li><a href="http://czysteogrzewanie.pl/warsztat/instalacja-grzewcza-jak-to-sie-robi/#Bufor_ciepa" target="_blank">zainstaluj bufor ciepła</a> - wtedy odrobinę większa moc kotła nie jest problemem, efektywność spalania rośnie, a koszty maleją</li>
+                <li>w ostateczności bierz kocioł o najmniejszej dostępnej mocy, ale nie więcej jak 10-12kW</li>
+            </ul>
           </div>
       {% endif %}
     </div>

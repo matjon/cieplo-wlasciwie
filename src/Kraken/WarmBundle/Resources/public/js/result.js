@@ -198,6 +198,10 @@ $(function () {
     });
 
     $('#update_fuels').bind('click', function() {
+        if (!fuelChart) {
+            return;  
+        }
+        
         var fuelIndex = 1;
         var costsIndex = 0;
         
