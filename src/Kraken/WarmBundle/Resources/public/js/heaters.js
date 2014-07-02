@@ -20,6 +20,7 @@ app.directive('smartFloat', function() {
     }
   };
 });
+
 app.controller('WarmCtrl', function($scope) {
     $scope.outdoor_temperature = outdoorTemperature;
     $scope.floor_height = floorHeight;
@@ -37,6 +38,7 @@ app.controller('WarmCtrl', function($scope) {
     }
 
     $scope.room_type = "standard";
+    $scope.room_temperature = 20;
     $scope.room_floor = $scope.getFirstHeatedFloor();
     $scope.room_width = Math.round(buildingWidth / 2);
     $scope.room_length = Math.round(buildingLength / 2);
@@ -123,18 +125,17 @@ app.controller('WarmCtrl', function($scope) {
         return $scope.floor_height * unheatedWallLength;
     }
 
-    $scope.getIndoorTemperature = function()
+    $scope.setDefaultIndoorTemperature = function()
     {
-        if ($scope.room_type == "bathroom")
-            return 24;
-        
-        if ($scope.room_type == "workshop")
-            return 16;
-
-        if ($scope.room_type == "garage")
-            return 12;
-        
-        return 20;
+        if ($scope.room_type == "bathroom") {
+            $scope.room_temperature = 24;
+        } else if ($scope.room_type == "workshop") {
+            $scope.room_temperature = 16;
+        } else if ($scope.room_type == "garage") {
+            $scope.room_temperature = 12;
+        } else {
+            $scope.room_temperature = 20;
+        }
     }
 
     $scope.getBelowFloorName = function()
@@ -193,15 +194,15 @@ app.controller('WarmCtrl', function($scope) {
         var isAboveFloorHeated = $scope.isAboveFloorHeated();
         
         if (aboveFloorName == false) {
-            return $scope.getCeilingArea() * buildingRoofConductance * ($scope.getIndoorTemperature() - $scope.outdoor_temperature);
+            return $scope.getCeilingArea() * buildingRoofConductance * ($scope.room_temperature - $scope.outdoor_temperature);
         }
         
         if (aboveFloorName == 'attic' && !isAboveFloorHeated) {
-            return 0.5 * $scope.getCeilingArea() * buildingHighestCeilingConductance * ($scope.getIndoorTemperature() - $scope.outdoor_temperature);
+            return 0.5 * $scope.getCeilingArea() * buildingHighestCeilingConductance * ($scope.room_temperature - $scope.outdoor_temperature);
         }
 
         if (!isAboveFloorHeated && aboveFloorName != false) {
-            return 0.5 * $scope.getCeilingArea() * buildingInternalCeilingConductance * ($scope.getIndoorTemperature() - $scope.outdoor_temperature);
+            return 0.5 * $scope.getCeilingArea() * buildingInternalCeilingConductance * ($scope.room_temperature - $scope.outdoor_temperature);
         }
         
         return 0;
@@ -213,15 +214,15 @@ app.controller('WarmCtrl', function($scope) {
         var isBelowFloorHeated = $scope.isBelowFloorHeated();
         
         if (belowFloorName == false) {
-            return $scope.getCeilingArea() * buildingGroundFloorConductance * ($scope.getIndoorTemperature() - $scope.outdoor_temperature);
+            return $scope.getCeilingArea() * buildingGroundFloorConductance * ($scope.room_temperature - $scope.outdoor_temperature);
         }
         
         if ($scope.room_floor == "basement") {
-            return $scope.getCeilingArea() * buildingUndergroundConductance * ($scope.getIndoorTemperature() - $scope.outdoor_temperature);
+            return $scope.getCeilingArea() * buildingUndergroundConductance * ($scope.room_temperature - $scope.outdoor_temperature);
         }
 
         if (!isBelowFloorHeated && belowFloorName != false) {
-            return 0.5 * $scope.getCeilingArea() * buildingInternalCeilingConductance  * ($scope.getIndoorTemperature() - $scope.outdoor_temperature);
+            return 0.5 * $scope.getCeilingArea() * buildingInternalCeilingConductance  * ($scope.room_temperature - $scope.outdoor_temperature);
         }
 
         return 0;
@@ -239,12 +240,12 @@ app.controller('WarmCtrl', function($scope) {
             fraction -= 0.025;
         }
         
-        return fraction * buildingVentilationEnergyLossFactor * ($scope.getIndoorTemperature() - $scope.outdoor_temperature);
+        return fraction * buildingVentilationEnergyLossFactor * ($scope.room_temperature - $scope.outdoor_temperature);
     }
     
     $scope.calculatePower = function()
     {
-        var temperatureDiff = $scope.getIndoorTemperature() - $scope.outdoor_temperature;
+        var temperatureDiff = $scope.room_temperature - $scope.outdoor_temperature;
         var power = 0;
         
         if ($scope.room_floor != 'basement') {

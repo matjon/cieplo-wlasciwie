@@ -48,12 +48,21 @@
         <div class="form-group">
           <label class="control-label col-lg-4" for="room_type">Rodzaj pomieszczenia</label>
           <div class="col-lg-8">
-            <select id="room_type" name="room_type" ng-model="room_type" class="form-control">
+            <select id="room_type" name="room_type" ng-model="room_type" class="form-control" ng-change="setDefaultIndoorTemperature()">
               <option value="standard">Pokój dzienny / sypialnia / kuchnia</option>
               <option value="bathroom">Łazienka</option>
               <option value="workshop">Pomieszczenie gospodarcze</option>
               <option value="garage">Garaż</option>
             </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-lg-4" for="room_temperature">Temperatura wewnątrz</label>
+          <div class="col-lg-8">
+            <div class="input-group">
+              <input id="room_temperature" name="room_temperature" ng-model="room_temperature" required="required" class="form-control" value="20" smart-float />
+              <span class="input-group-addon">&deg;C</span>
+            </div>
           </div>
         </div>
         <div class="form-group" ng-show="realFloors().length > 1">
@@ -138,7 +147,6 @@
     </div>
     <div class="col-md-6">
       <h3>Wynik</h3>
-      <h5 style="line-height:170%"><span class="label label-success" style="font-size:120%;line-height:120%">{[{ getIndoorTemperature() | number }]}&deg;C</span> to zakładana temperatura dla tego rodzaju pomieszczenia.</h5>
       <h5 style="line-height:170%"><span class="label label-warning" style="font-size:120%;line-height:120%">{[{ calculatePower() | number }]}W</span> takiej mocy grzejnik jest potrzebny (<a href="http://czysteogrzewanie.pl/warsztat/instalacja-grzewcza-jak-to-sie-robi/#Umiejscowienie_grzejnikw" target="_blank">przy montażu zgodnie z zasadami</a>).</h5>
       <p>&nbsp;</p>
       <div class="alert alert-warning" ng-show="heater_not_required && room_type != 'bathroom'">
