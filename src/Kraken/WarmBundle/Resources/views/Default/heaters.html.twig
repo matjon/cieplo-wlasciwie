@@ -142,8 +142,12 @@
       <h5 style="line-height:170%"><span class="label label-warning" style="font-size:120%;line-height:120%">{[{ calculatePower() | number }]}W</span> takiej mocy grzejnik jest potrzebny (<a href="http://czysteogrzewanie.pl/warsztat/instalacja-grzewcza-jak-to-sie-robi/#Umiejscowienie_grzejnikw" target="_blank">przy montażu zgodnie z zasadami</a>).</h5>
       <p>&nbsp;</p>
       <div class="alert alert-warning" ng-show="heater_not_required && room_type != 'bathroom'">
-          <h4>Pomieszczenie nie wymaga grzejnika</h4>
-          Straty ciepła są tak małe, że zrównoważą je zyski z innych pomieszczeń.
+          <h4>Grzejnik nie jest konieczny</h4>
+          Straty ciepła są tak małe, że zrównoważą je zyski z innych pokoi. Wystarczy, że kupisz nieco większy grzejnik do sąsiadującego pomieszczenia.
+      </div>
+      <div class="alert alert-warning" ng-show="heater_not_required && room_type == 'bathroom'">
+          <h4>W łazience moc grzejnika nie jest decydująca</h4>
+          Zapotrzebowanie na ciepło w małej łazience będzie zwykle mniejsze niż dostępne moce grzejników. Mimo to możesz bez obaw wziąć grzejnik o nieco większej mocy, by spełniał też inne funkcje (typu suszenie ręczników).
       </div>
       <div class="alert alert-info">
           <h4>Co z tym dalej zrobić</h4>

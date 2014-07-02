@@ -84,7 +84,7 @@ app.controller('WarmCtrl', function($scope) {
             externalWallLength = 2 * $scope.room_width + 2 * $scope.room_length;
         }
         
-        return $scope.floor_height * externalWallLength - $scope.getWindowsArea() - $scope.getDoorsArea();
+        return Math.max(0, $scope.floor_height * externalWallLength - $scope.getWindowsArea() - $scope.getDoorsArea());
     }
 
     $scope.getUnheatedWallArea = function()
@@ -253,11 +253,11 @@ app.controller('WarmCtrl', function($scope) {
         console.log("unheated: " +  ($scope.getUnheatedWallArea() * buildingInternalWallConductance * temperatureDiff * 0.5));
         console.log("outdoor: " +  ($scope.getExternalWallArea() * buildingExternalWallConductance * temperatureDiff));
         
-        $scope.heater_not_required = power <= 200;
-        
-        if (power) {
+        if (power > 0) {
             $scope.power = 50 * Math.ceil(Math.round(power) / 50);
         }
+        
+        $scope.heater_not_required = $scope.power > 0 && $scope.power <= 200;
 
         return $scope.power;
     }
