@@ -51,29 +51,17 @@ app.controller('WarmCtrl', function($scope) {
     {
         var externalWallLength = 0;
         
-        console.log("width: " + $scope.room_width + ", len: " + $scope.room_length);
-
         if ($scope.room_external_walls == "short") {
-            console.log('short');
             externalWallLength = Math.min($scope.room_width, $scope.room_length);
         } else if ($scope.room_external_walls == "long") {
-            console.log('long');
             externalWallLength = Math.max($scope.room_width, $scope.room_length);
         } else if ($scope.room_external_walls == 2) {
-            console.log('2');
             externalWallLength = parseFloat($scope.room_width) + parseFloat($scope.room_length);
-            console.log("2 tu jest: " + externalWallLength);
         } else if ($scope.room_external_walls == 3) {
-            console.log('3');
             externalWallLength = 2 * $scope.room_width + parseFloat($scope.room_length);
-            console.log("3 tu jest: " + externalWallLength);
         } else if ($scope.room_external_walls == 4) {
-            console.log('4');
             externalWallLength = 2 * $scope.room_width + 2 * $scope.room_length;
-            console.log("4 tu jest: " + externalWallLength);
         }
-        
-        console.log("external:" + externalWallLength);
         
         return $scope.floor_height * externalWallLength - $scope.getWindowsArea() - $scope.getDoorsArea();
     }
@@ -93,8 +81,6 @@ app.controller('WarmCtrl', function($scope) {
         } else if ($scope.room_unheated_walls == 4) {
             unheatedWallLength = 2 * $scope.room_width + 2 * $scope.room_length;
         }
-
-        console.log("unheated:" + unheatedWallLength);
 
         return $scope.floor_height * unheatedWallLength;
     }
@@ -168,9 +154,6 @@ app.controller('WarmCtrl', function($scope) {
         var aboveFloorName = $scope.getAboveFloorName();
         var isAboveFloorHeated = $scope.isAboveFloorHeated();
         
-        console.log("above: " + aboveFloorName);
-        console.log("above heated: " + isAboveFloorHeated);
-        
         if (aboveFloorName == false) {
             return $scope.getCeilingArea() * buildingRoofConductance * ($scope.getIndoorTemperature() - $scope.outdoor_temperature);
         }
@@ -191,9 +174,6 @@ app.controller('WarmCtrl', function($scope) {
         var belowFloorName = $scope.getBelowFloorName();
         var isBelowFloorHeated = $scope.isBelowFloorHeated();
         
-        console.log("below: " + belowFloorName);
-        console.log("below heated: " + isBelowFloorHeated);
-        
         if (belowFloorName == false) {
             return $scope.getCeilingArea() * buildingGroundFloorConductance * ($scope.getIndoorTemperature() - $scope.outdoor_temperature);
         }
@@ -212,10 +192,6 @@ app.controller('WarmCtrl', function($scope) {
     $scope.getVentilationEnergyLoss = function()
     {
         var roomCubature = $scope.room_width * $scope.room_length * $scope.floor_height;
-        
-        console.log("cubature: " + roomCubature);
-        console.log("house cubature: " + buildingCubature);
-        console.log("ventilation loss factor: " + buildingVentilationEnergyLossFactor);
         
         var fraction = roomCubature/buildingCubature;
         
@@ -241,18 +217,12 @@ app.controller('WarmCtrl', function($scope) {
             }
         }
         
-        console.log("ventilation loss: "  +$scope.getVentilationEnergyLoss());
-        
         power += $scope.getVentilationEnergyLoss();
-            
         power += $scope.getWindowsArea() * buildingWindowsConductance * temperatureDiff;
         power += $scope.getDoorsArea() * buildingDoorsConductance * temperatureDiff;
-
         power += $scope.getUnheatedWallArea() * buildingInternalWallConductance * temperatureDiff * 0.5;
         power += $scope.getCeilingHeatLoss();
         power += $scope.getFloorHeatLoss();
-        console.log("Sufit: " + $scope.getCeilingHeatLoss());
-        console.log("Podłoga: " + $scope.getFloorHeatLoss());
  
         power *= 1.05;
         
