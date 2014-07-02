@@ -68,7 +68,7 @@
           <label class="control-label col-lg-4" for="room_length">Długość pomieszczenia</label>
           <div class="col-lg-8">
             <div class="input-group">
-              <input type="text" id="room_length" name="room_length" ng-model="room_length" required="required" class="form-control" value="{{ (calc.house.buildingLength/2)|round }}" />
+              <input id="room_length" name="room_length" ng-model="room_length" required="required" class="form-control" value="{{ (calc.house.buildingLength/2)|round }}" smart-float />
               <span class="input-group-addon">m</span>
             </div>
           </div>
@@ -77,7 +77,7 @@
           <label class="control-label col-lg-4" for="room_width">Szerokość pomieszczenia</label>
           <div class="col-lg-8">
             <div class="input-group">
-              <input type="text" id="room_width" name="room_width" required="required" ng-model="room_width" class="form-control" value="{{ (calc.house.buildingWidth/2)|round }}"/>
+              <input id="room_width" name="room_width" required="required" ng-model="room_width" class="form-control" value="{{ (calc.house.buildingWidth/2)|round }}" smart-float />
               <span class="input-group-addon">m</span>
             </div>
           </div>

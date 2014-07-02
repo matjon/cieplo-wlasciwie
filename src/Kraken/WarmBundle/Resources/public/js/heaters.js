@@ -3,6 +3,23 @@ var app = angular.module('warm', []).config(function($interpolateProvider){
     }
 );
 
+var FLOAT_REGEXP = /^\-?\d+((\.|\,)\d+)?$/;
+app.directive('smartFloat', function() {
+  return {
+    require: 'ngModel',
+    link: function(scope, elm, attrs, ctrl) {
+      ctrl.$parsers.unshift(function(viewValue) {
+        if (FLOAT_REGEXP.test(viewValue)) {
+          ctrl.$setValidity('float', true);
+          return parseFloat(viewValue.replace(',', '.'));
+        } else {
+          ctrl.$setValidity('float', false);
+          return undefined;
+        }
+      });
+    }
+  };
+});
 app.controller('WarmCtrl', function($scope) {
     $scope.outdoor_temperature = outdoorTemperature;
     $scope.floor_height = floorHeight;
@@ -77,9 +94,9 @@ app.controller('WarmCtrl', function($scope) {
         } else if ($scope.room_external_walls == "long") {
             externalWallLength = Math.max($scope.room_width, $scope.room_length);
         } else if ($scope.room_external_walls == 2) {
-            externalWallLength = parseFloat($scope.room_width) + parseFloat($scope.room_length);
+            externalWallLength = $scope.room_width + $scope.room_length;
         } else if ($scope.room_external_walls == 3) {
-            externalWallLength = 2 * $scope.room_width + parseFloat($scope.room_length);
+            externalWallLength = 2 * $scope.room_width + $scope.room_length;
         } else if ($scope.room_external_walls == 4) {
             externalWallLength = 2 * $scope.room_width + 2 * $scope.room_length;
         }
@@ -96,9 +113,9 @@ app.controller('WarmCtrl', function($scope) {
         } else if ($scope.room_unheated_walls == "long") {
             unheatedWallLength = Math.max($scope.room_width, $scope.room_length);
         } else if ($scope.room_unheated_walls == 2) {
-            unheatedWallLength = parseFloat($scope.room_width) + parseFloat($scope.room_length);
+            unheatedWallLength = $scope.room_width + $scope.room_length;
         } else if ($scope.room_unheated_walls == 3) {
-            unheatedWallLength = 2 * $scope.room_width + parseFloat($scope.room_length);
+            unheatedWallLength = 2 * $scope.room_width + $scope.room_length;
         } else if ($scope.room_unheated_walls == 4) {
             unheatedWallLength = 2 * $scope.room_width + 2 * $scope.room_length;
         }
