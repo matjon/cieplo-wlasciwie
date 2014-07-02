@@ -56,11 +56,11 @@
             </select>
           </div>
         </div>
-        <div class="form-group" ng-show="floors.length > 1">
+        <div class="form-group" ng-show="realFloors().length > 1">
           <label class="control-label col-lg-4" for="room_floor">Piętro</label>
           <div class="col-lg-8">
             <select id="room_floor" name="room_floor" ng-model="room_floor" class="form-control">
-              <option ng-repeat="floor in floors" ng-if="floor.heated == true" value="{[{ floor.name }]}">{[{ floor.label }]}</option>
+              <option ng-repeat="floor in floors" ng-if="floor.heated == true && floor.name != 'other'" value="{[{ floor.name }]}">{[{ floor.label }]}</option>
             </select>
           </div>
         </div>

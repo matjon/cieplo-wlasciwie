@@ -310,11 +310,11 @@ class BuildingTest extends \PHPUnit_Framework_TestCase
 
         $building = new Building($instance, $this->mockVentilation(), new WallService($instance), $this->mockWallFactory());
 
-        $this->assertEquals(321.52728, $building->getExternalWallEnergyLossFactor($w));
+        $this->assertEquals(320.8492, $building->getExternalWallEnergyLossFactor($w));
 
         $w->setExtraIsolationLayer($l2);
 
-        $this->assertEquals(53.25912, $building->getExternalWallEnergyLossFactor($w));
+        $this->assertEquals(53.1468, $building->getExternalWallEnergyLossFactor($w));
     }
 
     protected function mockVentilation()

@@ -30,9 +30,26 @@ app.controller('WarmCtrl', function($scope) {
 
     $scope.power = 0;
     $scope.heater_not_required = false;
+    
+    $scope.realFloors = function()
+    {
+        var floors = [];
+        
+        $scope.floors.forEach(function(floor) {
+              if (floor.name != 'other') {
+                  floors.push(floor);
+              }
+        });
+        
+        return floors;
+    }
 
     $scope.getWindowsArea = function()
     {
+        if ($scope.room_external_walls == 0) {
+            return 0;
+        }
+        
         var windowsArea = $scope.room_windows * $scope.standard_window_area;
 
         if ($scope.room_has_balcony_door) {
@@ -44,6 +61,10 @@ app.controller('WarmCtrl', function($scope) {
 
     $scope.getDoorsArea = function()
     {
+        if ($scope.room_external_walls == 0) {
+            return 0;
+        }
+        
         return Math.max(0, $scope.room_doors * $scope.standard_door_area);
     }
 
@@ -225,6 +246,12 @@ app.controller('WarmCtrl', function($scope) {
         power += $scope.getFloorHeatLoss();
  
         power *= 1.05;
+        
+        console.log("ceiling: " +  $scope.getCeilingHeatLoss());
+        console.log("floor: " +  $scope.getFloorHeatLoss());
+        console.log("ventilation: " +  $scope.getVentilationEnergyLoss());
+        console.log("unheated: " +  ($scope.getUnheatedWallArea() * buildingInternalWallConductance * temperatureDiff * 0.5));
+        console.log("outdoor: " +  ($scope.getExternalWallArea() * buildingExternalWallConductance * temperatureDiff));
         
         $scope.heater_not_required = power <= 200;
         

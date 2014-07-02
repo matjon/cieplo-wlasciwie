@@ -270,7 +270,14 @@ class Apartment extends Building implements BuildingInterface
                 'label' => false,
                 'heated' => false,
             );
+        } elseif ($below == 'heated_room') {
+            $floors[] = array(
+                'name' => 'other',
+                'label' => 'other',
+                'heated' => true,
+            );
         }
+
 
         for ($j = 1; $i < $nbFloors; $i++) {
             $floors[] = array(
@@ -285,6 +292,12 @@ class Apartment extends Building implements BuildingInterface
                 'name' => 'attic',
                 'label' => false,
                 'heated' => false,
+            );
+        } elseif ($above == 'heated_room') {
+            $floors[] = array(
+                'name' => 'other',
+                'label' => 'other',
+                'heated' => true,
             );
         }
 
