@@ -1080,6 +1080,7 @@ div.lead {
         padding-top: 40px;
         position: relative;
         text-align: left;
+        background-size: cover;
 }
 
 div.lead h1 {
