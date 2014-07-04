@@ -32,6 +32,15 @@ class HouseType extends AbstractType
             ->add('number_floors', null, array(
                 'label' => 'Liczba pięter',
             ))
+            ->add('floor_height', 'choice', array(
+                'choices' => array(
+                    '2.3' => 'Niskie (poniżej 2,5m)',
+                    '2.6' => 'Standardowe (ok. 2,6m)',
+                    '3.0' => 'Wysokie (3m i więcej)',
+                ),
+                'label' => 'Wysokość piętra',
+                'required' => true,
+            ))
             ->add('number_heated_floors', null, array(
                 'label' => 'Liczba ogrzewanych pięter',
             ))

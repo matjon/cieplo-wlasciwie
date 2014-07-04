@@ -224,7 +224,7 @@ class Apartment extends Building implements BuildingInterface
         // we're interested in heated room only
         $numberFloors = $this->getNumberOfHeatedFloors();
         for ($i = 0; $i < $numberFloors; $i++) {
-            $cubature += $this->getInternalBuildingLength() * $this->getInternalBuildingWidth() * self::FLOOR_HEIGHT;
+            $cubature += $this->getInternalBuildingLength() * $this->getInternalBuildingWidth() * $this->getFloorHeight();
         }
 
         return $cubature;

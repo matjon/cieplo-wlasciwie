@@ -42,6 +42,12 @@ class House
     protected $number_floors;
 
     /**
+     * @ORM\Column(type="decimal", precision=2, scale=1)
+     * @Assert\NotBlank
+     */
+    protected $floor_height;
+
+    /**
      * @ORM\Column(type="integer", length=2)
      * @Assert\NotBlank
      * @Assert\Range(min="1", minMessage = "Nawet ziemianka ma min. 1 piętro ogrzewane", max="99", maxMessage = "Za mało mam palców by to policzyć")
@@ -218,6 +224,7 @@ class House
     public function __construct()
     {
         $this->walls = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->floor_height = 2.6;
     }
 
     /**
@@ -297,6 +304,18 @@ class House
     public function getNumberFloors()
     {
         return $this->number_floors;
+    }
+
+    public function setFloorHeight($floorHeight)
+    {
+        $this->floor_height = $floorHeight;
+
+        return $this;
+    }
+
+    public function getFloorHeight()
+    {
+        return $this->floor_height;
     }
 
     /**

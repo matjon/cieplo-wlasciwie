@@ -6,9 +6,6 @@ use Kraken\WarmBundle\Entity\House;
 
 class VentilationService
 {
-    const FLOOR_HEIGHT = 2.6;
-    const CEILING_THICKNESS = 0.35;
-
     protected $instance;
     protected $house_service;
 

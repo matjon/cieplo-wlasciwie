@@ -25,6 +25,7 @@
           <legend>Wymiary mieszkania</legend>
           {{ form_row(form.building_length) }}
           {{ form_row(form.building_width) }}
+          {{ form_row(form.floor_height) }}
           {{ form_row(form.number_floors) }}
           {{ form_row(form.number_heated_floors) }}
             <div id="whats_unheated" style="display:none">
@@ -77,7 +78,7 @@
 
           <div class="control-group">
             <div class="controls">
-              <button type="submit" class="btn btn-primary btn-large">Oblicz</button>
+              <button type="submit" class="btn btn-primary btn-large pull-right">Oblicz</button>
             </div>
           </div>
           {{ form_rest(form) }}

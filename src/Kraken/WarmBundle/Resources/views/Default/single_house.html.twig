@@ -34,6 +34,7 @@
           <div id="whats_unheated" style="display:none">
                 {{ form_row(form.whats_unheated) }}
           </div>
+          {{ form_row(form.floor_height) }}
           {{ form_row(form.has_basement) }}
 
           <legend>Ściany zewnętrzne</legend>
@@ -97,7 +98,7 @@
 
           <div class="control-group">
             <div class="controls">
-              <button type="submit" class="btn btn-primary btn-large">Oblicz</button>
+              <button type="submit" class="btn btn-primary btn-large pull-right">Oblicz</button>
             </div>
           </div>
           {{ form_rest(form) }}

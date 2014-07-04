@@ -14,9 +14,7 @@ class Building implements BuildingInterface
     protected $house_service;
     protected $ventilation;
 
-    const FLOOR_HEIGHT = 2.6;
     const CEILING_THICKNESS = 0.35;
-
     const HEATING_SEASON_DAYS = 200;
 
     protected $windows_u_factor = array(
@@ -553,7 +551,7 @@ class Building implements BuildingInterface
         $numberFloors = $this->getNumberOfHeatedFloors();
 
         for ($i = 0; $i < $numberFloors; $i++) {
-            $floorCubature = $this->getInternalBuildingLength() * $this->getInternalBuildingWidth() * self::FLOOR_HEIGHT;
+            $floorCubature = $this->getInternalBuildingLength() * $this->getInternalBuildingWidth() * $this->getFloorHeight();
 
             $cubature += $i == 0 && $this->instance->getHouse()->getRoofType() != 'flat'
                 ? $floorCubature * 0.5
@@ -663,14 +661,14 @@ class Building implements BuildingInterface
 
     public function getFloorHeight()
     {
-        return self::FLOOR_HEIGHT;
+        return $this->instance->getHouse()->getFloorHeight();
     }
 
     public function getHouseHeight()
     {
         $numberFloors = $this->getNumberOfHeatedFloors();
 
-        return $numberFloors * self::FLOOR_HEIGHT + ($numberFloors - 1) * self::CEILING_THICKNESS;
+        return $numberFloors * $this->getFloorHeight() + ($numberFloors - 1) * self::CEILING_THICKNESS;
     }
 
     public function getDoorsArea()
@@ -690,7 +688,7 @@ class Building implements BuildingInterface
 
     public function getStandardDoorArea()
     {
-        $doorHeight = self::FLOOR_HEIGHT*0.8;
+        $doorHeight = $this->getFloorHeight()*0.8;
         $doorWidth = 1;
 
         return $doorHeight * $doorWidth;
@@ -728,7 +726,7 @@ class Building implements BuildingInterface
 
     public function getBasementHeight()
     {
-        return 0.9 * self::FLOOR_HEIGHT;
+        return 0.9 * $this->getFloorHeight();
     }
 
     public function getFloors()
