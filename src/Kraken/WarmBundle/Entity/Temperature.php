@@ -18,6 +18,11 @@ class Temperature
     protected $id;
 
     /**
+     * @ORM\Column(type="string")
+     */
+    protected $type;
+
+    /**
      * @ORM\Column(type="integer", length=2)
      */
     protected $month;
@@ -45,6 +50,18 @@ class Temperature
     public function getId()
     {
         return $this->id;
+    }
+
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
     }
 
     /**
