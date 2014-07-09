@@ -244,12 +244,18 @@ class UpgradeService
             //walls
             $instance = clone unserialize(serialize($this->instance));
             $house = $instance->getHouse();
-            $newEnergyLoss = $building->getEnergyLossToOutside() + $building->getEnergyLossToUnheated(true);
+     
+            if ($apartment->getNumberUnheatedWalls() > 0) {
+                $building = clone $this->building;
+                $building->setInstance($instance);
 
-            $variants[] = array(
-                'gain' => round(($actualEnergyLoss - $newEnergyLoss) / $actualEnergyLoss, 2),
-                'title' => 'ocieplenie ścian od pomieszczeń nieogrzewanych 5cm styropianu'
-            );
+                $newEnergyLoss = $building->getEnergyLossToOutside() + $building->getEnergyLossToUnheated(true);
+
+                $variants[] = array(
+                    'gain' => round(($actualEnergyLoss - $newEnergyLoss) / $actualEnergyLoss, 2),
+                    'title' => 'ocieplenie ścian od pomieszczeń nieogrzewanych 5cm styropianu'
+                );
+            }
         }
 
         $gain = array();
