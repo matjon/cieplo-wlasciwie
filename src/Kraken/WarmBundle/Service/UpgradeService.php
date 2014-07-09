@@ -182,6 +182,76 @@ class UpgradeService
             }
         }
 
+        $apartment = $house->getApartment();
+
+        if ($apartment) {
+            //floor
+            $instance = clone unserialize(serialize($this->instance));
+            $house = $instance->getHouse();
+
+            if ($apartment->getWhatsUnder() != 'heated_room') {
+                $ceilingIsolation = $house->getLowestCeilingIsolationLayer();
+
+                if (!$ceilingIsolation || $ceilingIsolation->getSize() <= 5) {
+                    $m = new Material();
+                    $m->setLambda(0.038);
+
+                    $l = new Layer();
+                    $l->setMaterial($m);
+                    $l->setSize(10);
+
+                    $house->setLowestCeilingIsolationLayer($l);
+                    
+                    $building = clone $this->building;
+                    $building->setInstance($instance);
+                    $newEnergyLoss = $building->getEnergyLossToOutside() + $building->getEnergyLossToUnheated();
+
+                    $variants[] = array(
+                        'gain' => round(($actualEnergyLoss - $newEnergyLoss) / $actualEnergyLoss, 2),
+                        'title' => 'ocieplenie podłogi 10cm styropianu'
+                    );
+                }
+            }
+
+            //ceiling
+            $instance = clone unserialize(serialize($this->instance));
+            $house = $instance->getHouse();
+
+            if ($apartment->getWhatsOver() != 'heated_room') {
+                $ceilingIsolation = $house->getHighestCeilingIsolationLayer();
+
+                if (!$ceilingIsolation || $ceilingIsolation->getSize() <= 5) {
+                    $m = new Material();
+                    $m->setLambda(0.038);
+
+                    $l = new Layer();
+                    $l->setMaterial($m);
+                    $l->setSize(10);
+
+                    $house->setHighestCeilingIsolationLayer($l);
+                    
+                    $building = clone $this->building;
+                    $building->setInstance($instance);
+                    $newEnergyLoss = $building->getEnergyLossToOutside() + $building->getEnergyLossToUnheated();
+
+                    $variants[] = array(
+                        'gain' => round(($actualEnergyLoss - $newEnergyLoss) / $actualEnergyLoss, 2),
+                        'title' => 'ocieplenie sufitu 10cm styropianu'
+                    );
+                }
+            }
+
+            //walls
+            $instance = clone unserialize(serialize($this->instance));
+            $house = $instance->getHouse();
+            $newEnergyLoss = $building->getEnergyLossToOutside() + $building->getEnergyLossToUnheated(true);
+
+            $variants[] = array(
+                'gain' => round(($actualEnergyLoss - $newEnergyLoss) / $actualEnergyLoss, 2),
+                'title' => 'ocieplenie ścian od pomieszczeń nieogrzewanych 5cm styropianu'
+            );
+        }
+
         $gain = array();
         foreach ($variants as $key => $row)
         {

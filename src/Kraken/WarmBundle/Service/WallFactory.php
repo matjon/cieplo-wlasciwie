@@ -9,7 +9,7 @@ use Kraken\WarmBundle\Entity\Wall;
 
 class WallFactory
 {
-    public function getInternalWall(Calculation $calc)
+    public function getInternalWall(Calculation $calc, $addInsulation = false)
     {
         $year = $calc->getConstructionYear();
 
@@ -33,6 +33,17 @@ class WallFactory
 
         $wall = new Wall();
         $wall->setConstructionLayer($l);
+
+        if ($addInsulation) {
+            $m = new Material();
+            $m->setLambda(0.038);
+
+            $l = new Layer();
+            $l->setMaterial($m);
+            $l->setSize(5);
+
+            $wall->setExtraIsolationLayer($l);
+        }
 
         return $wall;
     }

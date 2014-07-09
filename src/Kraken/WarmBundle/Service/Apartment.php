@@ -53,11 +53,11 @@ class Apartment extends Building implements BuildingInterface
             + $this->getFloorEnergyLossFactor();
     }
 
-    public function getEnergyLossToUnheated()
+    public function getEnergyLossToUnheated($addWallsIsolation = false)
     {
         return 0.5 * $this->getFloorEnergyLossToUnheated()
             + $this->getCeilingEnergyLossToUnheated()
-            + $this->getWallsEnergyLossToUnheated();
+            + $this->getWallsEnergyLossToUnheated($addWallsIsolation);
     }
 
     public function getFloorEnergyLossToUnheated()
@@ -101,9 +101,9 @@ class Apartment extends Building implements BuildingInterface
         return $this->instance->getHouse()->getApartment()->getNumberExternalWalls();
     }
 
-    public function getWallsEnergyLossToUnheated()
+    public function getWallsEnergyLossToUnheated($addIsolation = false)
     {
-        $internalWall = $this->wall_factory->getInternalWall($this->instance);
+        $internalWall = $this->wall_factory->getInternalWall($this->instance, $addIsolation);
 
         return $this->wall->getThermalConductance($internalWall) * $this->getInternalWallArea($internalWall);
     }
