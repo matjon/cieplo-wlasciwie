@@ -3,6 +3,7 @@
 namespace Kraken\WarmBundle\Service;
 
 use Kraken\WarmBundle\Calculator\BuildingInterface;
+use Kraken\WarmBundle\Entity\Calculation;
 use Kraken\WarmBundle\Entity\Wall;
 use Kraken\WarmBundle\Entity\House;
 use Kraken\WarmBundle\Service\InstanceService;
@@ -39,6 +40,16 @@ class Building implements BuildingInterface
         $this->ventilation = $ventilation;
         $this->wall = $wall;
         $this->wall_factory = $wall_factory;
+    }
+
+    public function setInstance(Calculation $instance)
+    {
+        $this->instance = $instance;
+    }
+
+    public function getInstance()
+    {
+        return $this->instance;
     }
 
     public function getHouseDescription()
@@ -228,16 +239,16 @@ class Building implements BuildingInterface
 
     public function getEnergyLossToOutside()
     {
-        return $this->getWallsEnergyLossFactor()
-            + $this->getRoofEnergyLossFactor()
-            + $this->getGroundEnergyLossFactor()
-            + $this->getVentilationEnergyLossFactor();
+        return $this->lossToOutside = $this->getWallsEnergyLossFactor()
+                + $this->getRoofEnergyLossFactor()
+                + $this->getGroundEnergyLossFactor()
+                + $this->getVentilationEnergyLossFactor();
     }
 
     public function getEnergyLossToUnheated()
     {
-        return 0.5 * $this->getFloorEnergyLossToUnheated()
-            + $this->getRoofEnergyLossToUnheated();
+        return $this->lossToUnheated = 0.5 * $this->getFloorEnergyLossToUnheated()
+                + $this->getRoofEnergyLossToUnheated();
     }
 
     public function getHeatedArea()

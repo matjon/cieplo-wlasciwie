@@ -49,6 +49,10 @@ services:
         class: Kraken\WarmBundle\Service\WallService
         arguments: [@kraken_warm.instance]
 
+    kraken_warm.upgrade:
+        class: Kraken\WarmBundle\Service\UpgradeService
+        arguments: [@kraken_warm.instance, @kraken_warm.building]
+
     kraken_warm.wall.factory:
         class: Kraken\WarmBundle\Service\WallFactory
 

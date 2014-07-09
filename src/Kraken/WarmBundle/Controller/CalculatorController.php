@@ -390,6 +390,7 @@ class CalculatorController extends Controller
             'advice' => $adviceGenerator->getAdviceFor($calc),
             'punch' => $this->get('kraken_warm.punchline'),
             'classifier' => $this->get('kraken_warm.building_classifier'),
+            'upgrade' => $this->get('kraken_warm.upgrade'),
             'houseDescription' => $building->getHouseDescription(),
             'calc' => $calc,
             'city' => $this->get('kraken_warm.city_locator')->findNearestCity(),
