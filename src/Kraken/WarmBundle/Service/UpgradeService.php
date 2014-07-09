@@ -29,7 +29,7 @@ class UpgradeService
         $originalWall = $this->instance->getHouse()->getWalls()->first();
 
         if (!$originalWall->getExtraIsolationLayer() || $originalWall->getExtraIsolationLayer()->getSize() < 10) {
-            $isolationSize = $originalWall->getExtraIsolationLayer() ? 20 : 15;
+            $isolationSize = 15;
 
             $instance = clone unserialize(serialize($this->instance));
             $wall = $instance->getHouse()->getWalls()->first();
@@ -49,9 +49,7 @@ class UpgradeService
 
             $variants[] = array(
                 'gain' => round(($actualEnergyLoss - $newEnergyLoss) / $actualEnergyLoss, 2),
-                'title' => $wall->getExtraIsolationLayer() 
-                    ? sprintf('wymiana ocieplenia ścian zewn. na %scm styropianu', $isolationSize)
-                    : sprintf('ocieplenie ścian zewn. na %scm styropianu', $isolationSize)
+                'title' => sprintf('ocieplenie ścian zewn. %scm styropianu', $isolationSize)
             );
         }
 
