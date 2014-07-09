@@ -250,13 +250,17 @@
     </div>
     <div class="col-md-6">
       <h3>W co zainwestować, by taniej ogrzewać?</h3>
-      <dl>
-        {% for item in upgrade.variants %}
-        <dt>{{ label_warning(item.gain * 100 ~ '%') }}</dt>
-        <dd>{{ item.title|raw }}</dd>
-        {% endfor %}
-      </dl>
-
+      {% set variants = upgrade.variants %}
+      {% if variants %}
+        <dl>
+          {% for item in variants %}
+          <dt>{{ label_warning(item.gain * 100 ~ '%') }}</dt>
+          <dd>{{ item.title|raw }}</dd>
+          {% endfor %}
+        </dl>
+      {% else %}
+      <p>Dom jest dobrze ocieplony. Za rozsądne pieniądze nic tu nie poprawisz.</p>
+      {% endif %}
       {% if advice %}
         <h3>Co zrobić, by było lepiej</h3>
         <dl>
