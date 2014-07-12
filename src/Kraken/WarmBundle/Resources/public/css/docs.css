@@ -1165,3 +1165,7 @@ div.lead .copy a:hover {
 .f-class {
         background-color: #BE0E11;
 }
+
+.label {
+        font-size: 1em;
+}
