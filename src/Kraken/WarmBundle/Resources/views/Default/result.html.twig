@@ -69,7 +69,7 @@
         <h3>Aktualna sytuacja</h3>
           <dl>
           {% set fuelInfoProvided = calc.fuelType and calc.fuelConsumption %}
-          {% set stoveEfficiency = fuelInfoProvided ? (calculator.yearlyStoveEfficiency*100)|number_format(0, ',', ' ') : 0 %}
+          {% set stoveEfficiency = fuelInfoProvided ? calculator.yearlyStoveEfficiency*100 : 0 %}
           {% if calc.stovePower %}
             <dt>{{ label_success(calc.stovePower|number_format(0, ',', ' ') ~ 'kW') }}</dt>
             <dd>moc nominalna twojego kotła</dd>
@@ -93,7 +93,7 @@
                 {% if stoveEfficiency < 35 %}
                   <div class="alert alert-danger">
                       <h4>Ogrzewanie rujnuje twój budżet</h4>
-                      Sprawność twojej instalacji grzewczej to <strong>marne ~{{ stoveEfficiency }}%</strong>.
+                      Sprawność twojej instalacji grzewczej to <strong>marne ~{{ stoveEfficiency|number_format(0, ',', ' ') }}%</strong>.
                       To znaczy, że większość pieniędzy wydanych na ogrzewanie wyrzucasz w błoto!
                       <br />Na szczęście możesz szybko i prawie za darmo zacząć oszczędzać.
                       <br /><a href="http://czysteogrzewanie.pl/jak-palic-w-piecu/jak-palic-czysto-weglem/" target="_blank">Przeczytaj, jak palić ekonomicznie i wygodnie</a>.
@@ -101,31 +101,31 @@
                 {% elseif stoveEfficiency < 50 %}
                   <div class="alert alert-warning">
                       <h4>Sporo przepłacasz za ogrzewanie</h4>
-                      Sprawność twojej instalacji grzewczej to <strong>tylko ~{{ stoveEfficiency }}%</strong>.
+                      Sprawność twojej instalacji grzewczej to <strong>tylko ~{{ stoveEfficiency|number_format(0, ',', ' ') }}%</strong>.
                       <br /><a href="http://czysteogrzewanie.pl/jak-palic-w-piecu/jak-palic-czysto-weglem/" target="_blank">Zobacz, jak palić ekonomicznie oraz wygodnie i zacznij oszczędzać od zaraz!</a>
                   </div>
                 {% elseif stoveEfficiency < 75 %}
                   <div class="alert alert-info">
                       <h4>Ogrzewanie jest dość efektywne</h4>
-                      Sprawność twojej instalacji grzewczej to <strong>~{{ stoveEfficiency }}%</strong>.
+                      Sprawność twojej instalacji grzewczej to <strong>~{{ stoveEfficiency|number_format(0, ',', ' ') }}%</strong>.
                   </div>
                 {% elseif stoveEfficiency < 90 %}
                   <div class="alert alert-success">
                       <h4>Ogrzewanie jest bardzo efektywne</h4>
-                      Sprawność twojej instalacji grzewczej to <strong>aż ~{{ stoveEfficiency }}%</strong>.
+                      Sprawność twojej instalacji grzewczej to <strong>aż ~{{ stoveEfficiency|number_format(0, ',', ' ') }}%</strong>.
                   </div>
                 {% endif %}
             {% else %}
                 {% if stoveEfficiency < 75 %}
                   <div class="alert alert-warning">
                       <h4>Ogrzewanie jest nieefektywne</h4>
-                      Sprawność twojej instalacji grzewczej to <strong>tylko ~{{ stoveEfficiency }}%</strong>. To mało jak na {{ calc.fuelType == 'electricity' ? 'prąd' : 'gaz' }}.
+                      Sprawność twojej instalacji grzewczej to <strong>tylko ~{{ stoveEfficiency|number_format(0, ',', ' ') }}%</strong>. To mało jak na {{ calc.fuelType == 'electricity' ? 'prąd' : 'gaz' }}.
                       Być może podałeś zbyt duże aktualne zużycie energii. Jeśli grzejesz także wodę użytkową, odejmij od rachunku 10-20%.
                   </div>
                 {% elseif stoveEfficiency < 110 %}
                   <div class="alert alert-success">
                       <h4>Ogrzewanie jest bardzo efektywne</h4>
-                      Sprawność twojej instalacji grzewczej to <strong>aż ~{{ stoveEfficiency }}%</strong>. Znakomicie.
+                      Sprawność twojej instalacji grzewczej to <strong>aż ~{{ stoveEfficiency|number_format(0, ',', ' ') }}%</strong>. Znakomicie.
                   </div>
                 {% endif %}
             {% endif %}
