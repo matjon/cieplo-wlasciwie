@@ -38,6 +38,7 @@
           {{ form_row(form.has_basement) }}
 
           <legend>Ściany zewnętrzne</legend>
+          {{ form_row(form.construction_type) }}
           {{ form_row(form.walls[0].construction_layer.material) }}
           {{ form_row(form.walls[0].construction_layer.size) }}
 

@@ -60,6 +60,11 @@ class House
     protected $whats_unheated;
 
     /**
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $construction_type;
+
+    /**
      * @ORM\Column(type="integer", length=2, nullable=true)
      * @Assert\Range(min="0", minMessage = "Za mało drzwi zewnętrznych", max="99", maxMessage = "Więcej jak 99 drzwi nie jest ci potrzebne. Sprzedaj połowę.")
      */
@@ -778,5 +783,17 @@ class House
     public function getWhatsUnheated()
     {
         return $this->whats_unheated;
+    }
+
+    public function getConstructionType()
+    {
+        return $this->construction_type;
+    }
+
+    public function setConstructionType($construction_type)
+    {
+        $this->construction_type = $construction_type;
+
+        return $this;
     }
 }

@@ -22,7 +22,7 @@ class WallType extends AbstractType
                 'mapped' => false
             ))
             ->add('has_isolation_outside', 'checkbox', array(
-                'label' => 'Dom jest ocieplony',
+                'label' => 'Dom jest docieplony',
                 'mapped' => false
             ))
             ->add('construction_layer', new LayerType(), array(

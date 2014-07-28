@@ -5,6 +5,7 @@ $(document).ready(function () {
 });
 
 function initialize() {
+    updateConstructionType();
     updateWallStuff();
     updateFloorsStuff();
     updateRoofType();
@@ -20,9 +21,11 @@ function bindEvents() {
     $('#calculation_has_basement').change(function () {
         updateBasementThings();
     });
+
     $('#calculation_is_basement_heated').change(function () {
         updateBasementThings();
     });
+
     $('#calculation_is_ground_floor_heated').change(function () {
         updateBasementThings();
     });
@@ -30,8 +33,13 @@ function bindEvents() {
     $('#calculation_number_floors').change(function () {
         updateFloorsStuff();
     });
+
     $('#calculation_number_heated_floors').change(function () {
         updateFloorsStuff();
+    });
+    
+    $('#calculation_construction_type').change(function() {
+        updateConstructionType();
     });
 
     $('#calculation_walls_0_construction_layer_size').change(function () {
@@ -58,7 +66,7 @@ function analyzeWallSize()
         + makeInteger($('#calculation_walls_0_outside_layer_size').val())
         + makeInteger($('#calculation_walls_0_extra_isolation_layer_size').val());
 
-    $('#wall_may_be_too_thin').toggle(wallSize < 20);
+    $('#wall_may_be_too_thin').toggle(wallSize < 20 && $('#calculation_construction_type').val() == 'traditional');
     $('#wall_may_be_too_thin span').text(wallSize);
     $('#wall_may_have_isolation').toggle(wallSize > 30 && $('#calculation_walls_0_isolation_layer_size').val() == 0);
 }
@@ -98,6 +106,38 @@ function updateRoofType() {
         $('#calculation_highest_ceiling_isolation_layer').parent().prev().text('Izolacja dachu');
     } else {
         $('#calculation_highest_ceiling_isolation_layer').parent().prev().text('Izolacja najwyższego stropu');
+    }
+}
+
+function updateConstructionType() {
+    var newVal = $('#calculation_construction_type').val();
+
+    var isCanadian = newVal == 'canadian';
+    
+    $('#wall_isolation_layer').toggle(isCanadian);
+    $('#calculation_walls_0_has_isolation_inside').parent().parent().toggle(!isCanadian);
+    $('#calculation_walls_0_has_another_layer').parent().parent().toggle(!isCanadian);
+    $('#calculation_walls_0_has_isolation_outside').parent().parent().toggle(!isCanadian);
+    $('#calculation_walls_0_construction_layer_material').parent().parent().toggle(!isCanadian);
+    $('#calculation_walls_0_construction_layer_size').parent().parent().parent().toggle(!isCanadian);
+
+    if (newVal == 'traditional') {
+        $('#calculation_walls_0_construction_layer_material').parent().prev().text('Główny materiał ściany');
+        $('#calculation_walls_0_construction_layer_size').parent().parent().prev().text('Grubość ściany');
+        
+        $('#calculation_walls_0_isolation_layer_material').parent().prev().text('Materiał');
+        $('#calculation_walls_0_isolation_layer_size').parent().parent().prev().text('Grubość');
+    } else {
+        var additionalMaterial = 'Drewno liściaste';
+        $('#calculation_walls_0_construction_layer_material option:contains(' + additionalMaterial + ')').prop({selected: true});
+        $('#calculation_walls_0_construction_layer_size').val(6);
+        
+      
+        $('#calculation_walls_0_construction_layer_material').parent().prev().text('Materiał');
+        $('#calculation_walls_0_construction_layer_size').parent().parent().prev().text('Grubość');
+        
+        $('#calculation_walls_0_isolation_layer_material').parent().prev().text('Materiał izolacyjny ścian');
+        $('#calculation_walls_0_isolation_layer_size').parent().parent().prev().text('Grubość izolacji');
     }
 }
 

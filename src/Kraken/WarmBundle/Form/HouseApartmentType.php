@@ -13,6 +13,7 @@ class HouseApartmentType extends HouseType
 
         $builder
             ->remove('roof_type')
+            ->remove('construction_type')
             ->remove('roof_isolation_layer')
             ->remove('is_attic_heated')
             ->remove('has_basement')

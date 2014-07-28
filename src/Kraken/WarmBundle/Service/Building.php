@@ -98,9 +98,16 @@ class Building implements BuildingInterface
         }
 
         $wall = $this->instance->getHouse()->getWalls()->first();
-        $wallDetails = array(
-            $wall->getConstructionLayer()->getMaterial()->getName().', '.$wall->getConstructionLayer()->getSize().'cm'
-        );
+
+        if ($this->instance->getHouse()->getConstructionType() == 'canadian') {
+            $wallDetails = array(
+                'Dom kanadyjski, szkielet drewniany'
+            );
+        } else {
+            $wallDetails = array(
+                $wall->getConstructionLayer()->getMaterial()->getName().', '.$wall->getConstructionLayer()->getSize().'cm'
+            );
+        }
 
         if ($wall->getIsolationLayer()) {
             $wallDetails[] = $wall->getIsolationLayer()->getMaterial()->getName().', '.$wall->getIsolationLayer()->getSize().'cm';

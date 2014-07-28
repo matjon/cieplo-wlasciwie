@@ -58,6 +58,14 @@ class HouseType extends AbstractType
                 'required' => false,
                 'label' => 'Dom posiada balkon(y)'
             ))
+            ->add('construction_type', 'choice', array(
+                'choices' => array(
+                    'traditional' => 'Tradycyjna - murowana lub drewniana',
+                    'canadian' => 'Dom kanadyjski, szkieletowy',
+                ),
+                'label' => 'Typ konstrukcji',
+                'required' => true,
+            ))
             ->add('walls','collection', array(
                 'type' =>  new WallType(),
                 'allow_add' => false,

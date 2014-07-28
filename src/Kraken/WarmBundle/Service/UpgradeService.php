@@ -159,7 +159,7 @@ class UpgradeService
 
         if ($this->building->isGroundFloorHeated()) {
             $groundFloorIsolation = $house->getGroundFloorIsolationLayer();
-            $materialName = $groundFloorIsolation ? $groundFloorIsolation->getMaterial()->getName() : '';
+            $materialName = $groundFloorIsolation && $groundFloorIsolation->getMaterial() ? $groundFloorIsolation->getMaterial()->getName() : '';
 
             if (!$groundFloorIsolation || $groundFloorIsolation->getSize() <= 10 || (!stristr($materialName, 'styropian') && !stristr($materialName, 'wełna'))) {
                 $m = new Material();
