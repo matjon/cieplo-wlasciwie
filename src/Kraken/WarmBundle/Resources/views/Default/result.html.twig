@@ -73,11 +73,11 @@
           {% if calc.stovePower %}
             <dt>{{ label_success(calc.stovePower|number_format(0, ',', ' ') ~ 'kW') }}</dt>
             <dd>moc nominalna twojego kotła</dd>
-            {% if calculator.isStoveOversized and (not fuelInfoProvided or stoveEfficiency < 50) %}
+            {% if calculator.isStoveOversized and (not fuelInfoProvided or stoveEfficiency < 40) %}
                 <div class="alert alert-danger">
-                  <h4>Twój kocioł marnuje opał</h4>
-                  To dlatego, że ma zbyt dużą moc nominalną.
-                  <a href="http://czysteogrzewanie.pl/zakupy/mocy-przybywaj-dobor-mocy-kotla-weglowego/#Co_zrobi_z_przewymiarowanym_kotem" target="_blank">Dlaczego to problem i jak tanio go naprawić?</a>.
+                  <h4>Zbyt duża moc kotła drenuje ci portfel</h4>
+                  Przez ten zbędny zapas mocy płacisz za opał, który bez pożytku ucieka kominem.
+                  <a href="http://czysteogrzewanie.pl/zakupy/mocy-przybywaj-dobor-mocy-kotla-weglowego/#Co_zrobi_z_przewymiarowanym_kotem" target="_blank">Zobacz, dlaczego tak jest i jak to tanio naprawić</a>.
                 </div>
             {% endif %}
           {% endif %}
@@ -139,9 +139,9 @@
         <h3>Ile energii potrzeba do ogrzewania</h3>
         <dl>
           <dt>{{ label_success((calculator.maxHeatingPower/1000)|number_format(1, ',', ' ') ~ 'kW') }}</dt>
-          <dd>takiej maksymalnej mocy źródła ciepła potrzebujesz</dd>
+          <dd>takiej mocy grzewczej potrzebuje twój dom w największy mróz</dd>
           <dt>{{ calculator.yearlyEnergyConsumption|number_format(0, ',', ' ') }}kWh</dt>
-          <dd>tyle energii zużyjesz rocznie na ogrzewanie</dd>
+          <dd>tyle ciepła zużyje dom w ciągu całego sezonu grzewczego</dd>
           <dt>{{ calculator.yearlyEnergyConsumptionFactor|number_format(0, ',', ' ') }}kWh/m<sup>2</sup>*rok</dt>
           <dd>zużycie roczne energii w przeliczeniu na 1m<sup>2</sup> - zalicza twój dom do klasy energetycznej {{ classifier.class }}</dd>
         </dl>
@@ -161,7 +161,7 @@
   <div class="row">
     <div class="col-md-6">
       <h3>Czym i za ile ogrzewać</h3>
-      <p>Tyle zapłaciłbyś, gdybyś chciał całą zimę utrzymać w mieszkaniu średnią temperaturę {{ calc.indoorTemperature|number_format(1, ',', ' ') }}&deg;C.
+      <p>Tyle zapłaciłbyś, gdybyś chciał całą zimę utrzym ać w mieszkaniu średnią temperaturę {{ calc.indoorTemperature|number_format(1, ',', ' ') }}&deg;C.
         Możesz założyć kufajkę i marznąć przy {{ min(16, calc.indoorTemperature-5)|number_format(1, ',', ' ') }}&deg;C, ale <a href="http://czysteogrzewanie.pl/jak-palic-w-piecu/jak-ogrzewac-by-sie-ogrzac/" target="_blank">wcale nie będzie taniej</a>.</p>
         <div id="fuel_chart"></div>
         <a class="btn btn-info btn-big pull-right" href="#custom_fuel_prices" data-toggle="modal">Zmień ceny paliw i koszt pracy</a>
