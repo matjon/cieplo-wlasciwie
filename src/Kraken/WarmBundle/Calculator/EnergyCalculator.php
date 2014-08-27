@@ -100,6 +100,11 @@ class EnergyCalculator
         return ($this->building->getEnergyLossToOutside() + $this->building->getEnergyLossToUnheated()) * $this->getTemperatureDifference($outdoorTemp);
     }
 
+    public function getMaxHeatingPowerPerArea()
+    {
+        return $this->getMaxHeatingPower() / $this->building->getHeatedArea();
+    }
+
     /*
      * Returns average heating power needed during heating season
      */

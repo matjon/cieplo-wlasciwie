@@ -140,6 +140,8 @@
         <dl>
           <dt>{{ label_success((calculator.maxHeatingPower/1000)|number_format(1, ',', ' ') ~ 'kW') }}</dt>
           <dd>takiej mocy grzewczej potrzebuje twój dom w największy mróz</dd>
+          <dt>{{ calculator.maxHeatingPowerPerArea|number_format(0, ',', ' ') }}W/m<sup>2</sup></dt>
+          <dd>wskaźnik mocy kotła względem ogrzewanego metrażu</dd>
           <dt>{{ calculator.yearlyEnergyConsumption|number_format(0, ',', ' ') }}kWh</dt>
           <dd>tyle ciepła zużyje dom w ciągu całego sezonu grzewczego</dd>
           <dt>{{ calculator.yearlyEnergyConsumptionFactor|number_format(0, ',', ' ') }}kWh/m<sup>2</sup>*rok</dt>
