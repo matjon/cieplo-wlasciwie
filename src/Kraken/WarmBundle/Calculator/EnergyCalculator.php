@@ -49,6 +49,28 @@ class EnergyCalculator
         return 1.1 * $power;
     }
 
+    public function getSuggestedAutomaticStovePower()
+    {
+        $powerNeeded = $this->getMaxHeatingPower() / 1000;
+
+        $variants = array(
+            9 => '7 lub 10',
+            14 => '10-12',
+            19 => '17',
+            26 => '24',
+            38 => '35',
+            42 => '40',
+        );
+
+        foreach ($variants as $threshold => $power) {
+            if ($powerNeeded <= $threshold) {
+                return $power;
+            }
+        }
+
+        return 1.1 * $powerNeeded;
+    }
+
     public function getYearlyEnergyConsumptionFactor()
     {
         return $this->getYearlyEnergyConsumption()/$this->building->getHeatedArea();
@@ -62,7 +84,9 @@ class EnergyCalculator
             throw new \RuntimeException("Fuel consumption info not provided");
         }
 
-        return $this->getYearlyEnergyConsumption()/$paidEnergy;
+        $efficiency = $this->getYearlyEnergyConsumption()/$paidEnergy;
+
+        return round($efficiency, 1);
     }
 
     /*

@@ -216,21 +216,22 @@
   </div>
   <div class="row">
     <div class="col-md-6">
-      <h3>Jakiej mocy ogrzewania potrzebuję?</h3>
-
+      <h3>Jakiej mocy kotła szukać?</h3>
       <dl>
       {% if powerNeeded > 3 %}
-        <dt>{{ label_success(powerNeeded|number_format(0, ',', ' ') ~ '-' ~ (1.3*powerNeeded)|number_format(0, ',', ' ') ~ 'kW') }} dla kotła węglowego zasypowego lub podajnikowego</dt>
+        <dt>{{ label_success((1.1*powerNeeded)|number_format(0, ',', ' ') ~ '-' ~ (1.25*powerNeeded)|number_format(0, ',', ' ') ~ 'kW') }} dla kotła zasypowego</dt>
         <dd>Nie kupuj kotła o dużo większej mocy,
-              <a href="#" onclick="$('#big-stove-alert').toggle();return false">nawet jeśli sprzedawca, sąsiad i szwagier twierdzą inaczej</a>. Duży kocioł pracujący z małą mocą <a href="http://czysteogrzewanie.pl/zakupy/mocy-przybywaj-dobor-mocy-kotla-weglowego/" target="_blank">to katastrofa finansowa</a>.
+              <a href="#" onclick="$('#big-stove-alert').toggle();return false">nawet jeśli sprzedawca, sąsiad i szwagier twierdzą inaczej</a>. Mocno za duży kocioł <a href="http://czysteogrzewanie.pl/zakupy/mocy-przybywaj-dobor-mocy-kotla-weglowego/#Czym_grozi_zbyt_dua_moc_kota" target="_blank">to katastrofa finansowa</a>.
               <div class="alert alert-success" id="big-stove-alert" style="display:none">
-                  Nie zamarzniesz zimą! <strong>~{{ powerNeeded|number_format(0, ',', ' ') }}kW</strong> to maksymalna moc ciągła, jakiej twój dom będzie potrzebował w kilka(naście) najmroźniejszych dni w roku.<br />
-                  Jeśli grzejesz kotłem ciepłą wodę, dodaj jeszcze 2-3kW.
-                  Natomiast kocioł o zbyt dużej mocy to problemy i straty przez 3/4 sezonu grzewczego - wtedy pracuje on ze sprawnością <strong>zaledwie ~30%!</strong>
+                  <strong>~{{ powerNeeded|number_format(0, ',', ' ') }}kW</strong> to maksymalna moc grzewcza, jakiej twój dom będzie potrzebował co najwyżej w kilka(naście) najmroźniejszych dni w roku (zgodnie z normami budowlanymi, z uwzględnieniem rozsądnego zapasu mocy).
+                  <br /><br />Jeśli grzejesz kotłem ciepłą wodę, dodaj jeszcze 2-3kW. Jak ognia unikaj przewymiarowania kotła o ponad 50% - jego sprawność będzie pełzać <strong>w okolicach 30%</strong>, z efektami specjalnymi w postaci smoły i gnijącego komina.
               </div>
         </dd>
+        {% set automaticStovePower = calculator.suggestedAutomaticStovePower %}
+        <dt>{{ label_success(automaticStovePower ~ 'kW') }} dla kotła podajnikowego</dt>
+        <dd>Kotły podajnikowe posiadają nawet 30% zapasu ponad moc nominalną (potwierdzenie znajdziesz w DTR kotła), więc często nie ma potrzeby kupowania wyższego wariantu mocy, gdy potrzeby domu tylko nieznacznie przekraczają moc nominalną wariantu niższego.</dd>
         <dt>{{ label_success(sandCoalPowerNeeded|number_format(0, ',', ' ') ~ '-' ~  (1.2*sandCoalPowerNeeded)|number_format(0, ',', ' ') ~ 'kW') }} dla kotła miałowego</dt>
-        <dd><a href="http://czysteogrzewanie.pl/zakupy/mocy-przybywaj-dobor-mocy-kotla-weglowego/#Wyjtek_dla_kotw_miaowych" target="_blank">Kocioł miałowy dobiera się nieco inaczej</a>. Taka moc ma pojemność zasypu wystarczającą do bezobsługowej pracy przez ok. 24h, jeśli będzie rozpalany od góry (a to jedyny wygodny sposób palenia miałem).</dd>
+        <dd><a href="http://czysteogrzewanie.pl/zakupy/mocy-przybywaj-dobor-mocy-kotla-weglowego/#Wyjtek_dla_kotw_miaowych" target="_blank">Kocioł miałowy dobiera się nieco inaczej</a>. Taka moc ma pojemność zasypu wystarczającą do bezobsługowej pracy przez jedną dobę, jeśli będzie rozpalany od góry (a to jedyny wygodny sposób palenia miałem).</dd>
       {% else %}
           <dt>Zapomnij o kotle węglowym</dt>
           <p>Nie istnieją kotły węglowe pracujące efektywnie z tak małą mocą.</p>
