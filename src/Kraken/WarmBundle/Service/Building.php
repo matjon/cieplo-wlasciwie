@@ -64,7 +64,7 @@ class Building implements BuildingInterface
         );
 
         $house = $this->instance->getHouse();
-        $sizes = $house->getBuildingLength() . 'x'.$house->getBuildingWidth().'m';
+        $sizes = sprintf('%sm x %sm = %sm2 w obrysie', $house->getBuildingLength(), $house->getBuildingWidth(), $house->getBuildingWidth() * $house->getBuildingLength());
         $nbFloors = $house->getNumberFloors();
 
         if ($type == 'apartment') {
@@ -92,7 +92,7 @@ class Building implements BuildingInterface
 
         $withBasement = $house->getHasBasement() ? 'Podpiwniczony' : 'Bez piwnic';
         $withGarage = $house->getHasGarage() ? 'z garażem' : 'bez garażu';
-        $groundHeating = array($this->isGroundFloorHeated() ? 'Parter ogrzewany' : 'parter nieogrzewany');
+        $groundHeating = array($this->isGroundFloorHeated() ? 'Parter ogrzewany' : 'Parter nieogrzewany');
         if ($house->getHasBasement()) {
             $groundHeating[] = $this->isBasementHeated() ? 'piwnica ogrzewana' : 'piwnica nieogrzewana';
         }
@@ -105,21 +105,44 @@ class Building implements BuildingInterface
             );
         } else {
             $wallDetails = array(
-                $wall->getConstructionLayer()->getMaterial()->getName().', '.$wall->getConstructionLayer()->getSize().'cm'
+                $wall->getConstructionLayer()->getMaterial()->getName().' '.$wall->getConstructionLayer()->getSize().'cm'
             );
         }
 
         if ($wall->getIsolationLayer()) {
-            $wallDetails[] = $wall->getIsolationLayer()->getMaterial()->getName().', '.$wall->getIsolationLayer()->getSize().'cm';
+            $wallDetails[] = $wall->getIsolationLayer()->getMaterial()->getName().' '.$wall->getIsolationLayer()->getSize().'cm';
         }
         if ($wall->getOutsideLayer()) {
-            $wallDetails[] = $wall->getOutsideLayer()->getMaterial()->getName().', '.$wall->getOutsideLayer()->getSize().'cm';
+            $wallDetails[] = $wall->getOutsideLayer()->getMaterial()->getName().' '.$wall->getOutsideLayer()->getSize().'cm';
         }
         if ($wall->getExtraIsolationLayer()) {
-            $wallDetails[] = $wall->getExtraIsolationLayer()->getMaterial()->getName().', '.$wall->getExtraIsolationLayer()->getSize().'cm';
+            $wallDetails[] = $wall->getExtraIsolationLayer()->getMaterial()->getName().' '.$wall->getExtraIsolationLayer()->getSize().'cm';
         }
 
         $heatingDetails = sprintf("Ogrzewane piętra: %s, średnia temperatura: %sst.C", $this->getHouse()->getNumberHeatedFloors(), number_format($this->instance->getIndoorTemperature(), 1));
+
+        $windowsTypes = array(
+            'old_single_glass' => 'Stare z pojedynczą szybą',
+            'old_double_glass' => 'Stare z min. dwiema szybami',
+            'old_improved' => 'Stare, ale doszczelnione',
+            'semi_new_double_glass' => 'Starsze niż 10-letnie z szybami zespolonymi',
+            'new_double_glass' => 'Nowe z szybami zespolonymi',
+            'new_triple_glass' => 'Nowe z trzema szybami',
+        );
+
+        $doorsTypes = array(
+            'old_wooden' => 'Stare drewniane',
+            'old_metal' => 'Stare metalowe',
+            'new_wooden' => 'Nowe drewniane',
+            'new_metal' => 'Nowe metalowe',
+            'other' => 'Inne',
+        );
+
+        $ventilationTypes = array(
+            'natural' => 'Naturalna lub grawitacyjna',
+            'mechanical' => 'Mechaniczna',
+            'mechanical_recovery' => 'Mechaniczna z odzyskiem ciepła',
+        );
 
         if ($type == 'apartment') {
             $apartment = $house->getApartment();
@@ -138,20 +161,35 @@ class Building implements BuildingInterface
 
             $desc = array(
                 'type' => $types[$type].' '.$floor.' ('.$sizes.')',
-                'heating_details' => $heatingDetails,
                 'walls' => 'Ściany: '.implode(' + ', $wallDetails),
                 'external_walls' => $externalWalls,
                 'unheated_walls' => $unheatedWalls,
                 'over_under' => sprintf('Piętro wyżej: %s, piętro niżej: %s', strtolower($whatsOverUnder[$apartment->getWhatsOver()]), strtolower($whatsOverUnder[$apartment->getWhatsUnder()])),
+                'doors_windows' => sprintf('Okna: %s, drzwi: %s', $windowsTypes[$house->getWindowsType()], $doorsTypes[$house->getDoorsType()]),
+                'ventilation' => sprintf('Wentylacja: %s', $ventilationTypes[$house->getVentilationType()]),
+                'heating_details' => $heatingDetails,
             );
         } else {
+            $roofType = $house->getRoofType();
+
+            $roof = $roofType == 'flat' ? $roofs[$roofType] : $roofs[$roofType];
+            $roofInformation = array();
+            $roofInformation[] = $roof;
+            if ($house->getRoofIsolationLayer()) {
+                $roofIsolation = sprintf('izolacja: %s %scm', $house->getRoofIsolationLayer()->getMaterial()->getName(), $house->getRoofIsolationLayer()->getSize());
+                $roofInformation[] = $roofIsolation;
+            }
+            $roofInformation[] = $atticInUse;
+
             $desc = array(
                 'type' => $types[$type].' '.$floor.' ('.$sizes.')',
-                'heating_details' => $heatingDetails,
                 'walls' => 'Ściany: '.implode(' + ', $wallDetails),
-                'roof' => $roof == 'flat' ? $roofs[$roof] : $roofs[$roof].', '.$atticInUse,
+                'roof' => implode(', ', $roofInformation),
                 'ground' => implode(', ', array($withBasement, $withGarage)),
                 'ground_heating' => implode(', ', $groundHeating),
+                'doors_windows' => sprintf('Okna: %s, drzwi: %s', strtolower($windowsTypes[$house->getWindowsType()]), strtolower($doorsTypes[$house->getDoorsType()])),
+                'ventilation' => sprintf('Wentylacja: %s', strtolower($ventilationTypes[$house->getVentilationType()])),
+                'heating_details' => $heatingDetails,
             );
         }
 

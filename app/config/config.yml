@@ -69,6 +69,9 @@ doctrine:
                 radians: Kraken\WarmBundle\Query\Mysql\Radians
         auto_generate_proxy_classes: %kernel.debug%
         auto_mapping: true
+        metadata_cache_driver: array
+        query_cache_driver: array
+        result_cache_driver: array
 
 # Swiftmailer Configuration
 swiftmailer:
