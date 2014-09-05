@@ -180,6 +180,9 @@ class Building implements BuildingInterface
             if ($house->getRoofIsolationLayer()) {
                 $roofIsolation = sprintf('izolacja: %s %scm', $house->getRoofIsolationLayer()->getMaterial()->getName(), $house->getRoofIsolationLayer()->getSize());
                 $roofInformation[] = $roofIsolation;
+            } elseif ($house->getHighestCeilingIsolationLayer()) {
+                $roofIsolation = sprintf('izolacja: %s %scm', $house->getHighestCeilingIsolationLayer()->getMaterial()->getName(), $house->getHighestCeilingIsolationLayer()->getSize());
+                $roofInformation[] = $roofIsolation;
             }
 
             if (isset($atticInUse)) {
