@@ -86,9 +86,11 @@ class Building implements BuildingInterface
             'steep' => 'Dach dwuspadowy stromy',
         );
 
-        $atticInUse = $this->isAtticHeated()
-            ? 'poddasze ogrzewane'
-            : 'poddasze nieogrzewane';
+        if ($this->getHouse()->getRoofType() != 'flat') {
+            $atticInUse = $this->isAtticHeated()
+                ? 'poddasze ogrzewane'
+                : 'poddasze nieogrzewane';
+        }
 
         $withBasement = $house->getHasBasement() ? 'Podpiwniczony' : 'Bez piwnic';
         $withGarage = $house->getHasGarage() ? 'z garażem' : 'bez garażu';
@@ -179,7 +181,10 @@ class Building implements BuildingInterface
                 $roofIsolation = sprintf('izolacja: %s %scm', $house->getRoofIsolationLayer()->getMaterial()->getName(), $house->getRoofIsolationLayer()->getSize());
                 $roofInformation[] = $roofIsolation;
             }
-            $roofInformation[] = $atticInUse;
+
+            if (isset($atticInUse)) {
+                $roofInformation[] = $atticInUse;
+            }
 
             $desc = array(
                 'type' => $types[$type].' '.$floor.' ('.$sizes.')',
