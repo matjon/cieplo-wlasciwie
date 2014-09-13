@@ -789,6 +789,11 @@ class Calculation
      */
     public function getFuelConsumption()
     {
+        // in case someone put amount in kgs, not in tons
+        if ((stristr($this->getFuelType(), 'coal') || $this->getFuelType() == 'pellet' || $this->getFuelType() == 'coke') && $this->fuel_consumption >= 1000) {
+            return $this->fuel_consumption/1000;
+        }
+
         return $this->fuel_consumption;
     }
 

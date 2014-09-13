@@ -190,7 +190,7 @@ class Building implements BuildingInterface
             }
 
             $desc = array(
-                'type' => $types[$type].' '.$floor.' ('.$sizes.')',
+                'type' => $types[$type].' '.$floor.' A.D. '.$this->instance->getConstructionYear().' ('.$sizes.')',
                 'walls' => 'Ściany: '.implode(' + ', $wallDetails),
                 'roof' => implode(', ', $roofInformation),
                 'ground' => implode(', ', array($withBasement, $withGarage)),
