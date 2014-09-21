@@ -73,7 +73,7 @@ class UpgradeService
             $l->setMaterial($m);
             $l->setSize($isolationSize);
 
-            if ($flatRoof) {
+            if ($flatRoof || !$this->building->isAtticHeated()) {
                 $house->setHighestCeilingIsolationLayer($l);
             } else {
                 $house->setRoofIsolationLayer($l);
