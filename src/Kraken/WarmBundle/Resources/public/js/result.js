@@ -27,6 +27,9 @@ $(function () {
             dateTimeLabelFormats: { // don't display the dummy year
                 month: '%e.%m',
                 year: '%b'
+            },
+            title: {
+                text: 'Data'
             }
         },
         yAxis: {
@@ -74,7 +77,7 @@ $(function () {
     };
 
     $.getJSON(Routing.generate('details_climate'), function(data) {
-        climateChartOptions.series.push(data.series);
+        climateChartOptions.series = data.series;
         createClimateChart(climateChartOptions);
     });
 

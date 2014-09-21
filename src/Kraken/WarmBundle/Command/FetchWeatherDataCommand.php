@@ -11,7 +11,7 @@ class FetchWeatherDataCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('kraken:weather:fetch')
+            ->setName('kraken:weather:fetch_averages')
             ->setDescription('Fetches list of cities and weather data for each city')
         ;
     }

@@ -53,11 +53,10 @@
           Możesz później wrócić do tej strony, przesłać komuś te wyniki<br /> lub umieścić na forum. <br />Po prostu skopiuj ten adres: <strong><a href="{{ resultUrl }}">{{ resultUrl }}</a></strong>
       </div>
 
-      <h3>Warunki lokalne</h3>
+      <h3>Warunki klimatyczne ({{ city.name }})</h3>
       <p>Sezon grzewczy trwa u ciebie ok. <strong>{{ heatingSeason.getSeasonLength(calc) }} dni</strong>.</p>
       <p>Średnia temperatura zewnętrzna w sezonie grzewczym to <strong>{{ heatingSeason.getAverageTemperature(calc)|number_format(2, ',', ' ') }}&deg;C</strong>.</p>
       <div id="climate_chart"></div>
-      <p class="pull-right"><small>Dane: weather.msn.com</small></p>
     </div>
   </div>
 
@@ -145,7 +144,7 @@
           <dt>{{ calculator.yearlyEnergyConsumption|number_format(0, ',', ' ') }}kWh</dt>
           <dd>tyle ciepła zużyje dom w ciągu całego sezonu grzewczego</dd>
           <dt>{{ calculator.yearlyEnergyConsumptionFactor|number_format(0, ',', ' ') }}kWh/m<sup>2</sup>*rok</dt>
-          <dd>zużycie roczne energii w przeliczeniu na 1m<sup>2</sup> - zalicza twój dom do klasy energetycznej {{ classifier.class }}</dd>
+          <dd>zużycie roczne energii w przeliczeniu na 1m<sup>2</sup> - zalicza twój dom do klasy energetycznej&nbsp;{{ classifier.class }}</dd>
         </dl>
         <h4>W najmroźniejszy dzień zimy <small>średnia dobowa {{ heatingSeason.getLowestTemperature()|number_format(0, ',', ' ') }}&deg;C na zewnątrz</small></h4>
         <dl>

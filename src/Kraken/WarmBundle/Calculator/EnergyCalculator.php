@@ -38,6 +38,21 @@ class EnergyCalculator
         return $energy/1000;
     }
 
+    /*
+     * Amount of energy in kWh consumed during previous heating season (depends on location)
+     */
+    public function getLastYearEnergyConsumption()
+    {
+        $lastYearTemperatures = $this->heating_season->getLastYearDailyTemperatures();
+        $energy = 0;
+
+        foreach ($lastYearTemperatures as $t) {
+            $energy += $this->getHeatingPower($t->getValue()) * 24; // 24h
+        }
+
+        return $energy/1000;
+    }
+
     public function getNecessaryStovePower($fuel = 'coal')
     {
         $power = $this->getMaxHeatingPower() / 1000;
@@ -84,7 +99,7 @@ class EnergyCalculator
             throw new \RuntimeException("Fuel consumption info not provided");
         }
 
-        $efficiency = $this->getYearlyEnergyConsumption()/$paidEnergy;
+        $efficiency = $this->getLastYearEnergyConsumption()/$paidEnergy;
 
         return round($efficiency, 1);
     }

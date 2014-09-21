@@ -5,7 +5,7 @@ namespace Kraken\WarmBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Kraken\WarmBundle\Repository\TemperatureRepository")
  * @ORM\Table(name="temperature")
  */
 class Temperature
@@ -16,6 +16,11 @@ class Temperature
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    protected $type;
 
     /**
      * @ORM\Column(type="integer", length=2)
@@ -45,6 +50,18 @@ class Temperature
     public function getId()
     {
         return $this->id;
+    }
+
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
     }
 
     /**
