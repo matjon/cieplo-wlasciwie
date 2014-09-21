@@ -23,11 +23,11 @@ class LoadWeatherData implements FixtureInterface
                 continue;
             }
 
-            $city = new City();
-            $city->setName($cityData['name']);
-            $city->setLatitude($cityData['lat']);
-            $city->setLongitude($cityData['lon']);
-            $manager->persist($city);
+            $city = $manager->getRepository('KrakenWarmBundle:City')->findOneByName($cityData['name']);
+
+            if (!$city) {
+                continue;
+            }
 
             $cache = dirname(__DIR__) . '/weather/'.$code.'.json';
             if (file_exists($cache)) {
@@ -38,8 +38,13 @@ class LoadWeatherData implements FixtureInterface
 
             foreach ($temperatures as $month => $monthData) {
                 foreach ($monthData as $day => $value) {
+                    if ($month > 4 && $month < 9) {
+                        continue;
+                    }
+
                     $t = new Temperature();
                     $t->setMonth($month);
+                    $t->setType('average');
                     $t->setDay($day);
                     $t->setValue($value);
                     $t->setCity($city);

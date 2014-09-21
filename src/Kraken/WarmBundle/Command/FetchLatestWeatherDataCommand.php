@@ -116,12 +116,12 @@ class FetchLatestWeatherDataCommand extends ContainerAwareCommand
                         $month[0],
                         $month[1]
                     );
-                    //echo $dataUrl.PHP_EOL;
+                    echo $dataUrl.PHP_EOL;
 
                     $crawler = $client->request('GET', $dataUrl);
 
                     $row = array();
-                    $nodeValues = $crawler->filter('.monthly-history td')->each(function ($node, $i) use (&$row, &$data) {
+                    $nodeValues = $crawler->filter('.monthly-history td')->each(function ($node, $i) use (&$row, &$data, &$rowsThisMonth) {
                         //echo $i.': '.$node->text().PHP_EOL;
 
                         if ($i % 10 >= 0 && $i % 10 < 2) {

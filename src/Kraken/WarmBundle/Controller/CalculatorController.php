@@ -346,18 +346,51 @@ class CalculatorController extends Controller
 
         $this->get('kraken_warm.instance')->setCalculation($calc);
 
-        $c = $this->get('kraken_warm.energy_calculator');
+        $nearestCity = $this->get('kraken_warm.city_locator')->findNearestCity();
 
-        $days = $this->getDoctrine()->getRepository('KrakenWarmBundle:Temperature')
-            ->findBy(array('city' => $this->get('kraken_warm.city_locator')->findNearestCity()), array('month' => 'ASC', 'day' => 'ASC'));
+        $lastWinter = $this->get('doctrine.orm.entity_manager')->createQueryBuilder()
+                ->select('t')
+                ->from('KrakenWarmBundle:Temperature', 't')
+                ->where('t.type = ?1')
+                ->andWhere('t.city = ?2')
+                ->groupBy('t.month', 't.day')
+                ->orderBy('t.id')
+                ->setParameter(1, 'yearly')
+                ->setParameter(2, $nearestCity)
+                ->getQuery()
+                ->getResult();
+
+        $averageWinter = $this->get('doctrine.orm.entity_manager')->createQueryBuilder()
+                ->select('t')
+                ->from('KrakenWarmBundle:Temperature', 't')
+                ->where('t.type = ?1')
+                ->andWhere('t.city = ?2')
+                ->groupBy('t.month', 't.day')
+                ->orderBy('t.id')
+                ->setParameter(1, 'average')
+                ->setParameter(2, $nearestCity)
+                ->getQuery()
+                ->getResult();
 
         $temperatures = array(
-            'series' => array('showInLegend' => false, 'name' => 'Średnia temperatura zewn.', 'data' => array()),
+            'series' => array(
+                array('showInLegend' => true, 'name' => 'Ostatnia zima', 'data' => array()),
+                array('showInLegend' => true, 'name' => 'Średnia wieloletnia', 'color' => '#888888', 'data' => array()),
+            )
         );
 
-        foreach ($days as $d) {
-            $temperatures['series']['data'][] = array(mktime(0, 0, 0, $d->getMonth(), $d->getDay(), 1970)*1000, (double) $d->getValue());
+        foreach ($lastWinter as $d) {
+            $year = $d->getMonth() >= 9 ? 1970 : 1971;
+            $temperatures['series'][0]['data'][] = array(mktime(0,0,0, $d->getMonth(), $d->getDay(), $year)*1000, (double) $d->getValue());
         }
+
+        foreach ($averageWinter as $d) {
+            $year = $d->getMonth() >= 9 ? 1970 : 1971;
+            $temperatures['series'][1]['data'][] = array(mktime(0,0,0, $d->getMonth(), $d->getDay(), $year)*1000, (double) $d->getValue());
+        }
+
+        usort($temperatures['series'][0]['data'], function ($a, $b) { if ($a[0] == $b[0]) return 0; return ($a[0] < $b[0]) ? -1 : 1; });
+        usort($temperatures['series'][1]['data'], function ($a, $b) { if ($a[0] == $b[0]) return 0; return ($a[0] < $b[0]) ? -1 : 1; });
 
         return new JsonResponse($temperatures);
     }

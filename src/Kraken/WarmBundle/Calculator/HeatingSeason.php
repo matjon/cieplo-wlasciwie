@@ -42,9 +42,29 @@ class HeatingSeason
             ->createQueryBuilder()
             ->select('t')
             ->from('KrakenWarmBundle:Temperature', 't')
-            ->where('t.value < ?1')
+            ->where('t.type = ?0')
+            ->andWhere('t.value < ?1')
             ->andWhere('t.city = ?2')
             ->setParameters(array(
+                0 => 'average',
+                1 => self::HEATING_SEASON_THRESHOLD,
+                2 => $this->locator->findNearestCity($this->instance),
+            ))
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getLastYearDailyTemperatures()
+    {
+        return $this->em
+            ->createQueryBuilder()
+            ->select('t')
+            ->from('KrakenWarmBundle:Temperature', 't')
+            ->where('t.type = ?0')
+            ->andWhere('t.value < ?1')
+            ->andWhere('t.city = ?2')
+            ->setParameters(array(
+                0 => 'average',
                 1 => self::HEATING_SEASON_THRESHOLD,
                 2 => $this->locator->findNearestCity($this->instance),
             ))
@@ -62,9 +82,11 @@ class HeatingSeason
                 ->createQueryBuilder()
                 ->select('AVG(t.value) as avgTemp')
                 ->from('KrakenWarmBundle:Temperature', 't')
-                ->where('t.value < ?1')
+                ->where('t.type = ?0')
+                ->andWhere('t.value < ?1')
                 ->andWhere('t.city = ?2')
                 ->setParameters(array(
+                    0 => 'average',
                     1 => self::HEATING_SEASON_THRESHOLD,
                     2 => $this->locator->findNearestCity($this->instance),
                 ))
