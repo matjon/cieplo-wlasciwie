@@ -29,9 +29,6 @@ class HouseType extends AbstractType
                     )
                 ),
             ))
-            ->add('number_floors', null, array(
-                'label' => 'Liczba pięter',
-            ))
             ->add('floor_height', 'choice', array(
                 'choices' => array(
                     '2.3' => 'Niskie (poniżej 2,5m)',
@@ -41,8 +38,14 @@ class HouseType extends AbstractType
                 'label' => 'Wysokość piętra',
                 'required' => true,
             ))
+            ->add('number_floors', null, array(
+                'label' => 'Liczba wszystkich pięter budynku',
+                'attr' => array(
+                    'help_text' => 'Policz zarówno te zamieszkałe i ogrzewane jak i nieogrzewaną piwnicę czy strych',
+                )
+            ))
             ->add('number_heated_floors', null, array(
-                'label' => 'Liczba ogrzewanych pięter',
+                'label' => 'Liczba pięter ogrzewanych',
             ))
             ->add('whats_unheated', 'choice', array(
                 'choices' => array(
@@ -51,7 +54,7 @@ class HouseType extends AbstractType
                     'floor' => 'Jedno z pięter',
                     'attic' => 'Poddasze',
                 ),
-                'label' => 'Nieogrzewane piętro',
+                'label' => 'Które z pięter jest nieogrzewane?',
                 'required' => false
             ))
             ->add('has_balcony', null, array(

@@ -25,16 +25,14 @@
           <legend>Wymiary budynku</legend>
           {{ form_row(form.building_length) }}
           {{ form_row(form.building_width) }}
+          {{ form_row(form.floor_height) }}
+
+          <legend>Powierzchnia ogrzewana</legend>
           {{ form_row(form.number_floors) }}
-          <div class="alert alert-success">
-              <h4>Ile pięter ma mój dom?</h4>
-              Policz wszystkie kondygnacje: parter, piwnicę, poddasze/strych. <br />Nie bierz pod uwagę np. stryszku, na który można wejść tylko na czworaka.
-          </div>
           {{ form_row(form.number_heated_floors) }}
           <div id="whats_unheated" style="display:none">
                 {{ form_row(form.whats_unheated) }}
           </div>
-          {{ form_row(form.floor_height) }}
           {{ form_row(form.has_basement) }}
 
           <legend>Ściany zewnętrzne</legend>

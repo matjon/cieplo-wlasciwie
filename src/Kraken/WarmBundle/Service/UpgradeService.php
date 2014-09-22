@@ -182,7 +182,7 @@ class UpgradeService
             }
         }
 
-        $apartment = $house->getApartment();
+        $apartment = $instance->getHouse()->getApartment();
 
         if ($apartment) {
             //floor
@@ -261,7 +261,7 @@ class UpgradeService
         $gain = array();
         foreach ($variants as $key => $row)
         {
-            if ($row['gain'] < 0.02) {
+            if ($row['gain'] < 0.05) {
                 unset($variants[$key]);
                 continue;
             }
