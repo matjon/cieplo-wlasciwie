@@ -37,7 +37,7 @@ function bindEvents() {
         updateAreaStuff();
     });
     
-    $('#calculation_number_floors').change(function() {
+    $('#calculation_number_heated_floors').change(function() {
         updateAreaStuff();
     });
     
@@ -47,8 +47,10 @@ function bindEvents() {
 }
 
 function updateAreaStuff() {
+    var numberFloors = $('#calculation_number_heated_floors').val();
+    $('#calculation_number_floors').val(numberFloors);
+    
     var area = $('#calculation_area').val();
-    var numberFloors = $('#calculation_number_floors').val();
     var wallSize = $('#calculation_walls_0_construction_layer_size').val();
     
     if (area == 0) {

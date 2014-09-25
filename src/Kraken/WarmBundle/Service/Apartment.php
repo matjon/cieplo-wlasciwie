@@ -237,22 +237,6 @@ class Apartment extends Building implements BuildingInterface
         return $house->getNumberFloors();
     }
 
-//     public function getInternalBuildingLength()
-//     {
-//         $wall = $this->instance->getHouse()->getWalls()->first();
-//         $l = $this->instance->getHouse()->getBuildingLength();
-// 
-//         return $l;
-//     }
-// 
-//     public function getInternalBuildingWidth()
-//     {
-//         $wall = $this->instance->getHouse()->getWalls()->first();
-//         $w = $this->instance->getHouse()->getBuildingWidth();
-// 
-//         return $w;
-//     }
-
     public function getFloors()
     {
         $nbFloors = $this->getHouse()->getNumberFloors();
