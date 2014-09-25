@@ -64,7 +64,7 @@ class Building implements BuildingInterface
         );
 
         $house = $this->instance->getHouse();
-        $sizes = sprintf('%sm x %sm = %sm2 w obrysie', $house->getBuildingLength(), $house->getBuildingWidth(), $house->getBuildingWidth() * $house->getBuildingLength());
+        $sizes = sprintf('%sm x %sm = %sm2 w obrysie', $house->getBuildingLength(), $house->getBuildingWidth(), round($house->getBuildingWidth() * $house->getBuildingLength()));
         $nbFloors = $house->getNumberFloors();
 
         if ($type == 'apartment') {

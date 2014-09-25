@@ -23,8 +23,11 @@
           {% endif %}
 
           <legend>Wymiary mieszkania</legend>
-          {{ form_row(form.building_length) }}
-          {{ form_row(form.building_width) }}
+          {{ form_row(form.area) }}
+          <div style="display:none">
+              {{ form_row(form.building_length) }}
+              {{ form_row(form.building_width) }}
+          </div>
           {{ form_row(form.floor_height) }}
           {{ form_row(form.number_floors) }}
           {{ form_row(form.number_heated_floors) }}

@@ -5,10 +5,14 @@ $(document).ready(function () {
 });
 
 function initialize() {
+    updateAreaStuff();
     updateWallStuff();
     updateFloorsStuff();
     updateCeilingIsolation();
     updateFloorIsolation();
+    
+    $('#calculation_walls_0_construction_layer_material').parent().prev().text('Główny materiał ściany');
+    $('#calculation_walls_0_construction_layer_size').parent().parent().prev().text('Grubość ściany');
 }
 
 function bindEvents() {
@@ -28,6 +32,45 @@ function bindEvents() {
     $('#calculation_walls_0_has_isolation_outside').change(function() {
         updateWallStuff();
     });
+    
+    $('#calculation_area').change(function() {
+        updateAreaStuff();
+    });
+    
+    $('#calculation_number_floors').change(function() {
+        updateAreaStuff();
+    });
+    
+    $('#calculation_walls_0_construction_layer_size').change(function() {
+        updateAreaStuff();
+    });
+}
+
+function updateAreaStuff() {
+    var area = $('#calculation_area').val();
+    var numberFloors = $('#calculation_number_floors').val();
+    var wallSize = $('#calculation_walls_0_construction_layer_size').val();
+    
+    if (area == 0) {
+        var length = parseFloat($('#calculation_building_length').val());
+        length -= 2*(wallSize/100);
+        
+        $('#calculation_area').val(Math.ceil(length*length*1.1));
+        
+        return;
+    }
+    
+    var size = Math.sqrt(area) * 1.03;
+    
+    if (numberFloors > 1) {
+        size = Math.round(size / numberFloors);
+    }
+    
+    size += 2*(wallSize/100);
+    size = size.toFixed(2);
+    
+    $('#calculation_building_length').val(size);
+    $('#calculation_building_width').val(size);
 }
 
 function updateFloorsStuff() {

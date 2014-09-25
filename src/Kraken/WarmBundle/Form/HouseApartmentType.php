@@ -27,12 +27,22 @@ class HouseApartmentType extends HouseType
             ->remove('building_length')
             ->remove('building_width')
             ->remove('number_floors')
+            ->remove('number_heated_floors')
             ->add('apartment', new ApartmentType(), array(
                 'required' => false,
             ))
             ->add('has_balcony', null, array(
                 'required' => false,
                 'label' => 'Mieszkanie posiada balkon(y)'
+            ))
+            ->add('area', null, array(
+                'label' => 'Powierzchnia mieszkania',
+                'attr'  => array(
+                    'input_group' => array(
+                        'append'  => 'm2'
+                    )
+                ),
+                'mapped' => false
             ))
             ->add('building_length', null, array(
                 'label' => 'Długość mieszkania',
@@ -51,7 +61,12 @@ class HouseApartmentType extends HouseType
                 ),
             ))
             ->add('number_floors', null, array(
-                'label' => 'Liczba pięter mieszkania'
+                'label' => 'Łączna liczba poziomów (pięter) mieszkania',
+                'data' => 1,
+            ))
+            ->add('number_heated_floors', null, array(
+                'label' => 'Liczba ogrzewanych poziomów (pięter) mieszkania',
+                'data' => 1,
             ))
             ->add('lowest_ceiling_isolation_layer', new LayerType(), array(
                 'label' => 'Izolacja podłogi',
