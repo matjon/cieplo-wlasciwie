@@ -86,15 +86,13 @@ function updateFloorsStuff() {
 }
 
 function updateWallStuff() {
-    $('#calculation_walls_0_has_another_layer').change(function() {
-        $('#wall_outside_layer').toggle($(this).is(':checked'));
-    });
-    $('#calculation_walls_0_has_isolation_inside').change(function() {
-        $('#wall_isolation_layer').toggle($(this).is(':checked'));
-    });
-    $('#calculation_walls_0_has_isolation_outside').change(function() {
-        $('#wall_extra_isolation_layer').toggle($(this).is(':checked'));
-    });
+    $('#calculation_walls_0_has_another_layer').prop('checked', $('#calculation_walls_0_outside_layer_size').val());
+    $('#calculation_walls_0_has_isolation_inside').prop('checked', $('#calculation_walls_0_isolation_layer_size').val());
+    $('#calculation_walls_0_has_isolation_outside').prop('checked', $('#calculation_walls_0_extra_isolation_layer_size').val());
+
+    $('#wall_outside_layer').toggle($('#calculation_walls_0_has_another_layer').is(':checked'));
+    $('#wall_isolation_layer').toggle($('#calculation_walls_0_has_isolation_inside').is(':checked'));
+    $('#wall_extra_isolation_layer').toggle($('#calculation_walls_0_has_isolation_outside').is(':checked'));
 }
 
 function updateRoofType() {
