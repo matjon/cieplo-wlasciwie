@@ -73,14 +73,18 @@
           {{ form_row(form.latitude) }}
           {{ form_row(form.longitude) }}
 
+          <legend>Wymagania cieplne</legend>
+          {{ form_row(form.indoor_temperature) }}
           <legend>Źródło ciepła</legend>
-          <p><small>Podając informacje o sposobie ogrzewania i zużyciu paliwa, dowiesz się jak efektywnie działa ogrzewanie i w jaki sposób zaoszczędzić - nie rezygnując z ciepła w domu.</small></p>
+          <div class="alert alert-warning" ng-show="heater_not_required && room_type != 'bathroom'">
+              <h4>Ta część nie jest niezbędna do bilansu grzewczego budynku</h4>
+              Ale jeśli powiesz, czym i za ile ogrzewasz, to będziemy mogli ocenić, na ile efektywny jest twój sposób ogrzewania i co zrobić, by było taniej.
+          </div>
           {{ form_row(form.fuel_type) }}
           {{ form_row(form.stove_type) }}
           {{ form_row(form.stove_power) }}
           {{ form_row(form.fuel_consumption) }}
           {{ form_row(form.fuel_cost) }}
-          {{ form_row(form.indoor_temperature) }}
 
           <legend>Pozostałe</legend>
           <div class="form-group">

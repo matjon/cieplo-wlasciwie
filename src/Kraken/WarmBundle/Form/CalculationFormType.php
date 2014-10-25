@@ -102,7 +102,7 @@ class CalculationFormType extends AbstractType
                     'input_group' => array(
                         'append'  => '&deg;C',
                     ),
-                    'help_text' => 'Chodzi o średnią dobową. Jeśli np. w dzień zwykle jest 22st.C, a nocą 18st.C, to wpisz 20st.C',
+                    'help_text' => 'Podaj średnią dobową temperaturę, jaką uznajesz za komfortową w domu zimą bez noszenia swetra i kaleson. Np. w dzień +22, w nocy +18 - wpisz 20 stopni',
                 ),
             ))
             ->add('latitude', 'hidden')
