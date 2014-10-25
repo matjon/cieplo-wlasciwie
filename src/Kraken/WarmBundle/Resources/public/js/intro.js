@@ -12,6 +12,12 @@ function bindEvents() {
     $('#calculation_fuel_type').change(function() {
         updateFuelType();
     });
+
+    $('#wants_email').prop('checked', $('#give_email').val());
+
+    $('#wants_email').change(function() {
+        $('#give_email').toggle($('#wants_email').is(':checked'));
+    });
 }
 
 function updateFuelType() {

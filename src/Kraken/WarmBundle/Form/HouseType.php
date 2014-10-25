@@ -41,7 +41,7 @@ class HouseType extends AbstractType
             ->add('number_floors', null, array(
                 'label' => 'Liczba wszystkich pięter budynku',
                 'attr' => array(
-                    'help_text' => 'Policz zarówno te zamieszkałe i ogrzewane jak i nieogrzewaną piwnicę czy strych',
+                    'help_text' => 'Wlicz tutaj piwnicę, parter, każde z pięter, poddasze/strych - obojętnie czy ogrzewane, czy nie.',
                 )
             ))
             ->add('number_heated_floors', null, array(

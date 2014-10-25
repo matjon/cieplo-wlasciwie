@@ -83,19 +83,28 @@
           {{ form_row(form.indoor_temperature) }}
 
           <legend>Pozostałe</legend>
-          {{ form_row(form.email) }}
           <div class="form-group">
-              <div class="col-lg-4"></div>
-              <div class="col-lg-8">
-                <div class="alert alert-info">
-                    <strong>Adres e-mail nie jest wymagany.</strong> Jeśli go podasz, wyślemy ci link do wyniku, abyś go nie zgubił.<br />Wynik znajdziesz też w zakładce "Moje wyniki", ale tylko na tym komputerze.
-                </div>
+              <div class="checkbox">
+                  <label for="has_email">
+                      <input type="checkbox" id="wants_email" name="wants_email"/>Chcę dostać e-mail z linkiem do wyniku obliczeń
+                  </label>
+              </div>
+          </div>
+          <div id="give_email" style="display:none">
+              {{ form_row(form.email) }}
+              <div class="form-group">
+                  <div class="col-lg-4"></div>
+                  <div class="col-lg-8">
+                    <div class="alert alert-info">
+                        <strong>Adres e-mail nie jest wymagany.</strong> Jeśli go podasz, wyślemy ci link do wyniku, abyś go nie zgubił.<br />Wynik znajdziesz też w zakładce "Moje wyniki", ale tylko na tym komputerze.
+                    </div>
 
-                <p><span class="required">*</span> - pola wymagane</p>
+                  </div>
               </div>
           </div>
 
           <div class="form-actions">
+            <p><span class="required">*</span> - pola wymagane</p>
             {{ form_rest(form) }}
             <button type="submit" class="btn btn-primary pull-right">Dalej</button>
           </div>
