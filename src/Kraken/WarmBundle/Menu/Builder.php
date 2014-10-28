@@ -17,6 +17,7 @@ class Builder extends ContainerAware
         $menu->addChild('Czemu nie działa', array('route' => 'why_not_works'));
         $menu->addChild('Zasady', array('route' => 'rules'));
         $menu->addChild('Moje wyniki', array('route' => 'my_results'));
+        $menu->addChild('Kontakt', array('uri' => 'http://czysteogrzewanie.pl/kontakt'));
 
         return $menu;
     }

@@ -66,8 +66,18 @@ class HouseType extends AbstractType
                     'traditional' => 'Tradycyjna - murowana lub drewniana',
                     'canadian' => 'Dom kanadyjski, szkieletowy',
                 ),
-                'label' => 'Typ konstrukcji',
+                'label' => 'Typ konstrukcji budynku',
                 'required' => true,
+            ))
+            ->add('wall_size', 'integer', array(
+                'required' => true,
+                'label' => 'Całkowita grubość ściany zewnętrznej',
+                'mapped' => false,
+                'attr'  => array(
+                    'input_group' => array(
+                        'append' => 'cm'
+                    )
+                ),
             ))
             ->add('walls','collection', array(
                 'type' =>  new WallType(),
@@ -81,6 +91,7 @@ class HouseType extends AbstractType
                 )
             ))
             ->add('doors_type', 'choice', array(
+                'required' => false,
                 'choices' => array(
                     'old_wooden' => 'Stare drewniane',
                     'old_metal' => 'Stare metalowe',

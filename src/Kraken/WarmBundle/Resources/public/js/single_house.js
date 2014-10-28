@@ -11,6 +11,7 @@ function initialize() {
     updateRoofType();
     updateBasementThings();
     analyzeWallSize();
+    calculateWallSize();
 }
 
 function bindEvents() {
@@ -41,20 +42,28 @@ function bindEvents() {
     $('#calculation_construction_type').change(function() {
         updateConstructionType();
     });
+    
+    $('#calculation_wall_size').change(function () {
+        calculateWallSize();
+        analyzeWallSize();
+    });
 
     $('#calculation_walls_0_construction_layer_size').change(function () {
         analyzeWallSize();
     });
 
     $('#calculation_walls_0_isolation_layer_size').change(function () {
+        calculateWallSize();
         analyzeWallSize();
     });
 
     $('#calculation_walls_0_outside_layer_size').change(function () {
+        calculateWallSize();
         analyzeWallSize();
     });
 
     $('#calculation_walls_0_extra_isolation_layer_size').change(function () {
+        calculateWallSize();
         analyzeWallSize();
     });
 }
@@ -83,6 +92,23 @@ function updateFloorsStuff() {
         return;
     }
     $('#whats_unheated').toggle($('#calculation_number_floors').val()-heatedFloorsCount == 1);
+}
+
+function calculateWallSize() {
+    var totalSize = makeInteger($('#calculation_wall_size').val());
+
+    var constructionLayerSize = makeInteger($('#calculation_walls_0_construction_layer_size').val());
+    var isolationLayerSize = makeInteger($('#calculation_walls_0_isolation_layer_size').val());
+    var outsideLayerSize = makeInteger($('#calculation_walls_0_outside_layer_size').val());
+    var extraIsolationLayerSize = makeInteger($('#calculation_walls_0_extra_isolation_layer_size').val());
+    
+    if (totalSize) {
+        var sizeLeft = totalSize - (isolationLayerSize + outsideLayerSize + extraIsolationLayerSize);
+
+        $('#calculation_walls_0_construction_layer_size').val(sizeLeft);
+    } else if (isolationLayerSize + outsideLayerSize + extraIsolationLayerSize > 0) {
+        $('#calculation_wall_size').val(constructionLayerSize + isolationLayerSize + outsideLayerSize + extraIsolationLayerSize);
+    }
 }
 
 function updateWallStuff() {
@@ -118,24 +144,31 @@ function updateConstructionType() {
     $('#calculation_walls_0_has_isolation_outside').parent().parent().toggle(!isCanadian);
     $('#calculation_walls_0_construction_layer_material').parent().parent().toggle(!isCanadian);
     $('#calculation_walls_0_construction_layer_size').parent().parent().parent().toggle(!isCanadian);
+    $('#calculation_walls_0_outside_layer_material').parent().parent().toggle(!isCanadian);
+    $('#calculation_walls_0_outside_layer_size').parent().parent().parent().toggle(!isCanadian);
 
     if (newVal == 'traditional') {
-        $('#calculation_walls_0_construction_layer_material').parent().prev().text('Główny materiał ściany');
+        $('#calculation_walls_0_construction_layer_material').parent().prev().text('Główny materiał ścian zewnętrznych');
         $('#calculation_walls_0_construction_layer_size').parent().parent().prev().text('Grubość ściany');
         
-        $('#calculation_walls_0_isolation_layer_material').parent().prev().text('Materiał');
+        $('#calculation_walls_0_outside_layer_material').parent().prev().text('Materiał drugiej warstwy ścian zewnętrznych');
+        $('#calculation_walls_0_isolation_layer_material').parent().prev().text('Izolacja wewnątrz ścian zewnętrznych');
+        $('#calculation_walls_0_extra_isolation_layer_material').parent().prev().text('Materiał ocieplenia');
+        
         $('#calculation_walls_0_isolation_layer_size').parent().parent().prev().text('Grubość');
     } else {
         var additionalMaterial = 'Drewno liściaste';
         $('#calculation_walls_0_construction_layer_material option:contains(' + additionalMaterial + ')').prop({selected: true});
         $('#calculation_walls_0_construction_layer_size').val(6);
+
+        $('#calculation_walls_0_outside_layer_material').parent().prev().text('Materiał wykończeniowy');
+        $('#calculation_walls_0_outside_layer_size').parent().parent().prev().text('Grubość');
         
-      
-        $('#calculation_walls_0_construction_layer_material').parent().prev().text('Materiał');
-        $('#calculation_walls_0_construction_layer_size').parent().parent().prev().text('Grubość');
+        $('#calculation_walls_0_isolation_layer_material').parent().prev().text('Izolacja wypełniająca ściany');
+        $('#calculation_walls_0_isolation_layer_size').parent().parent().prev().text('Grubość');
         
-        $('#calculation_walls_0_isolation_layer_material').parent().prev().text('Materiał izolacyjny ścian');
-        $('#calculation_walls_0_isolation_layer_size').parent().parent().prev().text('Grubość izolacji');
+        $('#calculation_walls_0_extra_isolation_layer_material').parent().prev().text('Docieplenie od zewnątrz');
+        $('#calculation_walls_0_extra_isolation_layer_size').parent().parent().prev().text('Grubość');
     }
 }
 

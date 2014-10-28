@@ -38,7 +38,11 @@
           <legend>Ściany zewnętrzne</legend>
           {{ form_row(form.construction_type) }}
           {{ form_row(form.walls[0].construction_layer.material) }}
-          {{ form_row(form.walls[0].construction_layer.size) }}
+          {{ form_row(form.wall_size) }}
+
+          <div style="display:none">
+              {{ form_row(form.walls[0].construction_layer.size) }}
+          </div>
 
           {{ form_row(form.walls[0].has_another_layer) }}
             <div id="wall_outside_layer" style="display:none">
