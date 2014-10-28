@@ -12,6 +12,10 @@ function initialize() {
     updateBasementThings();
     analyzeWallSize();
     calculateWallSize();
+
+    if ($('#calculation_wall_size').val() == '' && $('#calculation_walls_0_construction_layer_size').val() > 0) {
+        $('#calculation_wall_size').val($('#calculation_walls_0_construction_layer_size').val());
+    }
 }
 
 function bindEvents() {
@@ -65,6 +69,39 @@ function bindEvents() {
     $('#calculation_walls_0_extra_isolation_layer_size').change(function () {
         calculateWallSize();
         analyzeWallSize();
+    });
+    
+    $('#calculation_walls_0_has_another_layer').change(function () {
+        var newVal = $('#calculation_walls_0_has_another_layer').is(':checked');
+        
+        $('#wall_outside_layer').toggle(newVal);
+        
+        if (!newVal) {
+            $('#calculation_walls_0_outside_layer_material').val('');
+            $('#calculation_walls_0_outside_layer_size').val('');
+        }
+    });
+
+    $('#calculation_walls_0_has_isolation_inside').change(function () {
+        var newVal = $('#calculation_walls_0_has_isolation_inside').is(':checked');
+        
+        $('#wall_isolation_layer').toggle(newVal);
+        
+        if (!newVal) {
+            $('#calculation_walls_0_isolation_layer_material').val('');
+            $('#calculation_walls_0_isolation_layer_size').val('');
+        }
+    });
+
+    $('#calculation_walls_0_has_isolation_outside').change(function () {
+        var newVal = $('#calculation_walls_0_has_isolation_outside').is(':checked');
+        
+        $('#wall_extra_isolation_layer').toggle(newVal);
+        
+        if (!newVal) {
+            $('#calculation_walls_0_extra_isolation_layer_material').val('');
+            $('#calculation_walls_0_extra_isolation_layer_size').val('');
+        }
     });
 }
 
