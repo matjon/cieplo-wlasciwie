@@ -54,8 +54,10 @@
       </div>
 
       <h3>Warunki klimatyczne ({{ city.name }})</h3>
-      <p>Sezon grzewczy trwa u ciebie ok. <strong>{{ heatingSeason.getSeasonLength(calc) }} dni</strong>.</p>
-      <p>Średnia temperatura zewnętrzna w sezonie grzewczym to <strong>{{ heatingSeason.getAverageTemperature(calc)|number_format(2, ',', ' ') }}&deg;C</strong>.</p>
+      {% set averageTemperature = heatingSeason.getAverageTemperature(calc) %}
+      {% set lastYearAverageTemperature = heatingSeason.getLastYearAverageTemperature(calc) %}
+      <p>Przeciętny sezon grzewczy trwa u ciebie ok. <strong>{{ heatingSeason.getSeasonLength(calc) }} dni</strong>, ze średnią temperaturą <strong>{{ averageTemperature|number_format(2, ',', ' ') }}&deg;C</strong>.</p>
+      <p>Poprzedni sezon grzewczy trwał ok. <strong>{{ heatingSeason.getLastSeasonLength(calc) }} dni</strong>, ze średnią temperaturą <strong>{{ lastYearAverageTemperature|number_format(2, ',', ' ') }}&deg;C</strong>.</p>
       <div id="climate_chart"></div>
     </div>
   </div>
