@@ -100,6 +100,7 @@ class Building implements BuildingInterface
         }
 
         $wall = $this->instance->getHouse()->getWalls()->first();
+        $wallSize = 0;
 
         if ($this->instance->getHouse()->getConstructionType() == 'canadian') {
             $wallDetails = array(
@@ -109,16 +110,20 @@ class Building implements BuildingInterface
             $wallDetails = array(
                 $wall->getConstructionLayer()->getMaterial()->getName().' '.$wall->getConstructionLayer()->getSize().'cm'
             );
+            $wallSize += $wall->getConstructionLayer()->getSize();
         }
 
         if ($wall->getIsolationLayer()) {
             $wallDetails[] = $wall->getIsolationLayer()->getMaterial()->getName().' '.$wall->getIsolationLayer()->getSize().'cm';
+            $wallSize += $wall->getIsolationLayer()->getSize();
         }
         if ($wall->getOutsideLayer()) {
             $wallDetails[] = $wall->getOutsideLayer()->getMaterial()->getName().' '.$wall->getOutsideLayer()->getSize().'cm';
+            $wallSize += $wall->getOutsideLayer()->getSize();
         }
         if ($wall->getExtraIsolationLayer()) {
             $wallDetails[] = $wall->getExtraIsolationLayer()->getMaterial()->getName().' '.$wall->getExtraIsolationLayer()->getSize().'cm';
+            $wallSize += $wall->getExtraIsolationLayer()->getSize();
         }
 
         $heatingDetails = sprintf("Ogrzewane piętra: %s, średnia temperatura: %sst.C", $this->getHouse()->getNumberHeatedFloors(), number_format($this->instance->getIndoorTemperature(), 1));
@@ -163,7 +168,7 @@ class Building implements BuildingInterface
 
             $desc = array(
                 'type' => $types[$type].' '.$floor.' ('.$sizes.')',
-                'walls' => 'Ściany: '.implode(' + ', $wallDetails),
+                'walls' => 'Ściany: '.$wallSize.'cm, w tym: '.implode(' + ', $wallDetails),
                 'external_walls' => $externalWalls,
                 'unheated_walls' => $unheatedWalls,
                 'over_under' => sprintf('Piętro wyżej: %s, piętro niżej: %s', strtolower($whatsOverUnder[$apartment->getWhatsOver()]), strtolower($whatsOverUnder[$apartment->getWhatsUnder()])),
@@ -191,7 +196,7 @@ class Building implements BuildingInterface
 
             $desc = array(
                 'type' => $types[$type].' '.$floor.' A.D. '.$this->instance->getConstructionYear().' ('.$sizes.')',
-                'walls' => 'Ściany: '.implode(' + ', $wallDetails),
+                'walls' => 'Ściany: '.$wallSize.'cm, w tym '.implode(' + ', $wallDetails),
                 'roof' => implode(', ', $roofInformation),
                 'ground' => implode(', ', array($withBasement, $withGarage)),
                 'ground_heating' => implode(', ', $groundHeating),

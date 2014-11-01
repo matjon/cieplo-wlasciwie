@@ -71,9 +71,10 @@ class HouseType extends AbstractType
             ))
             ->add('wall_size', 'integer', array(
                 'required' => true,
-                'label' => 'Całkowita grubość ściany zewnętrznej',
+                'label' => 'Grubość ścian zewnętrznych',
                 'mapped' => false,
                 'attr'  => array(
+                    'help_text' => 'Zmierz całkowitą grubość ściany: od tynku wewnątrz do tynku na zewnątrz',
                     'input_group' => array(
                         'append' => 'cm'
                     )
