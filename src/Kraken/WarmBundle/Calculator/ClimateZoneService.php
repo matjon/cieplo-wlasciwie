@@ -47,7 +47,7 @@ class ClimateZoneService
             ($lat >= 52.57 && $lat <= 54.14 && $lon >= 14.10 && $lon <= 19.40) ||
             ($lat >= 53.81 && $lat <= 54.96 && $lon >= 15.49 && $lon <= 19.55)
         )
-        }
+        {
             return 1;
         }
 
