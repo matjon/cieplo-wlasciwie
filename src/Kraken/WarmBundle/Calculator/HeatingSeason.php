@@ -11,7 +11,9 @@ class HeatingSeason
     protected $em;
     protected $locator;
     protected $seasonLength;
+    protected $lastSeasonLength;
     protected $avgTemp;
+    protected $lastYearAvgTemp;
     protected $climate;
 
     const HEATING_SEASON_THRESHOLD = 8;

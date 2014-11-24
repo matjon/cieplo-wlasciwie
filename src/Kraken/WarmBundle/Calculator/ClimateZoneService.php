@@ -26,31 +26,28 @@ class ClimateZoneService
         $lat = $this->instance->getLatitude();
         $lon = $this->instance->getLongitude();
 
-        if ($lat >= 49.15 && $lat <= 49.41 && $lon >= 19.79 && $lon <= 20.31) {
+        if (
+            ($lat >= 49.15 && $lat <= 49.41 && $lon >= 19.79 && $lon <= 20.31) ||
+            ($lat >= 53.65 && $lat <= 54.37 && $lon >= 21.80 && $lon <= 23.70)
+        )
+        {
             return 5;
         }
 
-        if ($lat >= 53.65 && $lat <= 54.37 && $lon >= 21.80 && $lon <= 23.70) {
-            return 5;
-        }
-
-        if ($lat >= 48.90 && $lat <= 49.46 && $lon >= 18.36 && $lon <= 23.05) {
+        if (
+            ($lat >= 48.90 && $lat <= 49.46 && $lon >= 18.36 && $lon <= 23.05) ||
+            ($lat >= 51.78 && $lat <= 54.39 && $lon >= 21.85 && $lon <= 24.07) ||
+            ($lat >= 53.18 && $lat <= 54.39 && $lon >= 20.25 && $lon <= 21.85)
+        )
+        {
             return 4;
         }
 
-        if ($lat >= 51.78 && $lat <= 54.39 && $lon >= 21.85 && $lon <= 24.07) {
-            return 4;
+        if (
+            ($lat >= 52.57 && $lat <= 54.14 && $lon >= 14.10 && $lon <= 19.40) ||
+            ($lat >= 53.81 && $lat <= 54.96 && $lon >= 15.49 && $lon <= 19.55)
+        )
         }
-
-        if ($lat >= 53.18 && $lat <= 54.39 && $lon >= 20.25 && $lon <= 21.85) {
-            return 4;
-        }
-
-        if ($lat >= 52.57 && $lat <= 54.14 && $lon >= 14.10 && $lon <= 19.40) {
-            return 1;
-        }
-
-        if ($lat >= 53.81 && $lat <= 54.96 && $lon >= 15.49 && $lon <= 19.55) {
             return 1;
         }
 
