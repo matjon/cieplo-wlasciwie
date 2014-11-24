@@ -5,7 +5,6 @@ namespace Kraken\WarmBundle\Service;
 use Kraken\WarmBundle\Calculator\BuildingInterface;
 use Kraken\WarmBundle\Entity\Calculation;
 use Kraken\WarmBundle\Entity\Wall;
-use Kraken\WarmBundle\Entity\House;
 use Kraken\WarmBundle\Service\InstanceService;
 use Kraken\WarmBundle\Service\VentilationService;
 
@@ -14,6 +13,11 @@ class Building implements BuildingInterface
     protected $instance;
     protected $house_service;
     protected $ventilation;
+    protected $wall;
+    protected $wall_factory;
+
+    protected $lossToOutside;
+    protected $lossToUnheated;
 
     const CEILING_THICKNESS = 0.35;
     const HEATING_SEASON_DAYS = 200;
@@ -340,7 +344,9 @@ class Building implements BuildingInterface
         $wall = $this->instance->getHouse()->getWalls()->first();
         $house = $wall->getHouse();
 
-        return $this->doors_u_factor[$house->getDoorsType()];
+        return isset($this->doors_u_factor[$house->getDoorsType()])
+            ? $this->doors_u_factor[$house->getDoorsType()]
+            : $this->doors_u_factor['other'];
     }
 
     public function getDoorsEnergyLossFactor(Wall $wall = null)

@@ -17,6 +17,9 @@ class FuelService
         'electricity' => 1,
     );
 
+    /**
+     * @param string $fuelType
+     */
     public function getFuelEnergy($fuelType, $amount)
     {
         if (!isset($this->fuelsEnergy[$fuelType])) {

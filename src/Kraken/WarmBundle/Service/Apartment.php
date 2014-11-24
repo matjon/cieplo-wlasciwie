@@ -4,7 +4,6 @@ namespace Kraken\WarmBundle\Service;
 
 use Kraken\WarmBundle\Calculator\BuildingInterface;
 use Kraken\WarmBundle\Entity\Wall;
-use Kraken\WarmBundle\Entity\House;
 
 class Apartment extends Building implements BuildingInterface
 {

@@ -57,6 +57,9 @@ class Temperature
         return $this->type;
     }
 
+    /**
+     * @param string $type
+     */
     public function setType($type)
     {
         $this->type = $type;

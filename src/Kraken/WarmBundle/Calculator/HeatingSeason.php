@@ -3,7 +3,6 @@
 namespace Kraken\WarmBundle\Calculator;
 
 use Doctrine\ORM\EntityManager;
-
 use Kraken\WarmBundle\Service\InstanceService;
 
 class HeatingSeason

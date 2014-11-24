@@ -2,8 +2,6 @@
 
 namespace Kraken\WarmBundle\Service;
 
-use Kraken\WarmBundle\Entity\House;
-
 class VentilationService
 {
     protected $instance;

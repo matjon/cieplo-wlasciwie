@@ -69,29 +69,6 @@ class Layer
     }
 
     /**
-     * Set wall
-     *
-     * @param  \Kraken\WarmBundle\Entity\Wall $wall
-     * @return Layer
-     */
-    public function setWall(\Kraken\WarmBundle\Entity\Wall $wall)
-    {
-        $this->wall = $wall;
-
-        return $this;
-    }
-
-    /**
-     * Get wall
-     *
-     * @return \Kraken\WarmBundle\Entity\Wall
-     */
-    public function getWall()
-    {
-        return $this->wall;
-    }
-
-    /**
      * Set material
      *
      * @param  \Kraken\WarmBundle\Entity\Material $material

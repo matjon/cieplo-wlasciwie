@@ -681,7 +681,7 @@ class House
     /**
      * Get calculations
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Calculation[]
      */
     public function getCalculations()
     {

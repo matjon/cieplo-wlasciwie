@@ -18,7 +18,7 @@ class AdviceGenerator
         $this->instance = $instance->get();
     }
 
-    public function getAdviceFor(Calculation $calc)
+    public function getAdvice()
     {
         $advice = array();
 
@@ -56,7 +56,9 @@ class AdviceGenerator
                     ' Możesz też <a href="http://czysteogrzewanie.pl/zakupy/mocy-przybywaj-dobor-mocy-kotla-weglowego/#Co_zrobi_z_przewymiarowanym_kotem" target="_blank">rozwiązać problem tanio.</a>';
             }
 
-        } catch (\Exception $e) {}
+        } catch (\Exception $e) {
+            // skip if any case is not applicable
+        }
 
         if ($heatingPower <= 8000) {
             $advice['Szkoda życia na szuflowanie węgla'] = "Twój dom jest energooszczędny, <a href='http://czysteogrzewanie.pl/2014/05/nie-pakuj-smieciucha-do-nowego-domu'>nie pakuj do niego 'śmieciucha'</a>! Nie oszczędzisz tyle ile myślisz, a uprzykrzysz sobie życie.";

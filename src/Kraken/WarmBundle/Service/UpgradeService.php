@@ -4,7 +4,6 @@ namespace Kraken\WarmBundle\Service;
 
 use Kraken\WarmBundle\Entity\Layer;
 use Kraken\WarmBundle\Entity\Material;
-use Kraken\WarmBundle\Entity\Wall;
 use Kraken\WarmBundle\Calculator\BuildingInterface;
 use Kraken\WarmBundle\Service\InstanceService;
 

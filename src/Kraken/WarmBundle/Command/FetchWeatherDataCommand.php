@@ -88,6 +88,9 @@ class FetchWeatherDataCommand extends ContainerAwareCommand
         file_put_contents(dirname(__DIR__) . '/DataFixtures/cities.json', json_encode($cities));
     }
 
+    /**
+     * @param string $cityName
+     */
     protected function fetchCityData($cityName)
     {
         $curl = curl_init();

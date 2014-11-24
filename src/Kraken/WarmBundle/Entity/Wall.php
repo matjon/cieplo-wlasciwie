@@ -90,29 +90,6 @@ class Wall
     }
 
     /**
-     * Set calculation
-     *
-     * @param  \Kraken\WarmBundle\Entity\Wall $calculation
-     * @return Wall
-     */
-    public function setCalculation(\Kraken\WarmBundle\Entity\Wall $calculation = null)
-    {
-        $this->calculation = $calculation;
-
-        return $this;
-    }
-
-    /**
-     * Get calculation
-     *
-     * @return \Kraken\WarmBundle\Entity\Wall
-     */
-    public function getCalculation()
-    {
-        return $this->calculation;
-    }
-
-    /**
      * Set house
      *
      * @param  \Kraken\WarmBundle\Entity\House $house

@@ -88,29 +88,6 @@ class Apartment
     }
 
     /**
-     * Set number_external_doors
-     *
-     * @param  integer   $numberExternalDoors
-     * @return Apartment
-     */
-    public function setNumberExternalDoors($numberExternalDoors)
-    {
-        $this->number_external_doors = $numberExternalDoors;
-
-        return $this;
-    }
-
-    /**
-     * Get number_external_doors
-     *
-     * @return integer
-     */
-    public function getNumberExternalDoors()
-    {
-        return $this->number_external_doors;
-    }
-
-    /**
      * Add houses
      *
      * @param  \Kraken\WarmBundle\Entity\House $houses

@@ -101,29 +101,6 @@ class Material
     }
 
     /**
-     * Set thermal_conductance
-     *
-     * @param  float    $thermalConductance
-     * @return Material
-     */
-    public function setThermalConductance($thermalConductance)
-    {
-        $this->$u_factor = $thermalConductance;
-
-        return $this;
-    }
-
-    /**
-     * Get thermal_conductance
-     *
-     * @return float
-     */
-    public function getThermalConductance()
-    {
-        return $this->$u_factor;
-    }
-
-    /**
      * Set for_wall_construction_layer
      *
      * @param  boolean  $forWallConstructionLayer

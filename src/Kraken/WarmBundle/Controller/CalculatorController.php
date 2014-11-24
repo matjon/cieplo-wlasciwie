@@ -2,18 +2,15 @@
 
 namespace Kraken\WarmBundle\Controller;
 
-use Kraken\WarmBundle\Calculator\AdviceGenerator;
 use Kraken\WarmBundle\Form\CalculationFormType;
 use Kraken\WarmBundle\Form\HouseApartmentType;
 use Kraken\WarmBundle\Form\HouseType;
 use Kraken\WarmBundle\Entity\Calculation;
 use Kraken\WarmBundle\Entity\House;
 use Kraken\WarmBundle\Entity\Layer;
-use Kraken\WarmBundle\Entity\Wall;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class CalculatorController extends Controller
@@ -406,7 +403,7 @@ class CalculatorController extends Controller
             'building' => $building,
             'pricing' => $pricing,
             'heatingSeason' => $heatingSeason,
-            'advice' => $adviceGenerator->getAdviceFor($calc),
+            'advice' => $adviceGenerator->getAdvice(),
             'punch' => $this->get('kraken_warm.punchline'),
             'classifier' => $this->get('kraken_warm.building_classifier'),
             'upgrade' => $this->get('kraken_warm.upgrade'),
