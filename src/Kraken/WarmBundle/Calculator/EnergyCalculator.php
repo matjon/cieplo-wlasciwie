@@ -149,7 +149,7 @@ class EnergyCalculator
      */
     public function getAvgHeatingPower()
     {
-        $avgTemp = $this->heating_season->getAverageTemperature($this->instance);
+        $avgTemp = $this->heating_season->getAverageTemperature();
 
         return ($this->building->getEnergyLossToOutside() + $this->building->getEnergyLossToUnheated()) * $this->getTemperatureDifference($avgTemp);
     }

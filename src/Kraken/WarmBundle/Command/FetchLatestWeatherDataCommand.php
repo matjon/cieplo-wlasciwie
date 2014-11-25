@@ -33,7 +33,6 @@ class FetchLatestWeatherDataCommand extends ContainerAwareCommand
 
         $client = new Client();
         $client->setHeader('User-Agent', 'Opera/9.80 (X11; Linux x86_64) Presto/2.12.388 Version/12.15');
-        $data = array();
 
         $matchedCities = array();
         foreach ($freemeteoCities as $city) {
@@ -121,7 +120,7 @@ class FetchLatestWeatherDataCommand extends ContainerAwareCommand
                     $crawler = $client->request('GET', $dataUrl);
 
                     $row = array();
-                    $nodeValues = $crawler->filter('.monthly-history td')->each(function ($node, $i) use (&$row, &$data, &$rowsThisMonth) {
+                    $crawler->filter('.monthly-history td')->each(function ($node, $i) use (&$row, &$data, &$rowsThisMonth) {
                         //echo $i.': '.$node->text().PHP_EOL;
 
                         if ($i % 10 >= 0 && $i % 10 < 2) {

@@ -18,7 +18,6 @@ class PunchLineGenerator
     public function getPhrases()
     {
         $factor = $this->calculator->getYearlyEnergyConsumptionFactor();
-        $type = $this->instance->getBuildingType();
 
         $house = "Twój dom to dziura bez dna";
 

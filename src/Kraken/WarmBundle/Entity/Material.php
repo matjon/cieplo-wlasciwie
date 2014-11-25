@@ -193,28 +193,6 @@ class Material
     }
 
     /**
-     * Set for_ceiling_isolation_layer
-     *
-     * @param  boolean  $forCeilingIsolationLayer
-     * @return Material
-     */
-    public function setForCeilingIsolationLayer($forCeilingIsolationLayer)
-    {
-        $this->for_ceiling_isolation_layer = $forCeilingIsolationLayer;
-
-        return $this;
-    }
-
-    /**
-     * Get for_ceiling_isolation_layer
-     *
-     * @return boolean
-     */
-    public function getForCeilingIsolationLayer()
-    {
-        return $this->for_ceiling_isolation_layer;
-    }
-    /**
      * Constructor
      */
     public function __construct()

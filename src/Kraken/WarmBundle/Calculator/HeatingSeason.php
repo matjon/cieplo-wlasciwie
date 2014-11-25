@@ -60,7 +60,7 @@ class HeatingSeason
             ->setParameters(array(
                 0 => 'average',
                 1 => self::HEATING_SEASON_THRESHOLD,
-                2 => $this->locator->findNearestCity($this->instance),
+                2 => $this->locator->findNearestCity(),
             ))
             ->getQuery()
             ->getResult();
@@ -78,7 +78,7 @@ class HeatingSeason
             ->setParameters(array(
                 0 => 'yearly',
                 1 => self::HEATING_SEASON_THRESHOLD,
-                2 => $this->locator->findNearestCity($this->instance),
+                2 => $this->locator->findNearestCity(),
             ))
             ->getQuery()
             ->getResult();
@@ -100,7 +100,7 @@ class HeatingSeason
                 ->setParameters(array(
                     0 => 'average',
                     1 => self::HEATING_SEASON_THRESHOLD,
-                    2 => $this->locator->findNearestCity($this->instance),
+                    2 => $this->locator->findNearestCity(),
                 ))
                 ->setMaxResults(1)
                 ->getQuery()
@@ -128,7 +128,7 @@ class HeatingSeason
                 ->setParameters(array(
                     0 => 'yearly',
                     1 => self::HEATING_SEASON_THRESHOLD,
-                    2 => $this->locator->findNearestCity($this->instance),
+                    2 => $this->locator->findNearestCity(),
                 ))
                 ->setMaxResults(1)
                 ->getQuery()

@@ -230,7 +230,6 @@ class CalculatorController extends Controller
 
     public function breakdownAction()
     {
-        $em = $this->getDoctrine()->getManager();
         $slug = $this->get('session')->get('calculation');
 
         $calc = $this->getDoctrine()
@@ -242,7 +241,6 @@ class CalculatorController extends Controller
         }
 
         $this->get('kraken_warm.instance')->setCalculation($calc);
-        $c = $this->get('kraken_warm.energy_calculator');
 
         $data = array();
         $breakdownData = $this->get('kraken_warm.building')->getEnergyLossBreakdown();
@@ -262,7 +260,6 @@ class CalculatorController extends Controller
 
     public function fuelsAction()
     {
-        $em = $this->getDoctrine()->getManager();
         $slug = $this->get('session')->get('calculation');
 
         $calc = $this->getDoctrine()
@@ -330,7 +327,6 @@ class CalculatorController extends Controller
 
     public function climateAction()
     {
-        $em = $this->getDoctrine()->getManager();
         $slug = $this->get('session')->get('calculation');
 
         $calc = $this->getDoctrine()

@@ -24,7 +24,7 @@ class EnergyPricing
     public function getEnergySourcesComparison()
     {
         $comparison = array();
-        $energyAmount = $this->calculator->getYearlyEnergyConsumption($this->instance);
+        $energyAmount = $this->calculator->getYearlyEnergyConsumption();
         $fuels = $this->em
             ->createQueryBuilder()
             ->select('f')
