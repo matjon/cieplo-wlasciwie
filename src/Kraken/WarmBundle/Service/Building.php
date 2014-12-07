@@ -108,7 +108,7 @@ class Building implements BuildingInterface
 
         if ($this->instance->getHouse()->getConstructionType() == 'canadian') {
             $wallDetails = array(
-                'Dom kanadyjski, szkielet drewniany'
+                'szkielet drewniany (dom kanadyjski)'
             );
         } else {
             $wallDetails = array(

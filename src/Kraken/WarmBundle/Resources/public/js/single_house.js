@@ -11,7 +11,7 @@ function initialize() {
     updateRoofType();
     updateBasementThings();
     analyzeWallSize();
-    calculateWallSize();
+    setInitialWallSize();
 
     if ($('#calculation_wall_size').val() == '' && $('#calculation_walls_0_construction_layer_size').val() > 0) {
         $('#calculation_wall_size').val($('#calculation_walls_0_construction_layer_size').val());
@@ -131,20 +131,38 @@ function updateFloorsStuff() {
     $('#whats_unheated').toggle($('#calculation_number_floors').val()-heatedFloorsCount == 1);
 }
 
-function calculateWallSize() {
-    var totalSize = makeInteger($('#calculation_wall_size').val());
+function setInitialWallSize() {
+    var isCanadian = $('#calculation_construction_type').val() == 'canadian';
 
     var constructionLayerSize = makeInteger($('#calculation_walls_0_construction_layer_size').val());
     var isolationLayerSize = makeInteger($('#calculation_walls_0_isolation_layer_size').val());
     var outsideLayerSize = makeInteger($('#calculation_walls_0_outside_layer_size').val());
     var extraIsolationLayerSize = makeInteger($('#calculation_walls_0_extra_isolation_layer_size').val());
     
-    if (totalSize) {
+    if (isCanadian) {
+        $('#calculation_wall_size').val(isolationLayerSize + extraIsolationLayerSize);
+    } else if (isolationLayerSize + outsideLayerSize + extraIsolationLayerSize > 0) {
+        $('#calculation_wall_size').val(constructionLayerSize + isolationLayerSize + outsideLayerSize + extraIsolationLayerSize);
+    }
+}
+
+function calculateWallSize() {
+    var totalSize = makeInteger($('#calculation_wall_size').val());
+    var isCanadian = $('#calculation_construction_type').val() == 'canadian';
+
+    var constructionLayerSize = makeInteger($('#calculation_walls_0_construction_layer_size').val());
+    var isolationLayerSize = makeInteger($('#calculation_walls_0_isolation_layer_size').val());
+    var outsideLayerSize = makeInteger($('#calculation_walls_0_outside_layer_size').val());
+    var extraIsolationLayerSize = makeInteger($('#calculation_walls_0_extra_isolation_layer_size').val());
+    
+    if (isCanadian) {
+        //var sizeLeft = totalSize - extraIsolationLayerSize;
+
+        $('#calculation_walls_0_construction_layer_size').val(6);
+    } else {      
         var sizeLeft = totalSize - (isolationLayerSize + outsideLayerSize + extraIsolationLayerSize);
 
         $('#calculation_walls_0_construction_layer_size').val(sizeLeft);
-    } else if (isolationLayerSize + outsideLayerSize + extraIsolationLayerSize > 0) {
-        $('#calculation_wall_size').val(constructionLayerSize + isolationLayerSize + outsideLayerSize + extraIsolationLayerSize);
     }
 }
 
