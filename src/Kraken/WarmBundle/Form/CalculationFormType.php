@@ -102,7 +102,7 @@ class CalculationFormType extends AbstractType
                     'input_group' => array(
                         'append'  => '&deg;C',
                     ),
-                    'help_text' => 'Podaj średnią dobową temperaturę, jaką uznajesz za komfortową w domu zimą bez noszenia swetra i kaleson. Np. w dzień +22, w nocy +18 - wpisz 20 stopni',
+                    'help_text' => 'Podaj średnią dobową temperaturę, jaką uznajesz za komfortową w domu zimą bez noszenia swetra i kalesonów. Np. w dzień +22, w nocy +18 - wpisz 20 stopni',
                 ),
             ))
             ->add('latitude', 'hidden')
